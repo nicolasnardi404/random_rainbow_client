@@ -1,24 +1,28 @@
 import logo from './logo.svg';
 import './App.css';
+import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import BasicExample from './components/BasicExample';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'; // Import BrowserRouter as Router
+import SimplePage from './components/SimplePage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Switch> {/* Wrap your routes in a Switch component */}
+        <Route exact path='/' component={() => (
+          <div className="App">
+            <BasicExample />
+            <header className="App-header">
+              <img src={logo} className="App-logo" alt="logo" />
+              <p>
+                CREATING RANDOM RAINBOW IN REACT
+              </p>
+              <Button>this is btn</Button>
+            </header>
+          </div>
+        )} />
+        <Route path='/page' component={SimplePage} />
+      </Switch>
   );
 }
 
