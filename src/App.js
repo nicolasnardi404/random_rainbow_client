@@ -2,7 +2,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'; 
 import Welcome from './pages/Welcome';
-import About from './pages/About';
+import Manifesto from './pages/Manifesto';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import LogIn from './pages/LogIn';
@@ -15,7 +15,7 @@ function App() {
         <Route path='/' exact>
           <Redirect to='/welcome' />
         </Route>
-        <Route path='/about' component={About} />
+        <Route path='/manifesto' component={Manifesto} />
         <Route path='/home' component={Home} />
         <Route path='/welcome' component={Welcome} />
         <Route path='/sign-in' component={SignIn} />

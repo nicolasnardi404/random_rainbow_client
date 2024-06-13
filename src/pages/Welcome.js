@@ -20,7 +20,7 @@ const Welcome = () => {
       <header className="App-header">
         <h1 className='app-title changing-colors'>RANDOM RAINBOW</h1> 
         <div className='icons-group'>
-        <Dragbtn name='about' onDoubleClick={() => handleDoubleClick('about')} />
+        <Dragbtn name='manifesto' onDoubleClick={() => handleDoubleClick('manifesto')} />
           <div className='icons-style'>
             <DragIcon text='log in'icon={faUserAstronaut} onDoubleClick={() => handleDoubleClick('log-in')} /> 
           </div>  

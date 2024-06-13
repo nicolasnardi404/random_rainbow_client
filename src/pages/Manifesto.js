@@ -1,4 +1,4 @@
-export default function About(){
+export default function Manifesto(){
     return( 
         <div className="App">
             <header className="App-header">

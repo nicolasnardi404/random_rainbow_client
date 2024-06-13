@@ -1,6 +1,27 @@
 .App {
   text-align: center;
   background-color: rgba(255, 153, 201, 0.85);
+  cursor: url('../images/rainbow.png'), auto;
+  animation: cursorChange 1s infinite;
+}
+
+@keyframes cursorChange {
+  0% {
+    cursor: url('../images/rainbow.png'), auto;
+  }
+  50% {
+    cursor: url('../images/rainbow-reverse.png'), auto;
+  }
+  100% {
+    cursor: url('../images/rainbow.png'), auto;
+  }
+}
+
+.cards-style{
+  background-color: blue;
+  color:red;
+  padding: 1em;
+  border-radius: 10px;
 }
 
 .App-header {
@@ -13,7 +34,6 @@
   color: #7ee280;
   font-family: bitmap;
 }
-
 
 .App-header video{
   position: fixed;
@@ -44,6 +64,7 @@
 
 .changing-colors{
   animation: colorChange 30s infinite alternate;
+  font-size: 8em;
 }
 
 @keyframes colorChange {
@@ -109,6 +130,7 @@
 .default-btn:hover{
   color: #85C7F2 ;
   background-color: #8447FF;
+  cursor: url('../images/rainbow-reverse.png'), auto;
 }
 
 
@@ -140,4 +162,17 @@
 @font-face {
   font-family: bitmap;
   src: url(../fonts/8-bit-pusab.ttf);
+}
+
+.container {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 10px;
+}
+
+.curve-path {
+  fill: transparent;
+}
+
+.text {
+  fill: #FF9800;
 }
