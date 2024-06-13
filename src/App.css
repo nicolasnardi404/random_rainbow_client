@@ -2,26 +2,35 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
-  background-color: #282c34;
+  background-color: #ff99c9;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #7ee280;
+}
+.App-header{
+  font-family: Jersey;
+}
+
+.app-title{
+  font-size: 5em;
+  border: red;
+  text-shadow: 2px 2px #8447FF;
+}
+
+.default-btn {
+  font-family: bitmap;
+  font-size: 20px;
+  color: #8447FF;
+  background-color: #85C7F2;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 4px 2px #E42525;
+  margin: 2em;
 }
 
 .App-link {
@@ -32,11 +41,12 @@
   background-color: blue;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@font-face {
+  font-family: Jersey;
+  src: url(../fonts/Jersey10Charted-Regular.ttf);
+}
+
+@font-face {
+  font-family: bitmap;
+  src: url(../fonts/8-bit-pusab.ttf);
 }
