@@ -1,3 +1,9 @@
 export default function About(){
-    return(<h1>about me</h1>)
+    return( 
+        <div className="App">
+            <header className="App-header">
+                <h1>ABOUT ME</h1>
+            </header>
+        </div>
+    )
 }

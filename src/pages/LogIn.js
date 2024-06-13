@@ -4,9 +4,9 @@ import { useHistory } from 'react-router-dom';
 import '../App.css';
 import { faUserAstronaut } from '@fortawesome/free-solid-svg-icons';
 import DragIcon from '../components/DragIcon';
-import SignInForm from '../components/SignInForm';
+import LogInForm from '../components/LogInForm';
 
-const SignIn = () => {
+const LogIn = () => {
   const history = useHistory();
 
   function handleDoubleClick(path) {
@@ -23,10 +23,10 @@ const SignIn = () => {
         <div className='icons-style'>
             <DragIcon icon={faUserAstronaut}/> 
         </div>  
-        <SignInForm />
+        <LogInForm />
       </header>
     </div>
   );
 };
 
-export default SignIn;
+export default LogIn;

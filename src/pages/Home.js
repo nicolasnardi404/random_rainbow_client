@@ -1,5 +1,9 @@
 export default function Home(){
-    return (
-    <h1>I am the video part</h1>
+    return( 
+        <div className="App">
+            <header className="App-header">
+                <h1>RANDOM RAINBOW VIDEOS</h1>
+            </header>
+        </div>
     )
 }

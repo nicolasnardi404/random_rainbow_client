@@ -2,7 +2,11 @@ import React from 'react';
 import Dragbtn from '../components/Dragbtn';
 import { useHistory } from 'react-router-dom';
 import '../App.css';
-import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserAstronaut } from '@fortawesome/free-solid-svg-icons';
+import { faUsers } from '@fortawesome/free-solid-svg-icons';
+import BackGroundVideo from '../components/BackGroundVideo';
+import DragIcon from '../components/DragIcon';
 
 const Welcome = () => {
   const history = useHistory();
@@ -14,13 +18,18 @@ const Welcome = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <h1 className='app-title'>RANDOM RAINBOW</h1> 
-        <div className='navBar-group-btn'>
-          <Dragbtn name='about' onDoubleClick={() => handleDoubleClick('about')} />
+        <h1 className='app-title changing-colors'>RANDOM RAINBOW</h1> 
+        <div className='icons-group'>
+        <Dragbtn name='about' onDoubleClick={() => handleDoubleClick('about')} />
+          <div className='icons-style'>
+            <DragIcon text='log in'icon={faUserAstronaut} onDoubleClick={() => handleDoubleClick('log-in')} /> 
+          </div>  
+          <div className='icons-style'>
+            <DragIcon text='sign in'icon={faUsers} onDoubleClick={() => handleDoubleClick('sign-in')} /> 
+          </div>
           <Dragbtn name='home' onDoubleClick={() => handleDoubleClick('home')} />
-          <Dragbtn name='sign-in' onDoubleClick={() => handleDoubleClick('sign-in')} />
-          <FontAwesomeIcon icon="fa-solid fa-user-astronaut" />
         </div>
+        <BackGroundVideo />
       </header>
     </div>
   );

@@ -5,7 +5,8 @@ import Welcome from './pages/Welcome';
 import About from './pages/About';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
-//import SignIn from './pages/SignIn';
+import LogIn from './pages/LogIn';
+
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path='/home' component={Home} />
         <Route path='/welcome' component={Welcome} />
         <Route path='/sign-in' component={SignIn} />
+        <Route path='/log-in' component={LogIn} />
       </Switch>
     </Router>
   );
