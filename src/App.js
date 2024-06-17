@@ -6,6 +6,8 @@ import Manifesto from './pages/Manifesto';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import LogIn from './pages/LogIn';
+import EmailVerificationSent from './pages/EmailVerificationSent';
+import UserInterface from './pages/UserInterface'
 
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
         <Route path='/welcome' component={Welcome} />
         <Route path='/sign-in' component={SignIn} />
         <Route path='/log-in' component={LogIn} />
+        <Route path='/email-verification-sent' component={EmailVerificationSent} />
+        <Route path='/videos' component={UserInterface}  />
       </Switch>
     </Router>
   );

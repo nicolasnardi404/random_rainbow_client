@@ -2,7 +2,6 @@ import React from 'react';
 import Dragbtn from '../components/Dragbtn';
 import { useHistory } from 'react-router-dom';
 import '../App.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserAstronaut } from '@fortawesome/free-solid-svg-icons';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import BackGroundVideo from '../components/BackGroundVideo';

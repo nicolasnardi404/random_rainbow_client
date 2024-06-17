@@ -16,7 +16,7 @@ const SignIn = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <h1 className='app-title '>RANDOM RAINBOW</h1> 
+        <a href='/welcome' className='app-title '>RANDOM RAINBOW</a> 
         <div className='icons-group'>
         <Dragbtn name='back to homepage' onDoubleClick={() => handleDoubleClick('')} />
         </div>
