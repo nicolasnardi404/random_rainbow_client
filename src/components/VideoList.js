@@ -1,31 +1,40 @@
-import React from 'react';
-import { faker } from '@faker-js/faker/locale/en';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
-
-const VideoList = () => {
+const VideoList = ({ idUser }) => {
   const history = useHistory();
+  const [videos, setVideos] = useState([]);
 
-  function handleClick(e){
-      e.preventDefault();
-      history.push('/add-new-video')
+  console.log('USER ID ' + idUser)
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/users/${idUser}/videos`);
+        setVideos(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error('Failed to fetch videos:', error);
+      }
+    };
+
+    if (idUser) {
+      fetchVideos();
+    }
+    console.log('hello');
+  }, [idUser]); // Re-fetch videos whenever the userId changes
+
+  function handleClick(e) {
+    e.preventDefault();
+    history.push(`/add-new-video/${idUser}`); // Include the userId in the navigation
   }
-
- //generate fake data for testing
-  const videos = Array.from({ length: 3 }, (_, index) => ({
-    id: index + 1,
-    title: faker.system.commonFileName(),
-    videoDescription: faker.lorem.paragraph(),
-    videoLink: `https://example.com/video/${index}`,
-    checked: faker.datatype.boolean(),
-    approved: faker.datatype.boolean(),
-  }));
 
   return (
     <div>
       <table className='table-header'>
         <thead>
-          <tr>  
+          <tr>
             <th>Title</th>
             <th>Link</th>
             <th>Checked</th>
