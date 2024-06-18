@@ -1,16 +1,14 @@
 import React from 'react';
-import {useHistory } from 'react-router-dom';
-import VideoList from '../components/VideoList';
+import Dragbtn from '../components/Dragbtn';
+import { useHistory } from 'react-router-dom';
+import '../App.css';
 import { faPersonThroughWindow } from '@fortawesome/free-solid-svg-icons'; 
 import { faSmile } from '@fortawesome/free-solid-svg-icons';
 import DragIcon from '../components/DragIcon';
-import Dragbtn from '../components/Dragbtn';
-import { useParams } from 'react-router-dom/cjs/react-router-dom';
+import AddNewVideo from '../components/AddNewVideo';
 
-const UserInterface = () => {
-  
+export default function NewVideo () {
   const history = useHistory();
-  const { idUser } = useParams();
 
   function handleDoubleClick(path) {
     history.push(`/${path}`);
@@ -19,7 +17,7 @@ const UserInterface = () => {
   return (
     <div className="App">
       <header className="App-header">
-      <div className='user-menu'>
+        <div className='user-menu'>
             <div className='icons-style'>
                 <DragIcon text='USERNAME'icon={faSmile} onDoubleClick={() => handleDoubleClick('videos')} /> 
              </div>  
@@ -32,11 +30,8 @@ const UserInterface = () => {
         <Dragbtn name='manifesto' onDoubleClick={() => handleDoubleClick('manifesto')} />
           <Dragbtn name='home' onDoubleClick={() => handleDoubleClick('home')} />
         </div>
-        <VideoList idUser={idUser} />
-        <Dragbtn name='return' onDoubleClick={() => handleDoubleClick('videos')} />
+        <AddNewVideo />
       </header>
     </div>
   );
 };
-
-export default UserInterface;

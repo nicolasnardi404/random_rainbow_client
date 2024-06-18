@@ -7,15 +7,15 @@ Veronica Purple: #8447FF
 Light Blue Sky: #85C7F2
 Red: #E42525
 */
-
-
 .App {
   text-align: center;
   background-color: rgba(255, 153, 201, 0.85);
   cursor: url('../images/rainbow.png'), auto;
   animation: cursorChange 1s infinite;
+  margin: auto;
+  padding: 1em 2em;
+  overflow: auto;
 }
-
 
 .cards-style{
   background-color: blue;
@@ -59,6 +59,7 @@ Red: #E42525
 }
 
 .changing-colors{
+  margin: 0.5em auto;
   animation: colorChange 30s infinite alternate;
   font-size: 8em;
 }
@@ -69,7 +70,7 @@ Red: #E42525
   background-color: #85C7F2;
   padding: 10px 15px;
   border-radius: 10px;
-  border: 4px 2px #E42525;
+  border: 1px solid #7EE280;
   margin: 1.2em;
 }
 
@@ -77,6 +78,7 @@ Red: #E42525
   color: #85C7F2 ;
   background-color: #8447FF;
   cursor: url('../images/rainbow-reverse.png'), auto;
+  border: 1px solid #E42525;
 }
 
 
@@ -107,6 +109,58 @@ Red: #E42525
   gap: 2em;
   justify-content: right;
   align-items: center;
+}
+
+/* User Interface */
+
+.table-header{
+  background: #F8E777;
+  margin: auto;
+}
+
+.table-header th{
+  background: #8447FF;
+  color: #85C7F2;
+  padding: 1em;
+  font-size: 0.5em;
+}
+
+.table-header td{
+  padding: 1em;
+  border: 3px dotted #85C7F2;
+  color: #8447FF;
+  font-size: 0.5em;
+}
+
+.update-btn{
+  background: #7ee280;
+  color: #E42525;
+  font-size: 1em;
+}
+
+.delete-btn{
+  background: #E42525;
+  color: #7ee280;
+  font-size: 1em;
+}
+
+.add-video-btn{
+  background: #8447FF;
+  color: #F8E777;
+}
+
+.add-video-btn:hover{
+  color: #E42525;
+  background-color: #F8E777;
+}
+
+/*  */
+
+.group-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /* style for random rainbow page */
@@ -194,6 +248,19 @@ Red: #E42525
 .none-text-decoration:hover{
   color: #7EE280;
   text-shadow: 1px 1px #8447FF;
+}
+
+/* Add new video */
+
+.add-video-style{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-video-form{
+  margin: 2em;
 }
 
 /* Animations */
