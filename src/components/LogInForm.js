@@ -5,7 +5,7 @@ export default function LogInForm() {
     const history = useHistory();
 
     const [formData, setFormData] = useState({
-        userName: '',
+        email: '',
         password: ''
     });
 
@@ -23,7 +23,7 @@ export default function LogInForm() {
     e.preventDefault();
 
     try {
-        const response = await fetch('http://localhost:8080/api/authenticate', {
+        const response = await fetch('http://localhost:8080/api/v1/auth/authenticate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -59,11 +59,11 @@ export default function LogInForm() {
     return (
         <form onSubmit={handleSubmit}>
             <label className="group-form">
-                Name:
+                Email:
                 <input className="input-form" 
                        type="text" 
-                       name="userName" 
-                       value={formData.userName}
+                       name="email" 
+                       value={formData.email}
                        onChange={handleChange}
                        required/>
                 <br></br>

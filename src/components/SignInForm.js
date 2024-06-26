@@ -4,11 +4,11 @@ import { useHistory } from 'react-router-dom';
 export default function SignInForm() {
     const history = useHistory();
     const [formData, setFormData] = useState({
-        userName: '',
-        password: '',
-        firstName: '',
-        lastName: '',
-        email: ''
+        username: '',
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: ''
     });
     const [error, setError] = useState('');
 
@@ -24,13 +24,14 @@ export default function SignInForm() {
         event.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:8080/api/register/processRegistrationForm', {
+            const response = await fetch('http://localhost:8080/api/v1/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)
             });
+            console.log(formData)
 
             if (response.ok) {
                 // After successful submission, redirect to the new endpoint
@@ -49,12 +50,12 @@ export default function SignInForm() {
         <div className="mb-5">
             <form className="group-form" onSubmit={handleSubmit}>
                 {error && <div className="error">{error}</div>}
-                <label>Username:</label>
+                <label>username:</label>
                 <input
                     className="input-form"
                     type="text"
-                    name="userName"
-                    value={formData.userName}
+                    name="username"
+                    value={formData.username}
                     onChange={handleChange}
                     required
                 />
@@ -73,8 +74,8 @@ export default function SignInForm() {
                 <input
                     className="input-form"
                     type="text"
-                    name="firstName"
-                    value={formData.firstName}
+                    name="firstname"
+                    value={formData.firstname}
                     onChange={handleChange}
                     required
                 />
@@ -83,8 +84,8 @@ export default function SignInForm() {
                 <input
                     className="input-form"
                     type="text"
-                    name="lastName"
-                    value={formData.lastName}
+                    name="lastname"
+                    value={formData.lastname}
                     onChange={handleChange}
                     required
                 />
