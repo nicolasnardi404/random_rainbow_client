@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-const VideoList = ({ idUser }) => {
+const VideoList = ({}) => {
   const history = useHistory();
   const [videos, setVideos] = useState([]);
 
-  console.log('USER ID ' + idUser)
+  const userId  = localStorage.getItem('userId');
 
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/users/${idUser}/videos`);
+        const response = await axios.get(`http://localhost:8080/api/users/${userId}/videos`);
         setVideos(response.data);
         console.log(response.data);
       } catch (error) {
@@ -19,15 +19,14 @@ const VideoList = ({ idUser }) => {
       }
     };
 
-    if (idUser) {
+    if (userId) {
       fetchVideos();
     }
-    console.log('hello');
-  }, [idUser]); // Re-fetch videos whenever the userId changes
+  }, [userId]); // Re-fetch videos whenever the userId changes
 
   function handleClick(e) {
     e.preventDefault();
-    history.push(`/add-new-video/${idUser}`); // Include the userId in the navigation
+    history.push(`/add-new-video/${userId}`); // Include the userId in the navigation
   }
 
   return (

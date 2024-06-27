@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../App.css'; // Assuming you want to style it similarly to Bootstrap
+import '../App.css'; 
 import { useHistory } from 'react-router-dom';
 
 export default function AddNewVideo() {

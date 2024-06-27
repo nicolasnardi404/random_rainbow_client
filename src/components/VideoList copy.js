@@ -22,7 +22,6 @@ const VideoList = ({ idUser }) => {
     if (idUser) {
       fetchVideos();
     }
-    console.log('hello');
   }, [idUser]); // Re-fetch videos whenever the userId changes
 
   function handleClick(e) {
