@@ -6,6 +6,7 @@ const VideoList = ({}) => {
   const history = useHistory();
   const [videos, setVideos] = useState([]);
 
+  const userName  = localStorage.getItem('username');
   const userId  = localStorage.getItem('userId');
 
   useEffect(() => {

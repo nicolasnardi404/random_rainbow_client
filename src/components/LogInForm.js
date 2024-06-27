@@ -46,9 +46,11 @@ export default function LogInForm() {
                     // Extract userId from the decoded token
                     const userId = decodedToken.userId;
                     console.log('User ID:', userId);
+                    const username = decodedToken.sub;
 
                     // Store the userId in local storage
                     localStorage.setItem('userId', userId);
+                    localStorage.setItem('username', username);
 
                     // Assuming successful authentication, redirect or show success message
                     history.push('/videos');

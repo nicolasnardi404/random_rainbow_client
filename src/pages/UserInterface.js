@@ -8,6 +8,9 @@ import Dragbtn from '../components/Dragbtn';
 import { useParams } from 'react-router-dom/cjs/react-router-dom';
 
 const UserInterface = () => {
+
+  const username  = localStorage.getItem('username');
+  console.log(localStorage)
   
   const history = useHistory();
   const { idUser } = useParams();
@@ -21,7 +24,7 @@ const UserInterface = () => {
       <header className="App-header">
       <div className='user-menu'>
             <div className='icons-style'>
-                <DragIcon text='USERNAME'icon={faSmile} onDoubleClick={() => handleDoubleClick('videos')} /> 
+                <DragIcon text={username} icon={faSmile} onDoubleClick={() => handleDoubleClick('videos')} /> 
              </div>  
             <div className='icons-style'>
                 <DragIcon text='log-out'icon={faPersonThroughWindow} onDoubleClick={() => handleDoubleClick('sign-in')} /> 
