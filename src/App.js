@@ -31,9 +31,10 @@ function App() {
           path="/email-verification-sent"
           component={EmailVerificationSent}
         />
-        <Route path="/users/:idUser/xvideos" component={UserInterface} />
         <Route path="/videos" component={UserInterface} />
         <Route path="/:idUser/add-new-video" component={NewVideo} />
+        <Route path="/:idUser/update/:videoId" component={NewVideo} />
+        <Route path="/users/:idUser/videos" component={UserInterface} />
       </Switch>
     </Router>
   );

@@ -1,23 +1,34 @@
-import React, { useState } from "react";
-import "../App.css";
+import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import axios from "axios";
 
-export default function AddNewVideo() {
+function AddNewVideo() {
   const history = useHistory();
   const { idUser } = useParams();
-
-  function handleClick(e) {
-    e.preventDefault();
-    history.push("/videos");
-  }
-
+  const { videoId } = useParams();
+  console.log(videoId);
   const [video, setVideo] = useState({
     title: "",
     videoDescription: "",
     videoLink: "",
   });
 
-  //java connection
+  useEffect(() => {
+    if (videoId) {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:8080/users/${idUser}/videos/${videoId}`
+          );
+          setVideo(response.data); // This should trigger a re-render
+        } catch (error) {
+          console.error("Failed to fetch video details:", error);
+        }
+      };
+      fetchData();
+    }
+  }, [videoId]);
+
   const handleChange = (e) => {
     setVideo({ ...video, [e.target.name]: e.target.value });
   };
@@ -25,24 +36,30 @@ export default function AddNewVideo() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    let url = `http://localhost:8080/users/${idUser}/videos/addNewVideo`;
+    let method = "POST";
+
+    const { user, ...videoData } = video;
+
+    if (videoId) {
+      url = `http://localhost:8080/users/${idUser}/videos/update/${videoId}`;
+      method = "PUT";
+    }
+
     try {
-      const response = await fetch(
-        `http://localhost:8080/users/${idUser}/videos/addNewVideo`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(video),
-        }
-      );
+      const response = await axios({
+        method: method,
+        url: url,
+        data: videoData,
+      });
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+      console.log(response);
+
+      if (response.status === 200) {
+        history.push(`/users/${idUser}/videos`);
+      } else {
+        console.error("Failed to save video:", response);
       }
-
-      // Redirect to videos page after successful submission
-      history.push("/videos");
     } catch (error) {
       console.error(
         "There has been a problem with your fetch operation:",
@@ -53,16 +70,11 @@ export default function AddNewVideo() {
 
   return (
     <div className="add-video-style">
-      <hr />
-      <h3>Add New Video</h3>
       <form onSubmit={handleSubmit}>
-        {/* Add hidden form field to handle the update */}
-        <input type="hidden" name="id" value={video.id || ""} />
-
         <input
           type="text"
           name="title"
-          value={video.title}
+          value={video.title} // Displaying the fetched title
           onChange={handleChange}
           className="form-control add-video-form"
           placeholder="Title"
@@ -84,15 +96,12 @@ export default function AddNewVideo() {
           className="form-control add-video-form"
           placeholder="Video Link"
         />
-
-        {/* Error handling can be implemented similarly */}
-
         <button type="submit" className="btn btn-info">
           Save
         </button>
       </form>
-      <hr />
-      <a href="/videos">Back to Videos List</a>
     </div>
   );
 }
+
+export default AddNewVideo;
