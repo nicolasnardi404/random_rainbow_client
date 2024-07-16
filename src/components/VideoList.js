@@ -9,8 +9,6 @@ const VideoList = ({}) => {
 
   const userId = localStorage.getItem("userId");
 
-  const data = { title: "", videoDescription: "", videoLink: "" };
-
   const fetchVideos = async () => {
     try {
       const response = await axios.get(

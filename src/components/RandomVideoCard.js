@@ -1,35 +1,27 @@
-import React, { useState } from 'react';
-import YouTube from 'react-youtube';
-import { videoDB } from '../data';
-import '../App.css';
+import React, { useState } from "react";
+import YouTube from "react-youtube";
+import { videoDB } from "../data";
+import "../App.css";
 
 export default function RandomVideoCard() {
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const [durationOption, setDurationOption] = useState('all');
+  const [durationOption, setDurationOption] = useState("1000");
 
-
-  const selectRandomVideo = () => {
-    let filteredVideos;
-  
-    switch (durationOption) {
-      case 'lessThan5':
-        filteredVideos = videoDB.filter(video => video.duration <= 5); // Assuming duration is in seconds
-        break;
-      case 'lessThan10':
-        filteredVideos = videoDB.filter(video => video.duration <= 10);
-        break;
-      default:
-        filteredVideos = videoDB; // Show all videos if no specific duration is selected
+  const selectRandomVideo = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/randomvideo/${durationOption}`
+      );
+      const videoData = await response.json();
+      setSelectedVideo(videoData);
+    } catch (error) {
+      console.error("Failed to fetch random video:", error);
     }
-  
-    const randomIndex = Math.floor(Math.random() * filteredVideos.length);
-    setSelectedVideo(filteredVideos[randomIndex]);
   };
-  
 
   const opts = {
-    height: '390',
-    width: '640',
+    height: "390",
+    width: "640",
     playerVars: {
       autoplay: 1,
       controls: 1,
@@ -42,23 +34,37 @@ export default function RandomVideoCard() {
 
   return (
     <div>
-      {selectedVideo? (
+      {selectedVideo ? (
         <div>
-          <div className='title'>{selectedVideo.title}</div>
-          <div className='artist'>* {selectedVideo.artist} *</div>
+          <div className="title">{selectedVideo.title}</div>
+          <div className="artist">* {selectedVideo.artist} *</div>
           <YouTube videoId={selectedVideo.videoId} opts={opts} />
-          <div className='description'>{selectedVideo.description}</div>
-          <button className='btn-random-video btn-random-video-after' onClick={selectRandomVideo}>Select Another Video</button>
+          <div className="description">{selectedVideo.description}</div>
+          <button
+            className="btn-random-video btn-random-video-after"
+            onClick={selectRandomVideo}
+          >
+            Select Another Video
+          </button>
         </div>
       ) : (
-        <button className='btn-random-video' onClick={selectRandomVideo}>🌈 Select a Random Video 🦄 </button>
+        <button className="btn-random-video" onClick={selectRandomVideo}>
+          🌈 Select a Random Video 🦄{" "}
+        </button>
       )}
-       <div className='duration'>
-        <label className='duration-label' htmlFor="duration">choose max time:</label>
-        <select className='duration-select' id="duration" value={durationOption} onChange={(e) => setDurationOption(e.target.value)}>
-          <option value="all">all videos</option>
-          <option value="lessThan5">less than 5 min</option>
-          <option value="lessThan10">less than 10 minutes</option>
+      <div className="duration">
+        <label className="duration-label" htmlFor="duration">
+          choose max time:
+        </label>
+        <select
+          className="duration-select"
+          id="duration"
+          value={durationOption}
+          onChange={(e) => setDurationOption(e.target.value)}
+        >
+          <option value="1000">all videos</option>
+          <option value="5">less than 5 min</option>
+          <option value="10">less than 10 minutes</option>
         </select>
       </div>
     </div>
