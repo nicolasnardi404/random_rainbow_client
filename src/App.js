@@ -14,6 +14,7 @@ import LogIn from "./pages/LogIn";
 import EmailVerificationSent from "./pages/EmailVerificationSent";
 import UserInterface from "./pages/UserInterface";
 import NewVideo from "./pages/NewVideo";
+import PasswordRecovery from "./pages/PasswordRecover";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/:idUser/add-new-video" component={NewVideo} />
         <Route path="/:idUser/update/:videoId" component={NewVideo} />
         <Route path="/users/:idUser/videos" component={UserInterface} />
+        <Route path="/password-recovery" component={PasswordRecovery} />
       </Switch>
     </Router>
   );
