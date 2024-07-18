@@ -3,8 +3,6 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 const VideoList = () => {
-  const username = localStorage.getItem("username");
-  console.log(localStorage);
   const history = useHistory();
   const [videos, setVideos] = useState([]);
   const [showAllVideos, setShowAllVideos] = useState(true);
@@ -93,7 +91,19 @@ const VideoList = () => {
           {videos.map((video) => (
             <tr key={video.id}>
               <td>{video.title}</td>
-              <td>{video.videoLink}</td>
+              <td>
+                <a
+                  href={
+                    video.approved
+                      ? `http://localhost:3000/home/${video.endpoint}`
+                      : undefined
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  video url
+                </a>
+              </td>
               <td>{video.checked ? "Yes" : "No"}</td>
               <td>{video.approved ? "Yes" : "No"}</td>
               <td>

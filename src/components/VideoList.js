@@ -85,7 +85,11 @@ const VideoList = ({}) => {
               <td>{video.title}</td>
               <td>
                 <a
-                  href={video.videoLink}
+                  href={
+                    video.approved
+                      ? `http://localhost:3000/home/${video.endpoint}`
+                      : undefined
+                  }
                   target="_blank"
                   rel="noopener noreferrer"
                 >
