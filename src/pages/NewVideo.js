@@ -46,7 +46,7 @@ export default function NewVideo() {
           />
           <Dragbtn
             name="home"
-            onDoubleClick={() => handleDoubleClick("home")}
+            onDoubleClick={() => handleDoubleClick("home/0")}
           />
         </div>
         <AddNewVideo />

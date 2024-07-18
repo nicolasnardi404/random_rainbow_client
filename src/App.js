@@ -15,6 +15,7 @@ import EmailVerificationSent from "./pages/EmailVerificationSent";
 import UserInterface from "./pages/UserInterface";
 import NewVideo from "./pages/NewVideo";
 import PasswordRecovery from "./pages/PasswordRecover";
+import CreateNewPassord from "./pages/CreateNewPassword";
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
           <Redirect to="/welcome" />
         </Route>
         <Route path="/manifesto" component={Manifesto} />
-        <Route path="/home" component={Home} />
+        <Route path="/home/:token" component={Home} />
         <Route path="/welcome" component={Welcome} />
         <Route path="/sign-in" component={SignIn} />
         <Route path="/log-in" component={LogIn} />
@@ -37,6 +38,7 @@ function App() {
         <Route path="/:idUser/update/:videoId" component={NewVideo} />
         <Route path="/users/:idUser/videos" component={UserInterface} />
         <Route path="/password-recovery" component={PasswordRecovery} />
+        <Route path="/new-password/:token" component={CreateNewPassord} />
       </Switch>
     </Router>
   );

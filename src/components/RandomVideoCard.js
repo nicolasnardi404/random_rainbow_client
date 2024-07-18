@@ -1,11 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, useHistory } from "react-router-dom";
 import YouTube from "react-youtube";
-import { videoDB } from "../data";
 import "../App.css";
 
 export default function RandomVideoCard() {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [durationOption, setDurationOption] = useState("1000");
+  const { token } = useParams();
+  const history = useHistory();
+
+  useEffect(() => {
+    if (token) {
+      fetchVideoByToken(token);
+    }
+  }, [token]);
+
+  const fetchVideoByToken = async (token) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/randomvideo/video/${token}`
+      );
+      const videoData = await response.json();
+      setSelectedVideo(videoData);
+    } catch (error) {
+      console.error("Failed to fetch video by token:", error);
+    }
+  };
 
   const selectRandomVideo = async () => {
     try {
@@ -14,11 +34,13 @@ export default function RandomVideoCard() {
       );
       const videoData = await response.json();
       setSelectedVideo(videoData);
+      console.log(videoData);
+
+      history.push(`/home/${videoData.endpoint}`);
     } catch (error) {
       console.error("Failed to fetch random video:", error);
     }
   };
-
   const opts = {
     height: "390",
     width: "640",
@@ -32,13 +54,17 @@ export default function RandomVideoCard() {
     },
   };
 
+  const uniqueVideoUrl = selectedVideo
+    ? `${selectedVideo.endpoint}/${selectedVideo.videoId}`
+    : "";
+
   return (
     <div>
       {selectedVideo ? (
         <div>
           <div className="title">{selectedVideo.title}</div>
           <div className="artist">* {selectedVideo.artist} *</div>
-          <YouTube videoId={selectedVideo.videoId} opts={opts} />
+          <YouTube endpoint={uniqueVideoUrl} opts={opts} />
           <div className="description">{selectedVideo.description}</div>
           <button
             className="btn-random-video btn-random-video-after"
