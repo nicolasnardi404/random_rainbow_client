@@ -16,6 +16,8 @@ import UserInterface from "./pages/UserInterface";
 import NewVideo from "./pages/NewVideo";
 import PasswordRecovery from "./pages/PasswordRecover";
 import CreateNewPassord from "./pages/CreateNewPassword";
+import AdminController from "./pages/AdminController";
+import VideoUpdateAdmin from "./pages/VideoUpdateAdmin";
 
 function App() {
   return (
@@ -39,6 +41,12 @@ function App() {
         <Route path="/users/:idUser/videos" component={UserInterface} />
         <Route path="/password-recovery" component={PasswordRecovery} />
         <Route path="/new-password/:token" component={CreateNewPassord} />
+        <Route path="/admin-controller" component={AdminController} />
+        <Route path="/admin-controller/review" component={AdminController} />
+        <Route
+          path="/admin/videos/update/:videoId"
+          component={VideoUpdateAdmin}
+        />
       </Switch>
     </Router>
   );
