@@ -9,19 +9,34 @@ export default function SignInForm() {
     lastname: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
   const [error, setError] = useState("");
+  const [passwordError, setPasswordError] = useState(""); // State to manage password mismatch error
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData({
-      ...formData,
+    setFormData((prevState) => ({
+      ...prevState,
       [name]: value,
-    });
+    }));
+
+    // Real-time validation for password match
+    if (name === "confirmPassword" && value !== formData.password) {
+      setPasswordError("Passwords do not match.");
+    } else {
+      setPasswordError("");
+    }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Check if passwords match before sending the request
+    if (formData.password !== formData.confirmPassword) {
+      setPasswordError("Passwords do not match.");
+      return;
+    }
 
     try {
       const response = await fetch(
@@ -52,8 +67,7 @@ export default function SignInForm() {
   return (
     <div className="mb-5">
       <form className="group-form" onSubmit={handleSubmit}>
-        {error && <div className="error">{error}</div>}
-        <label>username:</label>
+        <label>Username:</label>
         <input
           className="input-form"
           type="text"
@@ -63,12 +77,22 @@ export default function SignInForm() {
           required
         />
         <br />
-        <label>Password:</label>
+        <label>New Password:</label>
         <input
           className="input-form"
           type="password"
           name="password"
           value={formData.password}
+          onChange={handleChange}
+          required
+        />
+        <br />
+        <label>Confirm Password:</label>
+        <input
+          className="input-form"
+          type="password"
+          name="confirmPassword"
+          value={formData.confirmPassword}
           onChange={handleChange}
           required
         />
@@ -103,7 +127,8 @@ export default function SignInForm() {
           required
         />
         <br />
-        <input type="submit" value="SIGN UP" />
+        <input type="submit" value="Sign Up" />
+        {passwordError && <div className="error">{passwordError}</div>}
       </form>
     </div>
   );
