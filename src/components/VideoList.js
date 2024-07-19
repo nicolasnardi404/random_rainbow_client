@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
-const VideoList = ({}) => {
+const VideoList = () => {
   const history = useHistory();
   const [videos, setVideos] = useState([]);
   const [editingVideo, setEditingVideo] = useState({});
+  const [canAddVideo, setCanAddVideo] = useState(true);
 
   const userId = localStorage.getItem("userId");
 
@@ -14,8 +15,10 @@ const VideoList = ({}) => {
       const response = await axios.get(
         `http://localhost:8080/api/users/${userId}/videos`
       );
-      setVideos(response.data);
-      console.log(response.data);
+      const userVideos = response.data;
+      setVideos(userVideos);
+      setCanAddVideo(userVideos.length < 3); // Check if user has less than 3 videos
+      console.log(userVideos);
     } catch (error) {
       console.error("Failed to fetch videos:", error);
     }
@@ -50,11 +53,12 @@ const VideoList = ({}) => {
 
   function handleClick(e) {
     e.preventDefault();
-    history.push(`/${userId}/add-new-video`); // Include the userId in the navigation
+    if (canAddVideo) {
+      history.push(`/${userId}/add-new-video`); // Include the userId in the navigation
+    }
   }
 
   async function handleUpdate(videoId) {
-    const userId = localStorage.getItem("userId");
     try {
       const response = await axios.get(
         `http://localhost:8080/api/users/${userId}/videos/${videoId}`
@@ -67,6 +71,7 @@ const VideoList = ({}) => {
       console.error("Failed to fetch video details:", error);
     }
   }
+
   return (
     <div>
       <table className="table-header">
@@ -90,8 +95,6 @@ const VideoList = ({}) => {
                       ? `http://localhost:3000/home/${video.endpoint}`
                       : undefined
                   }
-                  target="_blank"
-                  rel="noopener noreferrer"
                 >
                   video url
                 </a>
@@ -117,7 +120,7 @@ const VideoList = ({}) => {
         </tbody>
       </table>
       <button onClick={handleClick} className="default-btn add-video-btn">
-        ADD NEW VIDEO
+        {canAddVideo ? "ADD NEW VIDEO" : "You cannot add more than 3 videos"}
       </button>
     </div>
   );
