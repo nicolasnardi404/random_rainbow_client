@@ -12,7 +12,7 @@ export default function SignInForm() {
     confirmPassword: "",
   });
   const [error, setError] = useState("");
-  const [passwordError, setPasswordError] = useState(""); // State to manage password mismatch error
+  const [passwordError, setPasswordError] = useState("");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -21,7 +21,6 @@ export default function SignInForm() {
       [name]: value,
     }));
 
-    // Real-time validation for password match
     if (name === "confirmPassword" && value !== formData.password) {
       setPasswordError("Passwords do not match.");
     } else {
@@ -32,7 +31,6 @@ export default function SignInForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Check if passwords match before sending the request
     if (formData.password !== formData.confirmPassword) {
       setPasswordError("Passwords do not match.");
       return;
@@ -49,14 +47,19 @@ export default function SignInForm() {
           body: JSON.stringify(formData),
         }
       );
-      console.log(formData);
 
-      if (response.ok) {
-        // After successful submission, redirect to the new endpoint
-        history.push("/email-verification-sent");
-      } else {
+      if (!response.ok) {
+        // Attempt to parse the response as JSON
         const errorData = await response.json();
-        setError(errorData.message);
+        if (errorData && errorData.errorMessage) {
+          // Use errorData.errorMessage instead of errorData.message
+          setError(errorData.errorMessage);
+        } else {
+          // Fallback to a generic error message if the expected structure is not found
+          setError("An unexpected error occurred. Please try again later.");
+        }
+      } else {
+        history.push("/email-verification-sent");
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -129,6 +132,7 @@ export default function SignInForm() {
         <br />
         <input type="submit" value="Sign Up" />
         {passwordError && <div className="error">{passwordError}</div>}
+        {error && <div className="error">{error}</div>}
       </form>
     </div>
   );
