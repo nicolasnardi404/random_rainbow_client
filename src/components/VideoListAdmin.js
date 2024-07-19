@@ -11,6 +11,7 @@ const VideoList = () => {
     try {
       const response = await axios.get(url);
       setVideos(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error("Failed to fetch videos:", error);
     }
@@ -80,6 +81,7 @@ const VideoList = () => {
       <table className="table-header">
         <thead>
           <tr>
+            <th>User</th>
             <th>Title</th>
             <th>Link</th>
             <th>Checked</th>
@@ -90,14 +92,11 @@ const VideoList = () => {
         <tbody>
           {videos.map((video) => (
             <tr key={video.id}>
+              <td>{video.user.username}</td>
               <td>{video.title}</td>
               <td>
                 <a
-                  href={
-                    video.approved
-                      ? `http://localhost:3000/home/${video.endpoint}`
-                      : undefined
-                  }
+                  href={`http://localhost:3000/home/${video.endpoint}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

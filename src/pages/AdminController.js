@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom";
 
 const AdminController = () => {
   const username = localStorage.getItem("username");
-  console.log(localStorage);
+  console.log(username);
 
   const history = useHistory();
   const { idUser } = useParams();

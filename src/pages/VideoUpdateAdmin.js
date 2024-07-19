@@ -25,7 +25,7 @@ export default function VideoUpdateAdmin() {
         <div className="user-menu">
           <div className="icons-style">
             <DragIcon
-              text={username``}
+              text={username}
               icon={faSmile}
               onDoubleClick={() => handleDoubleClick("videos")}
             />

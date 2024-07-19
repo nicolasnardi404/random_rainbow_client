@@ -33,7 +33,7 @@ const VideoList = ({}) => {
 
     try {
       await axios.delete(
-        `http://localhost:8080/users/${userId}/videos/delete/${videoId}`
+        `http://localhost:8080/api/users/${userId}/videos/delete/${videoId}`
       );
       // Refresh the list of videos after deletion
       fetchVideos();
@@ -57,7 +57,7 @@ const VideoList = ({}) => {
     const userId = localStorage.getItem("userId");
     try {
       const response = await axios.get(
-        `http://localhost:8080/users/${userId}/videos/${videoId}`
+        `http://localhost:8080/api/users/${userId}/videos/${videoId}`
       );
       const videoDetails = response.data; // Assuming the response contains the video details
       setEditingVideo(videoDetails); // Populate the form with existing video details

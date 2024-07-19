@@ -6,7 +6,6 @@ function AddNewVideo() {
   const history = useHistory();
   const { idUser } = useParams();
   const { videoId } = useParams();
-  console.log(videoId);
   const [video, setVideo] = useState({
     title: "",
     videoDescription: "",
@@ -18,9 +17,10 @@ function AddNewVideo() {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:8080/users/${idUser}/videos/${videoId}`
+            `http://localhost:8080/api/users/${idUser}/videos/${videoId}`
           );
           setVideo(response.data); // This should trigger a re-render
+          console.log("hey" + response.data);
         } catch (error) {
           console.error("Failed to fetch video details:", error);
         }
@@ -36,13 +36,13 @@ function AddNewVideo() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let url = `http://localhost:8080/users/${idUser}/videos/addNewVideo`;
+    let url = `http://localhost:8080/api/users/${idUser}/videos/addNewVideo`;
     let method = "POST";
 
     const { user, ...videoData } = video;
 
     if (videoId) {
-      url = `http://localhost:8080/users/${idUser}/videos/update/${videoId}`;
+      url = `http://localhost:8080/api/users/${idUser}/videos/update/${videoId}`;
       method = "PUT";
     }
 
