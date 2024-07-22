@@ -22,6 +22,7 @@ export default function RandomVideoCard() {
       );
       const videoData = await response.json();
       setSelectedVideo(videoData);
+      console.log(videoData);
     } catch (error) {
       console.error("Failed to fetch video by token:", error);
     }
@@ -63,7 +64,7 @@ export default function RandomVideoCard() {
       {selectedVideo ? (
         <div>
           <div className="title">{selectedVideo.title}</div>
-          <div className="artist">* {selectedVideo.artist} *</div>
+          <div className="artist">* {selectedVideo.user.username} *</div>
           <YouTube endpoint={uniqueVideoUrl} opts={opts} />
           <div className="description">{selectedVideo.description}</div>
           <button

@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import Dragbtn from "../components/Dragbtn";
 import { useHistory } from "react-router-dom";
 import "../App.css";
-import { faUserAstronaut } from "@fortawesome/free-solid-svg-icons";
-import DragIcon from "../components/DragIcon";
 import LogInForm from "../components/LogInForm";
+import HeaderUserOn from "../components/HeaderUserOn";
+import HeaderUserOff from "../components/HeaderUserOff";
+import { AuthContext } from "../components/AuthContext";
 
 const LogIn = () => {
   const history = useHistory();
+  const { authToken } = useContext(AuthContext);
 
   function handleDoubleClick(path) {
     history.push(`/${path}`);
@@ -16,24 +18,13 @@ const LogIn = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <a href="/welcome" className="app-title ">
-          RANDOM RAINBOW
-        </a>
-        <div className="icons-group">
-          <Dragbtn
-            name="back to homepage"
-            onDoubleClick={() => handleDoubleClick("")}
-          />
-        </div>
-        <div className="icons-style">
-          <DragIcon icon={faUserAstronaut} />
-        </div>
+        {authToken && authToken !== "" ? <HeaderUserOn /> : <HeaderUserOff />}
         <LogInForm />
+        <Dragbtn
+          name="forgot my password"
+          onDoubleClick={() => handleDoubleClick("password-recovery")}
+        />
       </header>
-      <Dragbtn
-        name="forgot my password"
-        onDoubleClick={() => handleDoubleClick("password-recovery")}
-      />
     </div>
   );
 };

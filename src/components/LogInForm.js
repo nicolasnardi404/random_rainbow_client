@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import * as jose from "jose";
+import { AuthContext } from "./AuthContext";
 
 export default function LogInForm() {
   const history = useHistory();
+  const { setToken, setRole, setId, setUsername } = useContext(AuthContext); // Moved to the top level
 
   const [formData, setFormData] = useState({
     email: "",
@@ -45,20 +47,13 @@ export default function LogInForm() {
         console.log("Response Data:", responseData.token);
 
         if (responseData.token) {
-          // Decode the JWT token using jose
           const decodedToken = jose.decodeJwt(responseData.token);
-          console.log("Decoded Token:", decodedToken);
 
-          // Extract userId from the decoded token
-          const userId = decodedToken.userId;
-          console.log("User ID:", userId);
-          const username = decodedToken.sub;
+          setToken(responseData.token); // Now using the imported setToken
+          setRole(decodedToken.role); // Now using the imported setRole
+          setId(decodedToken.userId); // Now using the imported setId
+          setUsername(decodedToken.sub);
 
-          // Store the userId in local storage
-          localStorage.setItem("userId", userId);
-          localStorage.setItem("username", username);
-
-          // Assuming successful authentication, redirect or show success message
           history.push("/videos");
         } else {
           throw new Error("Token not received");

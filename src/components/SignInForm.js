@@ -47,6 +47,7 @@ export default function SignInForm() {
           body: JSON.stringify(formData),
         }
       );
+      console.log(response);
 
       if (!response.ok) {
         // Attempt to parse the response as JSON

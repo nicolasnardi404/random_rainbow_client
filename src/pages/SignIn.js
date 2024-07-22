@@ -1,13 +1,13 @@
-import React from 'react';
-import Dragbtn from '../components/Dragbtn';
-import { useHistory } from 'react-router-dom';
-import '../App.css';
-import { faUserAstronaut } from '@fortawesome/free-solid-svg-icons';
-import DragIcon from '../components/DragIcon';
-import SignInForm from '../components/SignInForm';
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
+import SignInForm from "../components/SignInForm";
+import HeaderUserOn from "../components/HeaderUserOn";
+import HeaderUserOff from "../components/HeaderUserOff";
+import { AuthContext } from "../components/AuthContext";
 
 const SignIn = () => {
   const history = useHistory();
+  const { authToken } = useContext(AuthContext);
 
   function handleDoubleClick(path) {
     history.push(`/${path}`);
@@ -16,13 +16,7 @@ const SignIn = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <a href='/welcome' className='app-title '>RANDOM RAINBOW</a> 
-        <div className='icons-group'>
-        <Dragbtn name='back to homepage' onDoubleClick={() => handleDoubleClick('')} />
-        </div>
-        <div className='icons-style'>
-            <DragIcon icon={faUserAstronaut}/> 
-        </div>  
+        {authToken && authToken !== "" ? <HeaderUserOn /> : <HeaderUserOff />}
         <SignInForm />
       </header>
     </div>

@@ -20,7 +20,6 @@ function AddNewVideo() {
             `http://localhost:8080/api/users/${idUser}/videos/${videoId}`
           );
           setVideo(response.data); // This should trigger a re-render
-          console.log("hey" + response.data);
         } catch (error) {
           console.error("Failed to fetch video details:", error);
         }
@@ -53,10 +52,8 @@ function AddNewVideo() {
         data: videoData,
       });
 
-      console.log(response);
-
       if (response.status === 200) {
-        history.push(`/users/${idUser}/videos`);
+        history.push(`/videos`);
       } else {
         console.error("Failed to save video:", response);
       }
@@ -88,14 +85,16 @@ function AddNewVideo() {
           placeholder="Description"
           row="5"
         />
-        <input
-          type="text"
-          name="videoLink"
-          value={video.videoLink}
-          onChange={handleChange}
-          className="form-control add-video-form"
-          placeholder="Video Link"
-        />
+        {!videoId && (
+          <input
+            type="text"
+            name="videoLink"
+            value={video.videoLink}
+            onChange={handleChange}
+            className="form-control add-video-form"
+            placeholder="Video Link"
+          />
+        )}
         <button type="submit" className="btn btn-info">
           Save
         </button>

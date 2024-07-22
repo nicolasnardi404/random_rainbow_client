@@ -1,19 +1,14 @@
-import React from "react";
-import Dragbtn from "../components/Dragbtn";
+import React, { useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import "../App.css";
-import { faPersonThroughWindow } from "@fortawesome/free-solid-svg-icons";
-import { faSmile } from "@fortawesome/free-solid-svg-icons";
-import DragIcon from "../components/DragIcon";
-import { useLocation } from "react-router-dom";
 import UpdateVideoAdmin from "../components/UpdateVideoAdmin";
+import HeaderUserOn from "../components/HeaderUserOn";
+import HeaderUserOff from "../components/HeaderUserOff";
+import { AuthContext } from "../components/AuthContext";
 
 export default function VideoUpdateAdmin() {
-  const username = localStorage.getItem("username");
   const history = useHistory();
-  const location = useLocation();
-  const { idUser, videoId } = useParams();
-  console.log(idUser, videoId);
+  const { authToken } = useContext(AuthContext);
 
   function handleDoubleClick(path) {
     history.push(`/${path}`);
@@ -22,33 +17,7 @@ export default function VideoUpdateAdmin() {
   return (
     <div className="App">
       <header className="App-header">
-        <div className="user-menu">
-          <div className="icons-style">
-            <DragIcon
-              text={username}
-              icon={faSmile}
-              onDoubleClick={() => handleDoubleClick("videos")}
-            />
-          </div>
-          <div className="icons-style">
-            <DragIcon
-              text="log-out"
-              icon={faPersonThroughWindow}
-              onDoubleClick={() => handleDoubleClick("sign-in")}
-            />
-          </div>
-        </div>
-        <h1 className="app-title">RANDOM RAINBOW</h1>
-        <div className="icons-group">
-          <Dragbtn
-            name="manifesto"
-            onDoubleClick={() => handleDoubleClick("manifesto")}
-          />
-          <Dragbtn
-            name="home"
-            onDoubleClick={() => handleDoubleClick("home/0")}
-          />
-        </div>
+        {authToken && authToken !== "" ? <HeaderUserOn /> : <HeaderUserOff />}
         <UpdateVideoAdmin />
       </header>
     </div>

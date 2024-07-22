@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import Dragbtn from "../components/Dragbtn";
+import HeaderUserOn from "../components/HeaderUserOn";
+import HeaderUserOff from "../components/HeaderUserOff";
+import { AuthContext } from "../components/AuthContext";
+import React, { useContext, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import "../App.css";
-import { faUserAstronaut } from "@fortawesome/free-solid-svg-icons";
-import DragIcon from "../components/DragIcon";
 
 export default function PasswordRecovery() {
+  const { authToken } = useContext(AuthContext);
+
   const history = useHistory();
   const { token } = useParams();
   const [formData, setFormData] = useState({
@@ -60,18 +62,7 @@ export default function PasswordRecovery() {
   return (
     <div className="App">
       <header className="App-header">
-        <a href="/welcome" className="app-title">
-          RANDOM RAINBOW
-        </a>
-        <div className="icons-group">
-          <Dragbtn
-            name="back to homepage"
-            onDoubleClick={() => history.push("/")}
-          />
-        </div>
-        <div className="icons-style">
-          <DragIcon icon={faUserAstronaut} />
-        </div>
+        {authToken && authToken !== "" ? <HeaderUserOn /> : <HeaderUserOff />}
         <form onSubmit={handleSubmit}>
           <label className="group-form">
             NEW PASSWORD:

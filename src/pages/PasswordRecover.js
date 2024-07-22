@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import Dragbtn from "../components/Dragbtn";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import "../App.css";
-import { faUserAstronaut } from "@fortawesome/free-solid-svg-icons";
-import DragIcon from "../components/DragIcon";
+import HeaderUserOn from "../components/HeaderUserOn";
+import HeaderUserOff from "../components/HeaderUserOff";
+import { AuthContext } from "../components/AuthContext";
 
 export default function PasswordRecovery() {
+  const { authToken } = useContext(AuthContext);
   const history = useHistory();
   const [formData, setFormData] = useState({ email: "" });
 
@@ -48,18 +49,7 @@ export default function PasswordRecovery() {
   return (
     <div className="App">
       <header className="App-header">
-        <a href="/welcome" className="app-title">
-          RANDOM RAINBOW
-        </a>
-        <div className="icons-group">
-          <Dragbtn
-            name="back to homepage"
-            onDoubleClick={() => handleDoubleClick("")}
-          />
-        </div>
-        <div className="icons-style">
-          <DragIcon icon={faUserAstronaut} />
-        </div>
+        {authToken && authToken !== "" ? <HeaderUserOn /> : <HeaderUserOff />}
         <form onSubmit={handleSubmit}>
           <label className="group-form">
             Email:

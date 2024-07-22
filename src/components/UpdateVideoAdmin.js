@@ -39,7 +39,6 @@ function UpdateVideoAdmin() {
 
     let url = `http://localhost:8080/api/admin/videos/${videoId}`;
     let method = "PUT";
-    console.log(video);
 
     try {
       const response = await axios({

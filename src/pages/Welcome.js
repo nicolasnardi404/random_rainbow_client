@@ -23,20 +23,6 @@ const Welcome = () => {
             name="manifesto"
             onDoubleClick={() => handleDoubleClick("manifesto")}
           />
-          <div className="icons-style">
-            <DragIcon
-              text="log in"
-              icon={faUserAstronaut}
-              onDoubleClick={() => handleDoubleClick("log-in")}
-            />
-          </div>
-          <div className="icons-style">
-            <DragIcon
-              text="sign in"
-              icon={faUsers}
-              onDoubleClick={() => handleDoubleClick("sign-in")}
-            />
-          </div>
           <Dragbtn
             name="home"
             onDoubleClick={() => handleDoubleClick("home/0")}
