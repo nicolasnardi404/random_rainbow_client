@@ -37,25 +37,32 @@ const VideoList = () => {
     }
   };
 
-  const handleToggleApprove = async (videoId, approved) => {
+  const handleToggleApprove = async (video) => {
     const confirmToggle = window.confirm(
-      `Are you sure you want to ${approved ? "disapprove" : "approve"} this video?`
+      `Are you sure you want to ${video.videoStatus === "AVAILABLE" ? "cancel" : "approve"} this video?`
     );
     if (!confirmToggle) {
       return;
     }
 
     try {
-      await axios.put(
-        `http://localhost:8080/api/admin/videos/${videoId}/toggle-approve`
-      );
+      // Determine the URL based on the current videoStatus
+      const url =
+        video.videoStatus === "AVAILABLE"
+          ? `http://localhost:8080/api/admin/videos/${video.id}/toggle-cancel`
+          : `http://localhost:8080/api/admin/videos/${video.id}/toggle-approve`;
+
+      await axios.put(url);
       fetchVideos(
         showAllVideos
           ? "http://localhost:8080/api/admin/allvideos"
           : "http://localhost:8080/api/admin/review"
       );
     } catch (error) {
-      console.error("Failed to toggle approval status of video:", error);
+      console.error(
+        "Failed to toggle approval/cancellation status of video:",
+        error
+      );
     }
   };
 
@@ -84,7 +91,6 @@ const VideoList = () => {
             <th>User</th>
             <th>Title</th>
             <th>Link</th>
-            <th>Checked</th>
             <th>Approved</th>
             <th>Actions</th>
           </tr>
@@ -103,13 +109,18 @@ const VideoList = () => {
                   video url
                 </a>
               </td>
-              <td>{video.checked ? "Yes" : "No"}</td>
-              <td>{video.approved ? "Yes" : "No"}</td>
               <td>
-                <button
-                  onClick={() => handleToggleApprove(video.id, video.approved)}
-                >
-                  {video.approved ? "Disapprove" : "Approve"}
+                {video.videoStatus === "AVAILABLE" ? (
+                  <a>Available</a>
+                ) : video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ? (
+                  <span>Not Respecting Guidelines</span>
+                ) : (
+                  <span>Unchecked</span>
+                )}
+              </td>
+              <td>
+                <button onClick={() => handleToggleApprove(video)}>
+                  {video.videoStatus === "AVAILABLE" ? "Disapprove" : "Approve"}
                 </button>
                 <button onClick={() => handleDelete(video.id)}>Delete</button>
                 <button onClick={() => handleUpdate(video.id)}>Update</button>

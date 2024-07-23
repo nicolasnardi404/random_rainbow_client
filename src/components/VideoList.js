@@ -10,6 +10,7 @@ const VideoList = () => {
   const [editingVideo, setEditingVideo] = useState({});
   const [canAddVideo, setCanAddVideo] = useState(true);
   const userId = localStorage.getItem("idUser");
+  console.log(userId);
 
   const fetchVideos = async () => {
     try {
@@ -17,7 +18,6 @@ const VideoList = () => {
         `http://localhost:8080/api/users/${userId}/videos`
       );
       const userVideos = response.data;
-      console.log("videos" + response.data);
       setVideos(userVideos);
       setCanAddVideo(userVideos.length < 3); // Check if user has less than 3 videos
       console.log(userVideos);
@@ -40,7 +40,6 @@ const VideoList = () => {
       await axios.delete(
         `http://localhost:8080/api/users/${userId}/videos/delete/${videoId}`
       );
-      // Refresh the list of videos after deletion
       fetchVideos();
     } catch (error) {
       console.error("Failed to delete video:", error);
@@ -49,14 +48,14 @@ const VideoList = () => {
 
   useEffect(() => {
     if (userId) {
-      fetchVideos(); // Call fetchVideos on component mount if userId exists
+      fetchVideos();
     }
-  }, [userId]); // Re-fetch videos whenever the userId changes
+  }, [userId]);
 
   function handleClick(e) {
     e.preventDefault();
     if (canAddVideo) {
-      history.push(`/${userId}/add-new-video`); // Include the userId in the navigation
+      history.push(`/${userId}/add-new-video`);
     }
   }
 
@@ -65,9 +64,9 @@ const VideoList = () => {
       const response = await axios.get(
         `http://localhost:8080/api/users/${userId}/videos/${videoId}`
       );
-      const videoDetails = response.data; // Assuming the response contains the video details
-      setEditingVideo(videoDetails); // Populate the form with existing video details
-      history.push(`/${userId}/update/${videoId}`); // Navigate to the update page
+      const videoDetails = response.data;
+      setEditingVideo(videoDetails);
+      history.push(`/${userId}/update/${videoId}`);
       console.log(videoDetails);
     } catch (error) {
       console.error("Failed to fetch video details:", error);
@@ -80,9 +79,7 @@ const VideoList = () => {
         <thead>
           <tr>
             <th>Title</th>
-            <th>Link</th>
-            <th>Checked</th>
-            <th>Approved</th>
+            <th>Video Status</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -91,18 +88,16 @@ const VideoList = () => {
             <tr key={video.id}>
               <td>{video.title}</td>
               <td>
-                <a
-                  href={
-                    video.approved
-                      ? `http://localhost:3000/home/${video.endpoint}`
-                      : undefined
-                  }
-                >
-                  video url
-                </a>
+                {video.videoStatus === "AVAILABLE" ? (
+                  <a href={`http://localhost:3000/home/${video.endpoint}`}>
+                    View Video
+                  </a>
+                ) : video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ? (
+                  <span>Not Respecting Guidelines</span>
+                ) : (
+                  <span>Unchecked</span>
+                )}
               </td>
-              <td>{video.checked ? "Yes" : "No"}</td>
-              <td>{video.approved ? "Yes" : "No"}</td>
               <td>
                 <button
                   className="default-btn update-btn"
