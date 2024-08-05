@@ -47,20 +47,41 @@ const VideoList = () => {
 
     try {
       // Determine the URL based on the current videoStatus
-      const url =
+      const approveUrl =
         video.videoStatus === "AVAILABLE"
-          ? `http://localhost:8080/api/admin/videos/${video.id}/toggle-cancel`
-          : `http://localhost:8080/api/admin/videos/${video.id}/toggle-approve`;
+          ? `http://localhost:8080/api/admin/videos/${video.id}/toggle-approve`
+          : `http://localhost:8080/api/admin/videos/${video.id}/toggle-cancel`;
 
-      await axios.put(url);
-      fetchVideos(
-        showAllVideos
-          ? "http://localhost:8080/api/admin/allvideos"
-          : "http://localhost:8080/api/admin/review"
+      await axios.put(approveUrl);
+
+      // Assuming you have a way to get the new duration from the admin
+      const newDuration = prompt(
+        "Please enter the new duration for the video:"
       );
+
+      if (newDuration !== null && newDuration.trim() !== "") {
+        // Send the duration to the server
+        await axios.put(
+          `http://localhost:8080/api/admin/videos/duration/${video.id}`,
+          {
+            duration: parseInt(newDuration),
+          }
+        );
+
+        await axios.put(
+          `http://localhost:8080/api/admin/videos/${video.id}/toggle-approve`
+        );
+
+        // Refresh the list of videos
+        fetchVideos(
+          showAllVideos
+            ? "http://localhost:8080/api/admin/allvideos"
+            : "http://localhost:8080/api/admin/review"
+        );
+      }
     } catch (error) {
       console.error(
-        "Failed to toggle approval/cancellation status of video:",
+        "Failed to toggle approval/cancellation status of video or set duration:",
         error
       );
     }

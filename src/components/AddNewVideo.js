@@ -84,6 +84,7 @@ function AddNewVideo() {
           onChange={handleChange}
           className="form-control add-video-form"
           placeholder="Title"
+          required
         />
         <textarea
           type="text"
@@ -93,6 +94,7 @@ function AddNewVideo() {
           className="form-control add-video-form"
           placeholder="Description"
           row="5"
+          required
         />
         {!videoId && (
           <input
@@ -102,6 +104,7 @@ function AddNewVideo() {
             onChange={handleChange}
             className="form-control add-video-form"
             placeholder="Video Link"
+            required
           />
         )}
         <button type="submit" className="btn btn-info">

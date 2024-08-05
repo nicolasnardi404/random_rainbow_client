@@ -55,6 +55,7 @@ export default function SignInForm() {
         if (errorData && errorData.errorMessage) {
           // Use errorData.errorMessage instead of errorData.message
           setError(errorData.errorMessage);
+          console.log(errorData.errorMessage);
         } else {
           // Fallback to a generic error message if the expected structure is not found
           setError("An unexpected error occurred. Please try again later.");
