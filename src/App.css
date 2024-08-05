@@ -177,6 +177,10 @@ Red: #E42525
   margin: 1em;
 }
 
+.artist:hover {
+  color: #8447ff;
+}
+
 .description {
   margin: 2em 10em;
   background: #f8e777;
@@ -250,14 +254,16 @@ Red: #E42525
 
 /* Add new video */
 
-.add-video-style {
+.add-video-style,
+.edit-profile-style {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.add-video-form {
+.add-video-form,
+.edit-profile-form {
   margin: 2em;
 }
 

@@ -5,7 +5,7 @@ import { AuthContext } from "./AuthContext";
 
 export default function LogInForm() {
   const history = useHistory();
-  const { setToken, setRole, setId, setUsername } = useContext(AuthContext); // Moved to the top level
+  const { setToken, setRole, setId, setUsername } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -37,22 +37,21 @@ export default function LogInForm() {
         }
       );
 
-      console.log("Response:", response);
-
       if (
         response.ok &&
         response.headers.get("content-type")?.includes("application/json")
       ) {
         const responseData = await response.json();
-        console.log("Response Data:", responseData.token);
 
         if (responseData.token) {
           const decodedToken = jose.decodeJwt(responseData.token);
 
-          setToken(responseData.token); // Now using the imported setToken
-          setRole(decodedToken.role); // Now using the imported setRole
-          setId(decodedToken.userId); // Now using the imported setId
+          setToken(responseData.token);
+          setRole(decodedToken.role);
+          setId(decodedToken.userId);
           setUsername(decodedToken.sub);
+
+          console.log(decodedToken);
 
           history.push("/videos");
         } else {

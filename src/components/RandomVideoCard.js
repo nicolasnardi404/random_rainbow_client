@@ -42,6 +42,7 @@ export default function RandomVideoCard() {
       console.error("Failed to fetch random video:", error);
     }
   };
+
   const opts = {
     height: "390",
     width: "640",
@@ -64,7 +65,14 @@ export default function RandomVideoCard() {
       {selectedVideo ? (
         <div>
           <div className="title">{selectedVideo.title}</div>
-          <div className="artist">* {selectedVideo.user.username} *</div>
+          <div
+            className="artist"
+            onClick={() =>
+              history.push(`/profile/${selectedVideo.user.username}`)
+            }
+          >
+            * {selectedVideo.user.username} *
+          </div>
           <YouTube endpoint={uniqueVideoUrl} opts={opts} />
           <div className="description">{selectedVideo.description}</div>
           <button

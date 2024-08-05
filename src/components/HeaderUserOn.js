@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom";
 import { useHistory } from "react-router-dom";
 
 export default function HeaderUserOn() {
-  const username = localStorage.getItem("sub");
+  const username = localStorage.getItem("username");
   console.log(localStorage);
 
   const history = useHistory();
@@ -51,6 +51,10 @@ export default function HeaderUserOn() {
         <Dragbtn
           name="home"
           onDoubleClick={() => handleDoubleClick("home/0")}
+        />
+        <Dragbtn
+          name="edit profile"
+          onDoubleClick={() => handleDoubleClick("profile")}
         />
       </div>
     </div>

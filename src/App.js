@@ -18,9 +18,12 @@ import PasswordRecovery from "./pages/PasswordRecover";
 import CreateNewPassord from "./pages/CreateNewPassword";
 import AdminController from "./pages/AdminController";
 import VideoUpdateAdmin from "./pages/VideoUpdateAdmin";
+import ProfileUser from "./pages/ProfileUser";
+import ArtistProfile from "./pages/ArtistProfile";
 import { ProvideAuth } from "./components/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
+import EmailVerified from "./pages/EmailVerified";
 
 function App() {
   return (
@@ -39,7 +42,8 @@ function App() {
             path="/email-verification-sent"
             component={EmailVerificationSent}
           />
-          {/* <Route path="/videos" component={UserInterface} /> */}
+          <Route path="/profile/:username" component={ArtistProfile} />
+          <Route path="/email-verified/:token" component={EmailVerified} />
           <ProtectedRoute
             path="/:idUser/add-new-video"
             element={<NewVideo />}
@@ -53,6 +57,7 @@ function App() {
             path="/users/:idUser/videos"
             element={UserInterface}
           />
+          <ProtectedRoute path="/profile" element={<ProfileUser />} />
           <Route path="/password-recovery" component={<PasswordRecovery />} />
           <Route path="/new-password/:token" component={<CreateNewPassord />} />
           <ProtectedAdminRoute

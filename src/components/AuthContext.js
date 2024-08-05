@@ -20,7 +20,7 @@ export const ProvideAuth = ({ children }) => {
 
   const setUsername = (sub) => {
     setUser(sub);
-    localStorage.setItem("username", username);
+    localStorage.setItem("username", sub);
   };
 
   const setRole = (newRole) => {
