@@ -26,11 +26,13 @@ const VideoList = () => {
     }
 
     try {
-      await axios.delete(`http://localhost:8080/api/admin/videos/${videoId}`);
+      await axios.delete(
+        `https://random-rainbow-database.onrender.com/api/admin/videos/${videoId}`
+      );
       fetchVideos(
         showAllVideos
-          ? "http://localhost:8080/api/admin/allvideos"
-          : "http://localhost:8080/api/admin/review"
+          ? "https://random-rainbow-database.onrender.com/api/admin/allvideos"
+          : "https://random-rainbow-database.onrender.com/api/admin/review"
       );
     } catch (error) {
       console.error("Failed to delete video:", error);
@@ -49,8 +51,8 @@ const VideoList = () => {
       // Determine the URL based on the current videoStatus
       const approveUrl =
         video.videoStatus === "AVAILABLE"
-          ? `http://localhost:8080/api/admin/videos/${video.id}/toggle-approve`
-          : `http://localhost:8080/api/admin/videos/${video.id}/toggle-cancel`;
+          ? `https://random-rainbow-database.onrender.com/api/admin/videos/${video.id}/toggle-approve`
+          : `https://random-rainbow-database.onrender.com/api/admin/videos/${video.id}/toggle-cancel`;
 
       await axios.put(approveUrl);
 
@@ -62,21 +64,21 @@ const VideoList = () => {
       if (newDuration !== null && newDuration.trim() !== "") {
         // Send the duration to the server
         await axios.put(
-          `http://localhost:8080/api/admin/videos/duration/${video.id}`,
+          `https://random-rainbow-database.onrender.com/api/admin/videos/duration/${video.id}`,
           {
             duration: parseInt(newDuration),
           }
         );
 
         await axios.put(
-          `http://localhost:8080/api/admin/videos/${video.id}/toggle-approve`
+          `https://random-rainbow-database.onrender.com/api/admin/videos/${video.id}/toggle-approve`
         );
 
         // Refresh the list of videos
         fetchVideos(
           showAllVideos
-            ? "http://localhost:8080/api/admin/allvideos"
-            : "http://localhost:8080/api/admin/review"
+            ? "https://random-rainbow-database.onrender.com/api/admin/allvideos"
+            : "https://random-rainbow-database.onrender.com/api/admin/review"
         );
       }
     } catch (error) {
@@ -94,8 +96,8 @@ const VideoList = () => {
   useEffect(() => {
     fetchVideos(
       showAllVideos
-        ? "http://localhost:8080/api/admin/allvideos"
-        : "http://localhost:8080/api/admin/review"
+        ? "https://random-rainbow-database.onrender.com/api/admin/allvideos"
+        : "https://random-rainbow-database.onrender.com/api/admin/review"
     );
   }, [showAllVideos]);
 
@@ -123,7 +125,7 @@ const VideoList = () => {
               <td>{video.title}</td>
               <td>
                 <a
-                  href={`http://localhost:3000/home/${video.endpoint}`}
+                  href={`https://random-rainbow-database.onrender.com/home/${video.endpoint}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

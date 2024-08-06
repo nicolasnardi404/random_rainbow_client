@@ -13,7 +13,7 @@ const ProfileView = () => {
   const fetchProfileData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/randomvideo/videosbyartist/${userId}`
+        `https://random-rainbow-database.onrender.com/api/randomvideo/videosbyartist/${userId}`
       );
       const { dataUserProfile, username, listVideos } = response.data;
       setProfileData({ dataUserProfile, username });
@@ -74,7 +74,9 @@ const ProfileView = () => {
                 <td>{video.title}</td>
                 <td>
                   {video.videoStatus === "AVAILABLE" ? (
-                    <a href={`http://localhost:3000/home/${video.endpoint}`}>
+                    <a
+                      href={`http://www.randomrainbow.art/home/${video.endpoint}`}
+                    >
                       View Video
                     </a>
                   ) : (

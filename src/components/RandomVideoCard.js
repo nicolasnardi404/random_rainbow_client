@@ -18,7 +18,7 @@ export default function RandomVideoCard() {
   const fetchVideoByToken = async (token) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/randomvideo/video/${token}`
+        `https://random-rainbow-database.onrender.com/api/randomvideo/video/${token}`
       );
       const videoData = await response.json();
       setSelectedVideo(videoData);
@@ -31,7 +31,7 @@ export default function RandomVideoCard() {
   const selectRandomVideo = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/randomvideo/${durationOption}`
+        `https://random-rainbow-database.onrender.com/api/randomvideo/${durationOption}`
       );
       const videoData = await response.json();
       setSelectedVideo(videoData);

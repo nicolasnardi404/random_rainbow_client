@@ -11,7 +11,9 @@ const EmailVerified = () => {
   const { token } = useParams();
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/verify?token=${token}`)
+    fetch(
+      `https://random-rainbow-database.onrender.com/api/verify?token=${token}`
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data.url) {

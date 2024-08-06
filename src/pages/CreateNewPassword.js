@@ -36,7 +36,7 @@ export default function PasswordRecovery() {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/v1/auth/new-password/${token}`,
+        `https://random-rainbow-database.onrender.com/api/v1/auth/new-password/${token}`,
         {
           method: "POST",
           headers: {

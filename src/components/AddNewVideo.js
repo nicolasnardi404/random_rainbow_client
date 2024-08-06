@@ -17,7 +17,7 @@ function AddNewVideo() {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:8080/api/users/${idUser}/videos/${videoId}`
+            `https://random-rainbow-database.onrender.com/api/users/${idUser}/videos/${videoId}`
           );
           const videos = response.data;
           setVideo(videos); // This should trigger a re-render
@@ -43,11 +43,11 @@ function AddNewVideo() {
       videoLink: video.videoLink,
     };
 
-    let url = `http://localhost:8080/api/users/${idUser}/videos/addNewVideo`;
+    let url = `https://random-rainbow-database.onrender.com/api/users/${idUser}/videos/addNewVideo`;
     let method = "POST";
 
     if (videoId) {
-      url = `http://localhost:8080/api/users/${idUser}/videos/update/${videoId}`;
+      url = `https://random-rainbow-database.onrender.com/api/users/${idUser}/videos/update/${videoId}`;
       method = "PUT";
     }
 

@@ -15,7 +15,7 @@ function ProfileEdit() {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:8080/api/users/profile/${idUser}`
+            `https://random-rainbow-database.onrender.com/api/users/profile/${idUser}`
           );
           const userProfile = response.data;
           setProfile(userProfile);
@@ -37,7 +37,7 @@ function ProfileEdit() {
       socialMedia: profile.socialMedia,
     };
 
-    const url = `http://localhost:8080/api/users/profile/${idUser}`;
+    const url = `https://random-rainbow-database.onrender.com/api/users/profile/${idUser}`;
     const method = "PUT";
 
     try {

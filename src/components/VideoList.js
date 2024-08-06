@@ -15,7 +15,7 @@ const VideoList = () => {
   const fetchVideos = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/users/${userId}/videos`
+        `https://random-rainbow-database.onrender.com/api/users/${userId}/videos`
       );
       const userVideos = response.data;
       setVideos(userVideos);
@@ -38,7 +38,7 @@ const VideoList = () => {
 
     try {
       await axios.delete(
-        `http://localhost:8080/api/users/${userId}/videos/delete/${videoId}`
+        `https://random-rainbow-database.onrender.com/api/users/${userId}/videos/delete/${videoId}`
       );
       fetchVideos();
     } catch (error) {
@@ -62,7 +62,7 @@ const VideoList = () => {
   async function handleUpdate(videoId) {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/users/${userId}/videos/${videoId}`
+        `https://random-rainbow-database.onrender.com/api/users/${userId}/videos/${videoId}`
       );
       const videoDetails = response.data;
       setEditingVideo(videoDetails);
@@ -89,7 +89,9 @@ const VideoList = () => {
               <td>{video.title}</td>
               <td>
                 {video.videoStatus === "AVAILABLE" ? (
-                  <a href={`http://localhost:3000/home/${video.endpoint}`}>
+                  <a
+                    href={`http://www.randomrainbow.art/home/${video.endpoint}`}
+                  >
                     View Video
                   </a>
                 ) : video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ? (
