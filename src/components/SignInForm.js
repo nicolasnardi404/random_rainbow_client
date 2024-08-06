@@ -9,17 +9,21 @@ export default function SignInForm() {
     lastname: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
+  const [confirmPassword, setConfirmPassword] = useState(""); // New state for confirmPassword
   const [error, setError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    if (name === "confirmPassword") {
+      setConfirmPassword(value); // Update confirmPassword state specifically
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
 
     if (name === "confirmPassword" && value !== formData.password) {
       setPasswordError("Passwords do not match.");
@@ -31,11 +35,12 @@ export default function SignInForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
+    // Perform password confirmation check here
+    if (formData.password !== confirmPassword) {
       setPasswordError("Passwords do not match.");
       return;
     }
-
+    console.log(JSON.stringify(formData)); // Now formData does not include confirmPassword
     try {
       const response = await fetch(
         "https://random-rainbow-database.onrender.com/api/v1/auth/register",
@@ -44,7 +49,7 @@ export default function SignInForm() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(formData), // formData does not include confirmPassword
         }
       );
       console.log(response);
@@ -97,8 +102,7 @@ export default function SignInForm() {
           className="input-form"
           type="password"
           name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
+          onChange={handleChange} // Removed value prop since it's managed separately
           required
         />
         <br />
