@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "./AuthContext";
 
 function AddNewVideo() {
   const history = useHistory();
-  const idUser = localStorage.getItem("idUser");
+  const { authToken, idUser } = useContext(AuthContext);
+  console.log(authToken);
   const { videoId } = useParams();
   const [video, setVideo] = useState({
     title: "",
@@ -12,12 +14,19 @@ function AddNewVideo() {
     videoLink: "",
   });
 
+  const headers = {
+    Authorization: `Bearer ${authToken}`,
+  };
+
   useEffect(() => {
     if (videoId) {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:8080/api/users/${idUser}/videos/${videoId}`
+            `http://localhost:8080/api/users/${idUser}/videos/${videoId}`,
+            {
+              headers: headers,
+            }
           );
           const videos = response.data;
           setVideo(videos); // This should trigger a re-render
@@ -56,9 +65,7 @@ function AddNewVideo() {
         method: method,
         url: url,
         data: payload,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: headers,
       });
 
       if (response.status === 200) {

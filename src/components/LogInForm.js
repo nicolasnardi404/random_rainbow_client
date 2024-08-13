@@ -37,33 +37,39 @@ export default function LogInForm() {
         }
       );
 
-      if (
-        response.ok &&
-        response.headers.get("content-type")?.includes("application/json")
-      ) {
-        const responseData = await response.json();
+      if (response.ok) {
+        const contentType = response.headers.get("content-type");
 
-        if (responseData.token) {
-          const decodedToken = jose.decodeJwt(responseData.token);
+        if (contentType && contentType.includes("application/json")) {
+          const responseData = await response.json();
 
-          setToken(responseData.token);
-          setRole(decodedToken.role);
-          setId(decodedToken.userId);
-          setUsername(decodedToken.sub);
+          if (responseData.token) {
+            try {
+              const decodedToken = jose.decodeJwt(responseData.token);
+              console.log(decodedToken);
 
-          console.log(decodedToken);
+              // Save the token and user data in context
+              setToken(responseData.token);
+              setRole(decodedToken.role);
+              setId(decodedToken.userId);
+              setUsername(decodedToken.sub);
 
-          history.push("/videos");
+              // Redirect to another page
+              history.push("/videos");
+            } catch (err) {
+              // Handle decoding errors
+              setError("Invalid token format");
+            }
+          } else {
+            throw new Error("Token not received");
+          }
         } else {
-          throw new Error("Token not received");
+          throw new Error(`Expected JSON but got ${contentType}`);
         }
       } else {
-        const contentType = response.headers.get("content-type");
-        let errorMessage = "Server error";
-        if (contentType && !contentType.includes("application/json")) {
-          errorMessage += `, expected JSON but got ${contentType}`;
-        }
-        setError(errorMessage);
+        // Handle HTTP errors
+        const errorMessage = await response.text();
+        setError(`Server error: ${errorMessage}`);
       }
     } catch (error) {
       console.error("Error on log in:", error);
@@ -77,13 +83,13 @@ export default function LogInForm() {
         Email:
         <input
           className="input-form"
-          type="text"
+          type="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
           required
         />
-        <br></br>
+        <br />
         Password:
         <input
           className="input-form"
@@ -94,7 +100,7 @@ export default function LogInForm() {
           required
         />
       </label>
-      <br></br>
+      <br />
       <input type="submit" value="LOG IN" />
       {error && <p>{error}</p>}
     </form>

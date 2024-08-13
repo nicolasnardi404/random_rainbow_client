@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { useContext } from "react";
 import { AuthContext } from "./AuthContext";
 
 const VideoList = () => {
@@ -9,25 +8,34 @@ const VideoList = () => {
   const [videos, setVideos] = useState([]);
   const [editingVideo, setEditingVideo] = useState({});
   const [canAddVideo, setCanAddVideo] = useState(true);
-  const userId = localStorage.getItem("idUser");
-  console.log(userId);
+
+  const { authToken, idUser } = useContext(AuthContext);
+  const headers = {
+    Authorization: `Bearer ${authToken}`,
+    "Content-Type": "application/json",
+  };
+
+  console.log(headers);
+  console.log("context :" + idUser);
 
   const fetchVideos = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/users/${userId}/videos`
+        `http://localhost:8080/api/users/${idUser}/videos`,
+        {
+          headers: headers,
+        }
       );
       const userVideos = response.data;
       setVideos(userVideos);
-      setCanAddVideo(userVideos.length < 3); // Check if user has less than 3 videos
-      console.log(userVideos);
+      setCanAddVideo(userVideos.length < 3);
     } catch (error) {
       console.error("Failed to fetch videos:", error);
     }
   };
 
+  // Handle video deletion
   async function handleDelete(videoId) {
-    // Ask for confirmation
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this video?"
     );
@@ -38,7 +46,10 @@ const VideoList = () => {
 
     try {
       await axios.delete(
-        `http://localhost:8080/api/users/${userId}/videos/delete/${videoId}`
+        `http://localhost:8080/api/users/${idUser}/videos/delete/${videoId}`,
+        {
+          headers: headers,
+        }
       );
       fetchVideos();
     } catch (error) {
@@ -46,30 +57,35 @@ const VideoList = () => {
     }
   }
 
-  useEffect(() => {
-    if (userId) {
-      fetchVideos();
-    }
-  }, [userId]);
-
-  function handleClick(e) {
-    e.preventDefault();
-    if (canAddVideo) {
-      history.push(`/${userId}/add-new-video`);
-    }
-  }
-
+  // Handle video update
   async function handleUpdate(videoId) {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/users/${userId}/videos/${videoId}`
+        `http://localhost:8080/api/users/${idUser}/videos/${videoId}`,
+        {
+          headers: headers,
+        }
       );
       const videoDetails = response.data;
       setEditingVideo(videoDetails);
-      history.push(`/${userId}/update/${videoId}`);
-      console.log(videoDetails);
+      history.push(`/${idUser}/update/${videoId}`);
     } catch (error) {
       console.error("Failed to fetch video details:", error);
+    }
+  }
+
+  // Fetch videos when the component mounts
+  useEffect(() => {
+    if (idUser) {
+      fetchVideos();
+    }
+  }, [idUser]);
+
+  // Handle adding a new video
+  function handleClick(e) {
+    e.preventDefault();
+    if (canAddVideo) {
+      history.push(`/${idUser}/add-new-video`);
     }
   }
 

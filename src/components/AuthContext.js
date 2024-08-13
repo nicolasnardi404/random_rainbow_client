@@ -1,17 +1,20 @@
-// AuthContext.js
 import React, { createContext, useState } from "react";
 
 export const AuthContext = createContext();
 
 export const ProvideAuth = ({ children }) => {
   const [authToken, setAuthToken] = useState(
-    localStorage.getItem("authToken") || ""
+    () => localStorage.getItem("authToken") || ""
   );
-  const [role, setRoleState] = useState(localStorage.getItem("role") || "");
-
-  const [idUser, setIdUser] = useState(localStorage.getItem("idUser") || "");
-
-  const [username, setUser] = useState(localStorage.getItem("sub") || "");
+  const [role, setRoleState] = useState(
+    () => localStorage.getItem("role") || ""
+  );
+  const [idUser, setIdUser] = useState(
+    () => localStorage.getItem("idUser") || ""
+  );
+  const [username, setUser] = useState(
+    () => localStorage.getItem("username") || ""
+  );
 
   const setToken = (token) => {
     setAuthToken(token);
