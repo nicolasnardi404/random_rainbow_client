@@ -2,11 +2,17 @@ import React, { useState, useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
+import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded";
 
 function AddNewVideo() {
   const history = useHistory();
-  const { authToken, idUser } = useContext(AuthContext);
-  console.log(authToken);
+  const {
+    accessToken,
+    refreshToken,
+    idUser,
+    setAccessTokenLocal,
+    setRefreshTokenLocal,
+  } = useContext(AuthContext);
   const { videoId } = useParams();
   const [video, setVideo] = useState({
     title: "",
@@ -15,17 +21,29 @@ function AddNewVideo() {
   });
 
   const headers = {
-    Authorization: `Bearer ${authToken}`,
+    Authorization: `Bearer ${accessToken}`,
+  };
+
+  const getUpdatedToken = async () => {
+    return await refreshTokenIfNeeded({
+      accessToken,
+      refreshToken,
+      setAccessTokenLocal,
+      setRefreshTokenLocal,
+    });
   };
 
   useEffect(() => {
     if (videoId) {
       const fetchData = async () => {
         try {
+          const token = await getUpdatedToken();
           const response = await axios.get(
             `http://localhost:8080/api/users/${idUser}/videos/${videoId}`,
             {
-              headers: headers,
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             }
           );
           const videos = response.data;
@@ -61,11 +79,14 @@ function AddNewVideo() {
     }
 
     try {
+      const token = await getUpdatedToken();
       const response = await axios({
         method: method,
         url: url,
         data: payload,
-        headers: headers,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (response.status === 200) {

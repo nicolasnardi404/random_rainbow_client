@@ -6,7 +6,7 @@ import HeaderUserOff from "../components/HeaderUserOff";
 import { AuthContext } from "../components/AuthContext";
 
 const EmailVerified = () => {
-  const { authToken } = useContext(AuthContext);
+  const { accessToken } = useContext(AuthContext);
   const history = useHistory();
   const { token } = useParams();
 
@@ -28,7 +28,11 @@ const EmailVerified = () => {
   return (
     <div className="App">
       <header className="App-header">
-        {authToken && authToken !== "" ? <HeaderUserOn /> : <HeaderUserOff />}
+        {accessToken && accessToken !== "" ? (
+          <HeaderUserOn />
+        ) : (
+          <HeaderUserOff />
+        )}
         <div className="email-confirmation">
           <h2 className="email-confirmation-child">
             WELCOME TO RANDOM RAINBOW

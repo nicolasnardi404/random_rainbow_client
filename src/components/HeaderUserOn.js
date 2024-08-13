@@ -1,26 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import { faPersonThroughWindow } from "@fortawesome/free-solid-svg-icons";
 import { faSmile } from "@fortawesome/free-solid-svg-icons";
 import DragIcon from "../components/DragIcon";
 import Dragbtn from "../components/Dragbtn";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
 import { useHistory } from "react-router-dom";
+import { AuthContext } from "./AuthContext";
 
 export default function HeaderUserOn() {
-  const username = localStorage.getItem("username");
-  console.log(localStorage);
+  const { username, idUser } = useContext(AuthContext);
 
   const history = useHistory();
-  const { idUser } = useParams();
 
   function handleDoubleClick(path) {
     history.push(`/${path}`);
   }
 
   function handleLogout() {
-    localStorage.removeItem("authToken");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
     localStorage.removeItem("username");
     localStorage.removeItem("userId");
+    localStorage.removeItem("role");
     history.push("/welcome");
   }
 

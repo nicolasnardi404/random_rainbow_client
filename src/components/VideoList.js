@@ -1,29 +1,49 @@
+// src/components/VideoList.js
+
 import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "../components/AuthContext"; // Adjust the import path as needed
+import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded"; // Adjust the import path as needed
 
 const VideoList = () => {
   const history = useHistory();
   const [videos, setVideos] = useState([]);
   const [editingVideo, setEditingVideo] = useState({});
   const [canAddVideo, setCanAddVideo] = useState(true);
+  const {
+    accessToken,
+    refreshToken,
+    idUser,
+    setAccessTokenLocal,
+    setRefreshTokenLocal,
+  } = useContext(AuthContext);
 
-  const { authToken, idUser } = useContext(AuthContext);
   const headers = {
-    Authorization: `Bearer ${authToken}`,
+    Authorization: `Bearer ${accessToken}`,
     "Content-Type": "application/json",
   };
 
-  console.log(headers);
-  console.log("context :" + idUser);
+  const getUpdatedToken = async () => {
+    return await refreshTokenIfNeeded({
+      accessToken,
+      refreshToken,
+      setAccessTokenLocal,
+      setRefreshTokenLocal,
+    });
+  };
 
-  const fetchVideos = async () => {
+  async function fetchVideos() {
     try {
+      const token = await getUpdatedToken();
+
       const response = await axios.get(
         `http://localhost:8080/api/users/${idUser}/videos`,
         {
-          headers: headers,
+          headers: {
+            headers,
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       const userVideos = response.data;
@@ -32,9 +52,8 @@ const VideoList = () => {
     } catch (error) {
       console.error("Failed to fetch videos:", error);
     }
-  };
+  }
 
-  // Handle video deletion
   async function handleDelete(videoId) {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this video?"
@@ -45,10 +64,20 @@ const VideoList = () => {
     }
 
     try {
+      const token = await refreshTokenIfNeeded({
+        accessToken,
+        refreshToken,
+        setAccessTokenLocal,
+        setRefreshTokenLocal,
+      });
+
       await axios.delete(
         `http://localhost:8080/api/users/${idUser}/videos/delete/${videoId}`,
         {
-          headers: headers,
+          headers: {
+            headers,
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       fetchVideos();
@@ -57,13 +86,17 @@ const VideoList = () => {
     }
   }
 
-  // Handle video update
   async function handleUpdate(videoId) {
     try {
+      const token = await getUpdatedToken();
+
       const response = await axios.get(
         `http://localhost:8080/api/users/${idUser}/videos/${videoId}`,
         {
-          headers: headers,
+          headers: {
+            headers,
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       const videoDetails = response.data;
@@ -74,14 +107,12 @@ const VideoList = () => {
     }
   }
 
-  // Fetch videos when the component mounts
   useEffect(() => {
     if (idUser) {
       fetchVideos();
     }
   }, [idUser]);
 
-  // Handle adding a new video
   function handleClick(e) {
     e.preventDefault();
     if (canAddVideo) {

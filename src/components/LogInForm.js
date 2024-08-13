@@ -5,7 +5,13 @@ import { AuthContext } from "./AuthContext";
 
 export default function LogInForm() {
   const history = useHistory();
-  const { setToken, setRole, setId, setUsername } = useContext(AuthContext);
+  const {
+    setRefreshTokenLocal,
+    setAccessTokenLocal,
+    setRole,
+    setId,
+    setUsername,
+  } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -24,7 +30,6 @@ export default function LogInForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
     try {
       const response = await fetch(
         "http://localhost:8080/api/v1/auth/authenticate",
@@ -43,13 +48,12 @@ export default function LogInForm() {
         if (contentType && contentType.includes("application/json")) {
           const responseData = await response.json();
 
-          if (responseData.token) {
+          if (responseData.accessToken) {
             try {
-              const decodedToken = jose.decodeJwt(responseData.token);
-              console.log(decodedToken);
+              const decodedToken = jose.decodeJwt(responseData.accessToken);
 
-              // Save the token and user data in context
-              setToken(responseData.token);
+              setAccessTokenLocal(responseData.accessToken);
+              setRefreshTokenLocal(responseData.refreshToken);
               setRole(decodedToken.role);
               setId(decodedToken.userId);
               setUsername(decodedToken.sub);

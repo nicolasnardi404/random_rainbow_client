@@ -7,7 +7,7 @@ import { AuthContext } from "../components/AuthContext";
 
 const SignIn = () => {
   const history = useHistory();
-  const { authToken } = useContext(AuthContext);
+  const { accessToken } = useContext(AuthContext);
 
   function handleDoubleClick(path) {
     history.push(`/${path}`);
@@ -16,7 +16,11 @@ const SignIn = () => {
   return (
     <div className="App">
       <header className="App-header">
-        {authToken && authToken !== "" ? <HeaderUserOn /> : <HeaderUserOff />}
+        {accessToken && accessToken !== "" ? (
+          <HeaderUserOn />
+        ) : (
+          <HeaderUserOff />
+        )}
         <SignInForm />
       </header>
     </div>

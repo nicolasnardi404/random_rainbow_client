@@ -7,7 +7,7 @@ import { AuthContext } from "../components/AuthContext";
 
 const EmailVerificationSent = () => {
   const history = useHistory();
-  const { authToken } = useContext(AuthContext);
+  const { accessToken } = useContext(AuthContext);
 
   function handleDoubleClick(path) {
     history.push(`/${path}`);
@@ -16,7 +16,11 @@ const EmailVerificationSent = () => {
   return (
     <div className="App">
       <header className="App-header">
-        {authToken && authToken !== "" ? <HeaderUserOn /> : <HeaderUserOff />}
+        {accessToken && accessToken !== "" ? (
+          <HeaderUserOn />
+        ) : (
+          <HeaderUserOff />
+        )}
         <div className="email-confirmation">
           <h2 className="email-confirmation-child">
             THANKS FOR JOINING THE RANDOM RAINBOW

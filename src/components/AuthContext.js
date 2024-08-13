@@ -3,8 +3,8 @@ import React, { createContext, useState } from "react";
 export const AuthContext = createContext();
 
 export const ProvideAuth = ({ children }) => {
-  const [authToken, setAuthToken] = useState(
-    () => localStorage.getItem("authToken") || ""
+  const [accessToken, setAccessToken] = useState(
+    () => localStorage.getItem("accessToken") || ""
   );
   const [role, setRoleState] = useState(
     () => localStorage.getItem("role") || ""
@@ -15,38 +15,53 @@ export const ProvideAuth = ({ children }) => {
   const [username, setUser] = useState(
     () => localStorage.getItem("username") || ""
   );
+  const [refreshToken, setRefreshToken] = useState(
+    () => localStorage.getItem("refreshToken") || ""
+  );
 
-  const setToken = (token) => {
-    setAuthToken(token);
-    localStorage.setItem("authToken", token);
-  };
-
+  // Function to set the username
   const setUsername = (sub) => {
     setUser(sub);
     localStorage.setItem("username", sub);
   };
 
+  // Function to set the role
   const setRole = (newRole) => {
     setRoleState(newRole);
     localStorage.setItem("role", newRole);
   };
 
+  // Function to set the idUser
   const setId = (idUser) => {
     setIdUser(idUser);
     localStorage.setItem("idUser", idUser);
   };
 
+  // Function to set the accessToken
+  const setAccessTokenLocal = (token) => {
+    setAccessToken(token);
+    localStorage.setItem("accessToken", token);
+  };
+
+  // Function to set the refreshToken
+  const setRefreshTokenLocal = (token) => {
+    setRefreshToken(token);
+    localStorage.setItem("refreshToken", token);
+  };
+
   return (
     <AuthContext.Provider
       value={{
-        authToken,
+        accessToken,
         role,
         idUser,
         username,
-        setToken,
+        setAccessTokenLocal,
         setRole,
         setId,
         setUsername,
+        refreshToken,
+        setRefreshTokenLocal,
       }}
     >
       {children}

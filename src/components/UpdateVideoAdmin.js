@@ -1,101 +1,133 @@
-// import React, { useState, useEffect } from "react";
-// import { useHistory, useParams } from "react-router-dom";
-// import axios from "axios";
+import React, { useState, useEffect, useContext } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "./AuthContext";
+import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded";
 
-// function UpdateVideoAdmin() {
-//   const history = useHistory();
-//   const { idUser, videoId } = useParams(); // Destructure both idUser and videoId
-//   const [video, setVideo] = useState({
-//     title: "",
-//     videoDescription: "",
-//     videoLink: "",
-//   });
+function UpdateVideoAdmin() {
+  const history = useHistory();
+  const { videoId } = useParams(); // Destructure both idUser and videoId
+  const [video, setVideo] = useState({
+    title: "",
+    videoDescription: "",
+    videoLink: "",
+  });
+  const {
+    accessToken,
+    refreshToken,
+    idUser,
+    setAccessTokenLocal,
+    setRefreshTokenLocal,
+  } = useContext(AuthContext);
 
-//   // Fetch video data if videoId is present
-//   useEffect(() => {
-//     if (videoId) {
-//       const fetchData = async () => {
-//         try {
-//           const response = await axios.get(
-//             `http://localhost:8080/api/admin/videos/${videoId}`
-//           );
-//           setVideo(response.data);
-//         } catch (error) {
-//           console.error("Failed to fetch video details:", error);
-//         }
-//       };
-//       fetchData();
-//     }
-//   }, [videoId]);
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+    "Content-Type": "application/json",
+  };
 
-//   // Handle input change
-//   const handleChange = (e) => {
-//     setVideo({ ...video, [e.target.name]: e.target.value });
-//   };
+  const getUpdatedToken = async () => {
+    return await refreshTokenIfNeeded({
+      accessToken,
+      refreshToken,
+      setAccessTokenLocal,
+      setRefreshTokenLocal,
+    });
+  };
 
-//   // Handle form submit
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
+  // Fetch video data if videoId is present
+  useEffect(async () => {
+    if (videoId) {
+      const token = await getUpdatedToken();
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:8080/api/admin/videos/${videoId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          setVideo(response.data);
+        } catch (error) {
+          console.error("Failed to fetch video details:", error);
+        }
+      };
+      fetchData();
+    }
+  }, [videoId]);
 
-//     let url = `http://localhost:8080/api/admin/videos/${videoId}`;
-//     let method = "PUT";
+  // Handle input change
+  const handleChange = (e) => {
+    setVideo({ ...video, [e.target.name]: e.target.value });
+  };
 
-//     try {
-//       const response = await axios({
-//         method: method,
-//         url: url,
-//         data: video,
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//       });
+  // Handle form submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-//       if (response.status === 200) {
-//         history.push(`/admin-controller`);
-//       } else {
-//         console.error("Failed to save video:", response);
-//       }
-//     } catch (error) {
-//       console.error(
-//         "There has been a problem with your fetch operation:",
-//         error
-//       );
-//     }
-//   };
+    let url = `http://localhost:8080/api/admin/videos/${videoId}`;
+    let method = "PUT";
 
-//   return (
-//     <div className="add-video-style">
-//       <form onSubmit={handleSubmit}>
-//         <input
-//           type="text"
-//           name="title"
-//           value={video.title}
-//           onChange={handleChange}
-//           className="form-control add-video-form"
-//           placeholder="Title"
-//         />
-//         <textarea
-//           name="videoDescription"
-//           value={video.videoDescription}
-//           onChange={handleChange}
-//           className="form-control add-video-form"
-//           placeholder="Description"
-//           rows="5" // Corrected attribute name
-//         />
-//         <input
-//           type="text"
-//           name="videoLink"
-//           value={video.videoLink}
-//           onChange={handleChange}
-//           className="form-control add-video-form"
-//           placeholder="Video Link"
-//         />
-//         <button type="submit" className="btn btn-info">
-//           Save
-//         </button>
-//       </form>
-//     </div>
-//   );
-// }
+    try {
+      const token = await getUpdatedToken();
+      const response = await axios({
+        method: method,
+        url: url,
+        data: video,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
-// export default UpdateVideoAdmin;
+      if (response.status === 200) {
+        history.push(`/admin-controller`);
+      } else {
+        console.error("Failed to save video:", response);
+      }
+    } catch (error) {
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
+    }
+  };
+
+  return (
+    <div className="add-video-style">
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="title"
+          value={video.title}
+          onChange={handleChange}
+          className="form-control add-video-form"
+          placeholder="Title"
+        />
+        <textarea
+          name="videoDescription"
+          value={video.videoDescription}
+          onChange={handleChange}
+          className="form-control add-video-form"
+          placeholder="Description"
+          rows="5" // Corrected attribute name
+        />
+        <input
+          type="text"
+          name="videoLink"
+          value={video.videoLink}
+          onChange={handleChange}
+          className="form-control add-video-form"
+          placeholder="Video Link"
+        />
+        <button type="submit" className="btn btn-info">
+          Save
+        </button>
+      </form>
+    </div>
+  );
+}
+
+export default UpdateVideoAdmin;

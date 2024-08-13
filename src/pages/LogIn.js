@@ -9,7 +9,7 @@ import { AuthContext } from "../components/AuthContext";
 
 const LogIn = () => {
   const history = useHistory();
-  const { authToken } = useContext(AuthContext);
+  const { accessToken } = useContext(AuthContext);
 
   function handleDoubleClick(path) {
     history.push(`/${path}`);
@@ -18,7 +18,11 @@ const LogIn = () => {
   return (
     <div className="App">
       <header className="App-header">
-        {authToken && authToken !== "" ? <HeaderUserOn /> : <HeaderUserOff />}
+        {accessToken && accessToken !== "" ? (
+          <HeaderUserOn />
+        ) : (
+          <HeaderUserOff />
+        )}
         <LogInForm />
         <Dragbtn
           name="forgot my password"

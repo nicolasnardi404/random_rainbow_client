@@ -6,12 +6,16 @@ import HeaderUserOff from "../components/HeaderUserOff";
 import { AuthContext } from "../components/AuthContext";
 
 const Home = () => {
-  const { authToken } = useContext(AuthContext);
+  const { accessToken } = useContext(AuthContext);
 
   return (
     <div className="App">
       <header className="App-header">
-        {authToken && authToken !== "" ? <HeaderUserOn /> : <HeaderUserOff />}
+        {accessToken && accessToken !== "" ? (
+          <HeaderUserOn />
+        ) : (
+          <HeaderUserOff />
+        )}
         <RandomVideoCard />
       </header>
     </div>

@@ -1,15 +1,42 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "./AuthContext";
+import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded";
 
 const VideoList = () => {
   const history = useHistory();
   const [videos, setVideos] = useState([]);
   const [showAllVideos, setShowAllVideos] = useState(true);
+  const {
+    accessToken,
+    refreshToken,
+    idUser,
+    setAccessTokenLocal,
+    setRefreshTokenLocal,
+  } = useContext(AuthContext);
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+    "Content-Type": "application/json",
+  };
+
+  const getUpdatedToken = async () => {
+    return await refreshTokenIfNeeded({
+      accessToken,
+      refreshToken,
+      setAccessTokenLocal,
+      setRefreshTokenLocal,
+    });
+  };
 
   const fetchVideos = async (url) => {
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      });
       setVideos(response.data);
       console.log(response.data);
     } catch (error) {
@@ -26,11 +53,23 @@ const VideoList = () => {
     }
 
     try {
-      await axios.delete(`http://localhost:8080/api/admin/videos/${videoId}`);
+      const token = await getUpdatedToken();
+      await axios.delete(`http://localhost:8080/api/admin/videos/${videoId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
       fetchVideos(
         showAllVideos
           ? "http://localhost:8080/api/admin/allvideos"
-          : "http://localhost:8080/api/admin/review"
+          : "http://localhost:8080/api/admin/review",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
     } catch (error) {
       console.error("Failed to delete video:", error);
@@ -46,42 +85,46 @@ const VideoList = () => {
     }
 
     try {
-      // Determine the URL based on the current videoStatus
+      const token = await getUpdatedToken();
       const approveUrl =
         video.videoStatus === "AVAILABLE"
-          ? `http://localhost:8080/api/admin/videos/${video.id}/toggle-approve`
-          : `http://localhost:8080/api/admin/videos/${video.id}/toggle-cancel`;
+          ? `http://localhost:8080/api/admin/videos/${video.id}/toggle-cancel`
+          : `http://localhost:8080/api/admin/videos/${video.id}/toggle-approve`;
 
-      await axios.put(approveUrl);
+      let payload = {};
 
-      // Assuming you have a way to get the new duration from the admin
-      const newDuration = prompt(
-        "Please enter the new duration for the video:"
-      );
-
-      if (newDuration !== null && newDuration.trim() !== "") {
-        // Send the duration to the server
-        await axios.put(
-          `http://localhost:8080/api/admin/videos/duration/${video.id}`,
-          {
-            duration: parseInt(newDuration),
-          }
+      if (video.videoStatus === "UNCHECKED") {
+        const newDuration = prompt(
+          "Please enter the new duration for the video:"
         );
 
-        await axios.put(
-          `http://localhost:8080/api/admin/videos/${video.id}/toggle-approve`
-        );
-
-        // Refresh the list of videos
-        fetchVideos(
-          showAllVideos
-            ? "http://localhost:8080/api/admin/allvideos"
-            : "http://localhost:8080/api/admin/review"
-        );
+        if (newDuration !== null && newDuration.trim() !== "") {
+          payload = { duration: parseInt(newDuration) }; // Include duration in payload
+        }
       }
+
+      await axios.put(approveUrl, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      // Refresh the list of videos after toggling approval/cancellation
+      fetchVideos(
+        showAllVideos
+          ? "http://localhost:8080/api/admin/allvideos"
+          : "http://localhost:8080/api/admin/review",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
     } catch (error) {
       console.error(
-        "Failed to toggle approval/cancellation status of video or set duration:",
+        "Failed to toggle approval/cancellation status of video:",
         error
       );
     }
@@ -91,11 +134,18 @@ const VideoList = () => {
     history.push(`/admin/videos/update/${videoId}`);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
+    const token = await getUpdatedToken();
     fetchVideos(
       showAllVideos
         ? "http://localhost:8080/api/admin/allvideos"
-        : "http://localhost:8080/api/admin/review"
+        : "http://localhost:8080/api/admin/review",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
     );
   }, [showAllVideos]);
 
