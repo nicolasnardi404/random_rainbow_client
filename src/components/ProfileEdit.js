@@ -61,16 +61,13 @@ function ProfileEdit() {
     };
 
     try {
-      // Refresh token and get new access token
       const newAccessToken = await getUpdatedToken();
 
-      // Update headers with the new access token
       const headers = {
         Authorization: `Bearer ${newAccessToken}`,
         "Content-Type": "application/json",
       };
 
-      // Update user profile
       const response = await axios.put(
         `http://localhost:8080/api/users/profile/${idUser}`,
         payload,

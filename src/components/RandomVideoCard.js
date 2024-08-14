@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import YouTube from "react-youtube";
+import ReactPlayer from "react-player";
 import "../App.css";
 
 export default function RandomVideoCard() {
@@ -43,22 +43,8 @@ export default function RandomVideoCard() {
     }
   };
 
-  const opts = {
-    height: "390",
-    width: "640",
-    playerVars: {
-      autoplay: 1,
-      controls: 1,
-      modestbranding: 1,
-      rel: 0,
-      showinfo: 0,
-      iv_load_policy: 3,
-    },
-  };
-
-  const uniqueVideoUrl = selectedVideo
-    ? `${selectedVideo.endpoint}/${selectedVideo.videoId}`
-    : "";
+  // Determine the video URL
+  const videoUrl = selectedVideo ? selectedVideo.videoLink : "";
 
   return (
     <div>
@@ -73,7 +59,15 @@ export default function RandomVideoCard() {
           >
             * {selectedVideo.user.username} *
           </div>
-          <YouTube endpoint={uniqueVideoUrl} opts={opts} />
+          <div>
+            <ReactPlayer
+              className="player"
+              url={videoUrl}
+              controls={true}
+              width="640px"
+              height="390px"
+            />
+          </div>
           <div className="description">{selectedVideo.description}</div>
           <button
             className="btn-random-video btn-random-video-after"

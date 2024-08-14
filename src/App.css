@@ -181,6 +181,10 @@ Red: #E42525
   color: #8447ff;
 }
 
+.player {
+  margin: auto;
+}
+
 .description {
   margin: 2em 10em;
   background: #f8e777;

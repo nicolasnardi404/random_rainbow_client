@@ -16,7 +16,6 @@ const UserInterface = () => {
     history.push(`/${path}`);
   }
 
-  // Function to handle admin button click
   const handleAdminButtonClick = () => {
     history.push("/admin-controller");
   };
@@ -34,7 +33,6 @@ const UserInterface = () => {
           name="return"
           onDoubleClick={() => handleDoubleClick("videos")}
         />
-        {/* Conditionally render the admin button */}
         {role === "ROLE_ADMIN" && (
           <Dragbtn
             name="ADMIN"
