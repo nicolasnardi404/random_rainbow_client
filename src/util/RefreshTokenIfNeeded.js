@@ -17,7 +17,7 @@ export async function refreshTokenIfNeeded(context) {
 
   try {
     const response = await axios.post(
-      "http://localhost:8080/api/v1/auth/refresh",
+      "https://random-rainbow-database.onrender.com/api/v1/auth/refresh",
       { refreshToken: `${refreshToken}` }
     );
 

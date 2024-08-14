@@ -26,7 +26,7 @@ export default function PasswordRecovery() {
     event.preventDefault();
     try {
       const response = await fetch(
-        "http://localhost:8080/api/v1/auth/reset-password",
+        "https://random-rainbow-database.onrender.com/api/v1/auth/reset-password",
         {
           method: "POST",
           headers: {
