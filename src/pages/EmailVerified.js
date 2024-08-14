@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import "../App.css";
 import HeaderUserOn from "../components/HeaderUserOn";
 import HeaderUserOff from "../components/HeaderUserOff";
@@ -7,23 +7,33 @@ import { AuthContext } from "../components/AuthContext";
 
 const EmailVerified = () => {
   const { accessToken } = useContext(AuthContext);
-  const history = useHistory();
   const { token } = useParams();
 
+  const [isVerified, setIsVerified] = useState(false); // State to manage verification status
+  const [verificationError, setVerificationError] = useState(""); // State to manage error message
+
   useEffect(() => {
-    fetch(`http://localhost:8080/api/verify?token=${token}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.url) {
-          console.log("verified");
+    const verifyEmail = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/verify?token=${token}`
+        );
+        console.log(response);
+
+        if (response.status === 200) {
+          setIsVerified(true);
         } else {
-          console.error("Email verification failed");
+          setIsVerified(false);
+          setVerificationError(response.message || "Email verification failed");
         }
-      })
-      .catch((error) =>
-        console.error("Error during email verification:", error)
-      );
-  }, [token, history]);
+      } catch (error) {
+        setIsVerified(false);
+        setVerificationError("An error occurred during email verification");
+      }
+    };
+
+    verifyEmail();
+  }, [token]);
 
   return (
     <div className="App">
@@ -34,10 +44,18 @@ const EmailVerified = () => {
           <HeaderUserOff />
         )}
         <div className="email-confirmation">
-          <h2 className="email-confirmation-child">
-            WELCOME TO RANDOM RAINBOW
-          </h2>
-          <h2 className="email-confirmation-child">YOUR EMAIL IS CONFIRMED!</h2>
+          {isVerified ? (
+            <>
+              <h2 className="email-confirmation-child">
+                WELCOME TO RANDOM RAINBOW
+              </h2>
+              <h2 className="email-confirmation-child">
+                YOUR EMAIL IS CONFIRMED!
+              </h2>
+            </>
+          ) : (
+            <h2 className="email-confirmation-child">{verificationError}</h2>
+          )}
         </div>
       </header>
     </div>

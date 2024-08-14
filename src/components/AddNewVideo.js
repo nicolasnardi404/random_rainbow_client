@@ -19,6 +19,7 @@ function AddNewVideo() {
     videoDescription: "",
     videoLink: "",
   });
+  const [errorMessage, setErrorMessage] = useState(""); // State for error messages
 
   const headers = {
     Authorization: `Bearer ${accessToken}`,
@@ -95,6 +96,11 @@ function AddNewVideo() {
         console.error("Failed to save video:", response);
       }
     } catch (error) {
+      // Set error message to state
+      setErrorMessage(
+        error.response?.data ||
+          "There has been a problem with your fetch operation."
+      );
       console.error(
         "There has been a problem with your fetch operation:",
         error.response ? error.response : error.message
@@ -115,13 +121,12 @@ function AddNewVideo() {
           required
         />
         <textarea
-          type="text"
           name="videoDescription"
           value={video.videoDescription}
           onChange={handleChange}
           className="form-control add-video-form"
           placeholder="Description"
-          row="5"
+          rows="5"
           required
         />
         {!videoId && (
@@ -139,6 +144,8 @@ function AddNewVideo() {
           Save
         </button>
       </form>
+      {/* Display error message if present */}
+      {errorMessage && <div className="error">{errorMessage}</div>}
     </div>
   );
 }

@@ -15,6 +15,7 @@ const VideoList = () => {
     setAccessTokenLocal,
     setRefreshTokenLocal,
   } = useContext(AuthContext);
+
   const headers = {
     Authorization: `Bearer ${accessToken}`,
     "Content-Type": "application/json",
@@ -29,48 +30,38 @@ const VideoList = () => {
     });
   };
 
-  const fetchVideos = async (url) => {
+  const fetchVideos = async () => {
     try {
+      const token = await getUpdatedToken();
+      const url = showAllVideos
+        ? "http://localhost:8080/api/admin/allvideos"
+        : "http://localhost:8080/api/admin/review";
       const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
+        headers: { ...headers, Authorization: `Bearer ${token}` },
       });
       setVideos(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Failed to fetch videos:", error);
+      // Consider adding user-friendly error handling here
     }
   };
+
+  useEffect(() => {
+    fetchVideos();
+  }, [showAllVideos]);
 
   const handleDelete = async (videoId) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this video?"
     );
-    if (!confirmDelete) {
-      return;
-    }
+    if (!confirmDelete) return;
 
     try {
       const token = await getUpdatedToken();
       await axios.delete(`http://localhost:8080/api/admin/videos/${videoId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
+        headers: { ...headers, Authorization: `Bearer ${token}` },
       });
-      fetchVideos(
-        showAllVideos
-          ? "http://localhost:8080/api/admin/allvideos"
-          : "http://localhost:8080/api/admin/review",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      fetchVideos(); // Refresh video list
     } catch (error) {
       console.error("Failed to delete video:", error);
     }
@@ -80,48 +71,29 @@ const VideoList = () => {
     const confirmToggle = window.confirm(
       `Are you sure you want to ${video.videoStatus === "AVAILABLE" ? "cancel" : "approve"} this video?`
     );
-    if (!confirmToggle) {
-      return;
-    }
+    if (!confirmToggle) return;
 
     try {
       const token = await getUpdatedToken();
-      const approveUrl =
+      let approveUrl =
         video.videoStatus === "AVAILABLE"
           ? `http://localhost:8080/api/admin/videos/${video.id}/toggle-cancel`
           : `http://localhost:8080/api/admin/videos/${video.id}/toggle-approve`;
-
       let payload = {};
 
       if (video.videoStatus === "UNCHECKED") {
         const newDuration = prompt(
           "Please enter the new duration for the video:"
         );
-
         if (newDuration !== null && newDuration.trim() !== "") {
-          payload = { duration: parseInt(newDuration) }; // Include duration in payload
+          payload = { duration: parseInt(newDuration) };
         }
       }
 
       await axios.put(approveUrl, payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
+        headers: { ...headers, Authorization: `Bearer ${token}` },
       });
-
-      // Refresh the list of videos after toggling approval/cancellation
-      fetchVideos(
-        showAllVideos
-          ? "http://localhost:8080/api/admin/allvideos"
-          : "http://localhost:8080/api/admin/review",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      fetchVideos(); // Refresh video list
     } catch (error) {
       console.error(
         "Failed to toggle approval/cancellation status of video:",
@@ -134,25 +106,9 @@ const VideoList = () => {
     history.push(`/admin/videos/update/${videoId}`);
   };
 
-  useEffect(async () => {
-    const token = await getUpdatedToken();
-    fetchVideos(
-      showAllVideos
-        ? "http://localhost:8080/api/admin/allvideos"
-        : "http://localhost:8080/api/admin/review",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-  }, [showAllVideos]);
-
   const toggleVideoList = () => {
     setShowAllVideos(!showAllVideos);
   };
-
   return (
     <div>
       <h1>{showAllVideos ? "ALL VIDEOS" : "REVIEW VIDEOS"}</h1>
