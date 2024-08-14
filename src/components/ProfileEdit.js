@@ -1,57 +1,81 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "./AuthContext";
+import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded";
 
 function ProfileEdit() {
   const history = useHistory();
-  const idUser = localStorage.getItem("idUser");
   const [profile, setProfile] = useState({
     artistDescription: "",
     socialMedia: "",
   });
+  const {
+    accessToken,
+    refreshToken,
+    idUser,
+    setAccessTokenLocal,
+    setRefreshTokenLocal,
+  } = useContext(AuthContext);
+
+  const getUpdatedToken = async () => {
+    const newAccessToken = await refreshTokenIfNeeded({
+      accessToken,
+      refreshToken,
+      setAccessTokenLocal,
+      setRefreshTokenLocal,
+    });
+    return newAccessToken;
+  };
+
+  const fetchData = async () => {
+    try {
+      const newAccessToken = await getUpdatedToken();
+
+      const headers = {
+        Authorization: `Bearer ${newAccessToken}`,
+        "Content-Type": "application/json",
+      };
+
+      // Fetch user profile
+      const response = await axios.get(
+        `http://localhost:8080/api/users/profile/${idUser}`,
+        { headers }
+      );
+      setProfile(response.data);
+    } catch (error) {
+      console.error("Failed to fetch profile details:", error);
+    }
+  };
 
   useEffect(() => {
-    if (idUser) {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(
-            `https://random-rainbow-database.onrender.com/api/users/profile/${idUser}`
-          );
-          const userProfile = response.data;
-          setProfile(userProfile);
-          console.log(userProfile);
-        } catch (error) {
-          console.error("Failed to fetch profile details:", error);
-        }
-      };
-      fetchData();
-    }
-  }, [idUser]);
+    fetchData();
+  }, [idUser]); // Fetch data when `idUser` changes
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Prepare the JSON payload
     const payload = {
       artistDescription: profile.artistDescription,
       socialMedia: profile.socialMedia,
     };
 
-    const url = `https://random-rainbow-database.onrender.com/api/users/profile/${idUser}`;
-    const method = "PUT";
-
     try {
-      const response = await axios({
-        method: method,
-        url: url,
-        data: payload,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const newAccessToken = await getUpdatedToken();
+
+      const headers = {
+        Authorization: `Bearer ${newAccessToken}`,
+        "Content-Type": "application/json",
+      };
+
+      const response = await axios.put(
+        `http://localhost:8080/api/users/profile/${idUser}`,
+        payload,
+        { headers }
+      );
 
       if (response.status === 200) {
-        history.push(`/videos`); // Redirect to profiles page or another suitable location
+        history.push(`/videos`);
       } else {
         console.error("Failed to save profile:", response);
       }

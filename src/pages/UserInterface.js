@@ -8,10 +8,7 @@ import HeaderUserOff from "../components/HeaderUserOff";
 import { AuthContext } from "../components/AuthContext";
 
 const UserInterface = () => {
-  const username = localStorage.getItem("username");
-  const { authToken, role } = useContext(AuthContext);
-  console.log(role);
-
+  const { accessToken, role } = useContext(AuthContext);
   const history = useHistory();
   const { idUser } = useParams();
 
@@ -19,7 +16,6 @@ const UserInterface = () => {
     history.push(`/${path}`);
   }
 
-  // Function to handle admin button click
   const handleAdminButtonClick = () => {
     history.push("/admin-controller");
   };
@@ -27,13 +23,16 @@ const UserInterface = () => {
   return (
     <div className="App">
       <header className="App-header">
-        {authToken && authToken !== "" ? <HeaderUserOn /> : <HeaderUserOff />}
+        {accessToken && accessToken !== "" ? (
+          <HeaderUserOn />
+        ) : (
+          <HeaderUserOff />
+        )}
         <VideoList idUser={idUser} />
         <Dragbtn
           name="return"
           onDoubleClick={() => handleDoubleClick("videos")}
         />
-        {/* Conditionally render the admin button */}
         {role === "ROLE_ADMIN" && (
           <Dragbtn
             name="ADMIN"

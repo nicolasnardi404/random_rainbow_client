@@ -6,7 +6,7 @@ import HeaderUserOff from "../components/HeaderUserOff";
 import { AuthContext } from "../components/AuthContext";
 
 export default function PasswordRecovery() {
-  const { authToken } = useContext(AuthContext);
+  const { accessToken } = useContext(AuthContext);
   const history = useHistory();
   const [formData, setFormData] = useState({ email: "" });
 
@@ -26,7 +26,7 @@ export default function PasswordRecovery() {
     event.preventDefault();
     try {
       const response = await fetch(
-        "https://random-rainbow-database.onrender.com/api/v1/auth/reset-password",
+        "http://localhost:8080/api/v1/auth/reset-password",
         {
           method: "POST",
           headers: {
@@ -49,7 +49,11 @@ export default function PasswordRecovery() {
   return (
     <div className="App">
       <header className="App-header">
-        {authToken && authToken !== "" ? <HeaderUserOn /> : <HeaderUserOff />}
+        {accessToken && accessToken !== "" ? (
+          <HeaderUserOn />
+        ) : (
+          <HeaderUserOff />
+        )}
         <form onSubmit={handleSubmit}>
           <label className="group-form">
             Email:

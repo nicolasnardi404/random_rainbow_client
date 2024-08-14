@@ -6,7 +6,7 @@ import { useHistory, useParams } from "react-router-dom";
 import "../App.css";
 
 export default function PasswordRecovery() {
-  const { authToken } = useContext(AuthContext);
+  const { accessToken } = useContext(AuthContext);
 
   const history = useHistory();
   const { token } = useParams();
@@ -36,7 +36,7 @@ export default function PasswordRecovery() {
 
     try {
       const response = await fetch(
-        `https://random-rainbow-database.onrender.com/api/v1/auth/new-password/${token}`,
+        `http://localhost:8080/api/v1/auth/new-password/${token}`,
         {
           method: "POST",
           headers: {
@@ -62,7 +62,11 @@ export default function PasswordRecovery() {
   return (
     <div className="App">
       <header className="App-header">
-        {authToken && authToken !== "" ? <HeaderUserOn /> : <HeaderUserOff />}
+        {accessToken && accessToken !== "" ? (
+          <HeaderUserOn />
+        ) : (
+          <HeaderUserOff />
+        )}
         <form onSubmit={handleSubmit}>
           <label className="group-form">
             NEW PASSWORD:

@@ -9,7 +9,7 @@ import React, { useContext } from "react";
 
 const AdminController = () => {
   const username = localStorage.getItem("username");
-  const { authToken, role } = useContext(AuthContext);
+  const { accessToken, role } = useContext(AuthContext);
 
   const history = useHistory();
   const { idUser } = useParams();
@@ -21,7 +21,11 @@ const AdminController = () => {
   return (
     <div className="App">
       <header className="App-header">
-        {authToken && authToken !== "" ? <HeaderUserOn /> : <HeaderUserOff />}
+        {accessToken && accessToken !== "" ? (
+          <HeaderUserOn />
+        ) : (
+          <HeaderUserOff />
+        )}
         <VideoListAdmin />
         <Dragbtn
           name="return"

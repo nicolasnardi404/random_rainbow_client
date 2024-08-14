@@ -1,23 +1,51 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "./AuthContext";
+import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded";
 
 function AddNewVideo() {
   const history = useHistory();
-  const idUser = localStorage.getItem("idUser");
+  const {
+    accessToken,
+    refreshToken,
+    idUser,
+    setAccessTokenLocal,
+    setRefreshTokenLocal,
+  } = useContext(AuthContext);
   const { videoId } = useParams();
   const [video, setVideo] = useState({
     title: "",
     videoDescription: "",
     videoLink: "",
   });
+  const [errorMessage, setErrorMessage] = useState(""); // State for error messages
+
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+  };
+
+  const getUpdatedToken = async () => {
+    return await refreshTokenIfNeeded({
+      accessToken,
+      refreshToken,
+      setAccessTokenLocal,
+      setRefreshTokenLocal,
+    });
+  };
 
   useEffect(() => {
     if (videoId) {
       const fetchData = async () => {
         try {
+          const token = await getUpdatedToken();
           const response = await axios.get(
-            `https://random-rainbow-database.onrender.com/api/users/${idUser}/videos/${videoId}`
+            `http://localhost:8080/api/users/${idUser}/videos/${videoId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           );
           const videos = response.data;
           setVideo(videos); // This should trigger a re-render
@@ -43,21 +71,22 @@ function AddNewVideo() {
       videoLink: video.videoLink,
     };
 
-    let url = `https://random-rainbow-database.onrender.com/api/users/${idUser}/videos/addNewVideo`;
+    let url = `http://localhost:8080/api/users/${idUser}/videos/addNewVideo`;
     let method = "POST";
 
     if (videoId) {
-      url = `https://random-rainbow-database.onrender.com/api/users/${idUser}/videos/update/${videoId}`;
+      url = `http://localhost:8080/api/users/${idUser}/videos/update/${videoId}`;
       method = "PUT";
     }
 
     try {
+      const token = await getUpdatedToken();
       const response = await axios({
         method: method,
         url: url,
         data: payload,
         headers: {
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -67,6 +96,11 @@ function AddNewVideo() {
         console.error("Failed to save video:", response);
       }
     } catch (error) {
+      // Set error message to state
+      setErrorMessage(
+        error.response?.data ||
+          "There has been a problem with your fetch operation."
+      );
       console.error(
         "There has been a problem with your fetch operation:",
         error.response ? error.response : error.message
@@ -87,13 +121,12 @@ function AddNewVideo() {
           required
         />
         <textarea
-          type="text"
           name="videoDescription"
           value={video.videoDescription}
           onChange={handleChange}
           className="form-control add-video-form"
           placeholder="Description"
-          row="5"
+          rows="5"
           required
         />
         {!videoId && (
@@ -111,6 +144,8 @@ function AddNewVideo() {
           Save
         </button>
       </form>
+      {/* Display error message if present */}
+      {errorMessage && <div className="error">{errorMessage}</div>}
     </div>
   );
 }

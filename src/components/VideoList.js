@@ -1,33 +1,57 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { useContext } from "react";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "../components/AuthContext"; // Adjust the import path as needed
+import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded"; // Adjust the import path as needed
 
 const VideoList = () => {
   const history = useHistory();
   const [videos, setVideos] = useState([]);
   const [editingVideo, setEditingVideo] = useState({});
   const [canAddVideo, setCanAddVideo] = useState(true);
-  const userId = localStorage.getItem("idUser");
-  console.log(userId);
+  const {
+    accessToken,
+    refreshToken,
+    idUser,
+    setAccessTokenLocal,
+    setRefreshTokenLocal,
+  } = useContext(AuthContext);
 
-  const fetchVideos = async () => {
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+    "Content-Type": "application/json",
+  };
+
+  const getUpdatedToken = async () => {
+    return await refreshTokenIfNeeded({
+      accessToken,
+      refreshToken,
+      setAccessTokenLocal,
+      setRefreshTokenLocal,
+    });
+  };
+
+  async function fetchVideos() {
     try {
+      const token = await getUpdatedToken();
       const response = await axios.get(
-        `https://random-rainbow-database.onrender.com/api/users/${userId}/videos`
+        `http://localhost:8080/api/users/${idUser}/videos`,
+        {
+          headers: {
+            ...headers,
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const userVideos = response.data;
       setVideos(userVideos);
-      setCanAddVideo(userVideos.length < 3); // Check if user has less than 3 videos
-      console.log(userVideos);
+      setCanAddVideo(userVideos.length < 3);
     } catch (error) {
       console.error("Failed to fetch videos:", error);
     }
-  };
+  }
 
   async function handleDelete(videoId) {
-    // Ask for confirmation
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this video?"
     );
@@ -37,8 +61,15 @@ const VideoList = () => {
     }
 
     try {
+      const token = await getUpdatedToken();
       await axios.delete(
-        `https://random-rainbow-database.onrender.com/api/users/${userId}/videos/delete/${videoId}`
+        `http://localhost:8080/api/users/${idUser}/videos/delete/${videoId}`,
+        {
+          headers: {
+            ...headers,
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       fetchVideos();
     } catch (error) {
@@ -46,30 +77,46 @@ const VideoList = () => {
     }
   }
 
+  async function handleUpdate(videoId) {
+    try {
+      const token = await getUpdatedToken();
+      const response = await axios.get(
+        `http://localhost:8080/api/users/${idUser}/videos/${videoId}`,
+        {
+          headers: {
+            ...headers,
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const videoDetails = response.data;
+      setEditingVideo(videoDetails);
+      history.push(`/${idUser}/update/${videoId}`);
+    } catch (error) {
+      console.error("Failed to fetch video details:", error);
+    }
+  }
+
+  const handleStatusClick = (video) => {
+    if (
+      video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ||
+      video.videoStatus === "ERROR"
+    ) {
+      // Show error message in an alert or modal
+      alert(`Error Message: ${video.messageError}`);
+    }
+  };
+
   useEffect(() => {
-    if (userId) {
+    if (idUser) {
       fetchVideos();
     }
-  }, [userId]);
+  }, [idUser]);
 
   function handleClick(e) {
     e.preventDefault();
     if (canAddVideo) {
-      history.push(`/${userId}/add-new-video`);
-    }
-  }
-
-  async function handleUpdate(videoId) {
-    try {
-      const response = await axios.get(
-        `https://random-rainbow-database.onrender.com/api/users/${userId}/videos/${videoId}`
-      );
-      const videoDetails = response.data;
-      setEditingVideo(videoDetails);
-      history.push(`/${userId}/update/${videoId}`);
-      console.log(videoDetails);
-    } catch (error) {
-      console.error("Failed to fetch video details:", error);
+      history.push(`/${idUser}/add-new-video`);
     }
   }
 
@@ -87,15 +134,24 @@ const VideoList = () => {
           {videos.map((video) => (
             <tr key={video.id}>
               <td>{video.title}</td>
-              <td>
+              <td
+                style={{
+                  cursor:
+                    video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ||
+                    video.videoStatus === "ERROR"
+                      ? "pointer"
+                      : "default",
+                }}
+                onClick={() => handleStatusClick(video)}
+              >
                 {video.videoStatus === "AVAILABLE" ? (
-                  <a
-                    href={`http://www.randomrainbow.art/home/${video.endpoint}`}
-                  >
+                  <a href={`http://localhost:3000/home/${video.endpoint}`}>
                     View Video
                   </a>
                 ) : video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ? (
                   <span>Not Respecting Guidelines</span>
+                ) : video.videoStatus === "ERROR" ? (
+                  <span>Error</span>
                 ) : (
                   <span>Unchecked</span>
                 )}

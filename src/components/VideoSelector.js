@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { videoDB } from '../data.js';
+import React, { useState } from "react";
+import { videoDB } from "../data.js";
 
 const VideoSelector = () => {
   const [filteredVideos, setFilteredVideos] = useState(videoDB); // Initialize with the whole videoDB array
@@ -28,10 +28,12 @@ const VideoSelector = () => {
   return (
     <div>
       <button onClick={chooseVideo}>RANDOM VIDEO GENERATOR</button>
-      <select onChange={handleLengthChange} value={currentVideo?.length || ''}>
+      <select onChange={handleLengthChange} value={currentVideo?.length || ""}>
         <option value="5">&lt;5</option>
         <option value="10">&lt;10</option>
-        <option value="morethan10" selected>all</option>
+        <option value="morethan10" selected>
+          all
+        </option>
       </select>
 
       {currentVideo && (

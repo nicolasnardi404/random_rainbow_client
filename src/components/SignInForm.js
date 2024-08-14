@@ -9,21 +9,17 @@ export default function SignInForm() {
     lastname: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
-  const [confirmPassword, setConfirmPassword] = useState(""); // New state for confirmPassword
   const [error, setError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    if (name === "confirmPassword") {
-      setConfirmPassword(value); // Update confirmPassword state specifically
-    } else {
-      setFormData((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    }
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
 
     if (name === "confirmPassword" && value !== formData.password) {
       setPasswordError("Passwords do not match.");
@@ -35,21 +31,20 @@ export default function SignInForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Perform password confirmation check here
-    if (formData.password !== confirmPassword) {
+    if (formData.password !== formData.confirmPassword) {
       setPasswordError("Passwords do not match.");
       return;
     }
-    console.log(JSON.stringify(formData)); // Now formData does not include confirmPassword
+
     try {
       const response = await fetch(
-        "https://random-rainbow-database.onrender.com/api/v1/auth/register",
+        "http://localhost:8080/api/v1/auth/register",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData), // formData does not include confirmPassword
+          body: JSON.stringify(formData),
         }
       );
       console.log(response);
@@ -102,7 +97,8 @@ export default function SignInForm() {
           className="input-form"
           type="password"
           name="confirmPassword"
-          onChange={handleChange} // Removed value prop since it's managed separately
+          value={formData.confirmPassword}
+          onChange={handleChange}
           required
         />
         <br />

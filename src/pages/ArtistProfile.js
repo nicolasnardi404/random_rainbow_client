@@ -8,12 +8,16 @@ import { AuthContext } from "../components/AuthContext";
 import ProfileView from "../components/ProfileView";
 
 export default function ArtistProfile() {
-  const { authToken } = useContext(AuthContext);
+  const { accessToken } = useContext(AuthContext);
 
   return (
     <div className="App">
       <header className="App-header">
-        {authToken && authToken !== "" ? <HeaderUserOn /> : <HeaderUserOff />}
+        {accessToken && accessToken !== "" ? (
+          <HeaderUserOn />
+        ) : (
+          <HeaderUserOff />
+        )}
         <ProfileView />
       </header>
     </div>

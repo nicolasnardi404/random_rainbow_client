@@ -1,91 +1,68 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "./AuthContext";
+import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded";
 
 const VideoList = () => {
   const history = useHistory();
   const [videos, setVideos] = useState([]);
   const [showAllVideos, setShowAllVideos] = useState(true);
 
-  const fetchVideos = async (url) => {
+  const {
+    accessToken,
+    refreshToken,
+    setAccessTokenLocal,
+    setRefreshTokenLocal,
+  } = useContext(AuthContext);
+
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+    "Content-Type": "application/json",
+  };
+
+  const getUpdatedToken = async () => {
+    return await refreshTokenIfNeeded({
+      accessToken,
+      refreshToken,
+      setAccessTokenLocal,
+      setRefreshTokenLocal,
+    });
+  };
+
+  const fetchVideos = async () => {
     try {
-      const response = await axios.get(url);
+      const token = await getUpdatedToken();
+      const url = showAllVideos
+        ? "http://localhost:8080/api/admin/allvideos"
+        : "http://localhost:8080/api/admin/review";
+      const response = await axios.get(url, {
+        headers: { ...headers, Authorization: `Bearer ${token}` },
+      });
       setVideos(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Failed to fetch videos:", error);
     }
   };
 
+  useEffect(() => {
+    fetchVideos();
+  }, [showAllVideos]);
+
   const handleDelete = async (videoId) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this video?"
     );
-    if (!confirmDelete) {
-      return;
-    }
+    if (!confirmDelete) return;
 
     try {
-      await axios.delete(
-        `https://random-rainbow-database.onrender.com/api/admin/videos/${videoId}`
-      );
-      fetchVideos(
-        showAllVideos
-          ? "https://random-rainbow-database.onrender.com/api/admin/allvideos"
-          : "https://random-rainbow-database.onrender.com/api/admin/review"
-      );
+      const token = await getUpdatedToken();
+      await axios.delete(`http://localhost:8080/api/admin/videos/${videoId}`, {
+        headers: { ...headers, Authorization: `Bearer ${token}` },
+      });
+      fetchVideos();
     } catch (error) {
       console.error("Failed to delete video:", error);
-    }
-  };
-
-  const handleToggleApprove = async (video) => {
-    const confirmToggle = window.confirm(
-      `Are you sure you want to ${video.videoStatus === "AVAILABLE" ? "cancel" : "approve"} this video?`
-    );
-    if (!confirmToggle) {
-      return;
-    }
-
-    try {
-      // Determine the URL based on the current videoStatus
-      const approveUrl =
-        video.videoStatus === "AVAILABLE"
-          ? `https://random-rainbow-database.onrender.com/api/admin/videos/${video.id}/toggle-approve`
-          : `https://random-rainbow-database.onrender.com/api/admin/videos/${video.id}/toggle-cancel`;
-
-      await axios.put(approveUrl);
-
-      // Assuming you have a way to get the new duration from the admin
-      const newDuration = prompt(
-        "Please enter the new duration for the video:"
-      );
-
-      if (newDuration !== null && newDuration.trim() !== "") {
-        // Send the duration to the server
-        await axios.put(
-          `https://random-rainbow-database.onrender.com/api/admin/videos/duration/${video.id}`,
-          {
-            duration: parseInt(newDuration),
-          }
-        );
-
-        await axios.put(
-          `https://random-rainbow-database.onrender.com/api/admin/videos/${video.id}/toggle-approve`
-        );
-
-        // Refresh the list of videos
-        fetchVideos(
-          showAllVideos
-            ? "https://random-rainbow-database.onrender.com/api/admin/allvideos"
-            : "https://random-rainbow-database.onrender.com/api/admin/review"
-        );
-      }
-    } catch (error) {
-      console.error(
-        "Failed to toggle approval/cancellation status of video or set duration:",
-        error
-      );
     }
   };
 
@@ -93,13 +70,62 @@ const VideoList = () => {
     history.push(`/admin/videos/update/${videoId}`);
   };
 
-  useEffect(() => {
-    fetchVideos(
-      showAllVideos
-        ? "https://random-rainbow-database.onrender.com/api/admin/allvideos"
-        : "https://random-rainbow-database.onrender.com/api/admin/review"
-    );
-  }, [showAllVideos]);
+  const handleStatusChange = async (videoId, newStatus) => {
+    if (newStatus === "AVAILABLE") {
+      // Prompt for duration
+      const duration = prompt("Please enter the video duration (in seconds):");
+      if (duration !== null && !isNaN(duration) && duration.trim() !== "") {
+        try {
+          const token = await getUpdatedToken();
+          await axios.put(
+            `http://localhost:8080/api/admin/videos/duration/${videoId}`,
+            { duration: parseInt(duration) },
+            { headers: { ...headers, Authorization: `Bearer ${token}` } }
+          );
+
+          // Update status after setting duration
+          await axios.put(
+            `http://localhost:8080/api/admin/videos/status`,
+            { id: videoId, videoStatus: newStatus },
+            { headers: { ...headers, Authorization: `Bearer ${token}` } }
+          );
+
+          fetchVideos();
+        } catch (error) {
+          console.error("Failed to update video:", error);
+        }
+      }
+    } else {
+      // Prompt for error message
+      const errorMsg = prompt("Please enter an error message for this video:");
+      if (errorMsg !== null && errorMsg.trim() !== "") {
+        try {
+          const token = await getUpdatedToken();
+          await axios.put(
+            `http://localhost:8080/api/admin/videos/status`,
+            { id: videoId, videoStatus: newStatus, messageError: errorMsg },
+            { headers: { ...headers, Authorization: `Bearer ${token}` } }
+          );
+          fetchVideos();
+        } catch (error) {
+          console.error("Failed to update video status:", error);
+        }
+      }
+    }
+  };
+
+  const handleActionChange = async (action, videoId) => {
+    switch (action) {
+      case "delete":
+        await handleDelete(videoId);
+        break;
+      case "update":
+        handleUpdate(videoId);
+        break;
+      default:
+        console.log(`Unsupported action: ${action}`);
+    }
+  };
 
   const toggleVideoList = () => {
     setShowAllVideos(!showAllVideos);
@@ -114,7 +140,8 @@ const VideoList = () => {
             <th>User</th>
             <th>Title</th>
             <th>Link</th>
-            <th>Approved</th>
+            <th>Status</th>
+            <th>Error Message</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -125,7 +152,7 @@ const VideoList = () => {
               <td>{video.title}</td>
               <td>
                 <a
-                  href={`https://random-rainbow-database.onrender.com/home/${video.endpoint}`}
+                  href={`http://localhost:3000/home/${video.endpoint}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -133,20 +160,27 @@ const VideoList = () => {
                 </a>
               </td>
               <td>
-                {video.videoStatus === "AVAILABLE" ? (
-                  <a>Available</a>
-                ) : video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ? (
-                  <span>Not Respecting Guidelines</span>
-                ) : (
-                  <span>Unchecked</span>
-                )}
+                <select
+                  value={video.videoStatus}
+                  onChange={(e) => handleStatusChange(video.id, e.target.value)}
+                >
+                  <option value="AVAILABLE">Available</option>
+                  <option value="ERROR">Error</option>
+                  <option value="DOESNT_RESPECT_GUIDELINES">
+                    Doesn't Respect Guidelines
+                  </option>
+                  <option value="UNCHECKED">Unchecked</option>
+                </select>
               </td>
+              <td>{video.messageError}</td>
               <td>
-                <button onClick={() => handleToggleApprove(video)}>
-                  {video.videoStatus === "AVAILABLE" ? "Disapprove" : "Approve"}
-                </button>
-                <button onClick={() => handleDelete(video.id)}>Delete</button>
-                <button onClick={() => handleUpdate(video.id)}>Update</button>
+                <select
+                  onChange={(e) => handleActionChange(e.target.value, video.id)}
+                >
+                  <option value="">Select Action</option>
+                  <option value="delete">Delete</option>
+                  <option value="update">Update</option>
+                </select>
               </td>
             </tr>
           ))}
