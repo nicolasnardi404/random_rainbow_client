@@ -1,14 +1,12 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import Dragbtn from "../components/Dragbtn";
-import { faUserAstronaut } from "@fortawesome/free-solid-svg-icons";
-import { faUsers } from "@fortawesome/free-solid-svg-icons";
-import DragIcon from "../components/DragIcon";
+import { faUserAstronaut, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function HeaderUserOff() {
   const history = useHistory();
 
-  function handleDoubleClick(path) {
+  function handleClick(path) {
     history.push(`/${path}`);
   }
 
@@ -18,28 +16,26 @@ export default function HeaderUserOff() {
         RANDOM RAINBOW
       </a>
       <div className="icons-group">
-        <Dragbtn
-          name="manifesto"
-          onDoubleClick={() => handleDoubleClick("manifesto")}
-        />
-        <div className="icons-style">
-          <DragIcon
-            text="log in"
-            icon={faUserAstronaut}
-            onDoubleClick={() => handleDoubleClick("log-in")}
-          />
+        <button
+          className="default-btn" // Maintain class name for styling
+          onClick={() => handleClick("manifesto")}
+        >
+          Manifesto
+        </button>
+        <div className="icons-style" onClick={() => handleClick("log-in")}>
+          <FontAwesomeIcon icon={faUserAstronaut} />
+          <h4>Log In</h4>
         </div>
-        <div className="icons-style">
-          <DragIcon
-            text="sign in"
-            icon={faUsers}
-            onDoubleClick={() => handleDoubleClick("sign-in")}
-          />
+        <div className="icons-style" onClick={() => handleClick("sign-in")}>
+          <FontAwesomeIcon icon={faUsers} />
+          <h4>Sign In</h4>
         </div>
-        <Dragbtn
-          name="home"
-          onDoubleClick={() => handleDoubleClick("home/0")}
-        />
+        <button
+          className="default-btn" // Maintain class name for styling
+          onClick={() => handleClick("home/0")}
+        >
+          Home
+        </button>
       </div>
     </div>
   );

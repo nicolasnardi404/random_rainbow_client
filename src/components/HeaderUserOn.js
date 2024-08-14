@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
-import { faPersonThroughWindow } from "@fortawesome/free-solid-svg-icons";
-import { faSmile } from "@fortawesome/free-solid-svg-icons";
-import DragIcon from "../components/DragIcon";
-import Dragbtn from "../components/Dragbtn";
-import { useParams } from "react-router-dom/cjs/react-router-dom";
+import {
+  faPersonThroughWindow,
+  faSmile,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 
 export default function HeaderUserOn() {
-  const { username, idUser } = useContext(AuthContext);
+  const { username } = useContext(AuthContext);
 
   const history = useHistory();
 
-  function handleDoubleClick(path) {
+  function handleClick(path) {
     history.push(`/${path}`);
   }
 
@@ -28,35 +28,29 @@ export default function HeaderUserOn() {
   return (
     <div>
       <div className="user-menu">
-        <div className="icons-style">
-          <DragIcon
-            text={username}
-            icon={faSmile}
-            onDoubleClick={() => handleDoubleClick("videos")}
-          />
+        <div className="icons-style" onClick={() => handleClick("videos")}>
+          <FontAwesomeIcon icon={faSmile} />
+          <h4>{username}</h4>
         </div>
-        <div className="icons-style">
-          <DragIcon
-            text="log-out"
-            icon={faPersonThroughWindow}
-            onDoubleClick={handleLogout}
-          />
+        <div className="icons-style" onClick={handleLogout}>
+          <FontAwesomeIcon icon={faPersonThroughWindow} />
+          <h4>Log Out</h4>
         </div>
       </div>
       <h1 className="app-title">RANDOM RAINBOW</h1>
       <div className="icons-group">
-        <Dragbtn
-          name="manifesto"
-          onDoubleClick={() => handleDoubleClick("manifesto")}
-        />
-        <Dragbtn
-          name="home"
-          onDoubleClick={() => handleDoubleClick("home/0")}
-        />
-        <Dragbtn
-          name="edit profile"
-          onDoubleClick={() => handleDoubleClick("profile")}
-        />
+        <button
+          className="default-btn"
+          onClick={() => handleClick("manifesto")}
+        >
+          Manifesto
+        </button>
+        <button className="default-btn" onClick={() => handleClick("home/0")}>
+          Home
+        </button>
+        <button className="default-btn" onClick={() => handleClick("profile")}>
+          Edit Profile
+        </button>
       </div>
     </div>
   );
