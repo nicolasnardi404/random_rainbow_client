@@ -34,8 +34,8 @@ const VideoList = () => {
     try {
       const token = await getUpdatedToken();
       const url = showAllVideos
-        ? "http://localhost:8080/api/admin/allvideos"
-        : "http://localhost:8080/api/admin/review";
+        ? "https://random-rainbow-database.onrender.com/api/admin/allvideos"
+        : "https://random-rainbow-database.onrender.com/api/admin/review";
       const response = await axios.get(url, {
         headers: { ...headers, Authorization: `Bearer ${token}` },
       });
@@ -57,9 +57,12 @@ const VideoList = () => {
 
     try {
       const token = await getUpdatedToken();
-      await axios.delete(`http://localhost:8080/api/admin/videos/${videoId}`, {
-        headers: { ...headers, Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(
+        `https://random-rainbow-database.onrender.com/api/admin/videos/${videoId}`,
+        {
+          headers: { ...headers, Authorization: `Bearer ${token}` },
+        }
+      );
       fetchVideos();
     } catch (error) {
       console.error("Failed to delete video:", error);
@@ -78,16 +81,16 @@ const VideoList = () => {
         try {
           const token = await getUpdatedToken();
           await axios.put(
-            `http://localhost:8080/api/admin/videos/duration/${videoId}`,
+            `https://random-rainbow-database.onrender.com/api/admin/videos/duration/${videoId}`,
             { duration: parseInt(duration) },
-            { headers: { ...headers, Authorization: `Bearer ${token}` } }
+            { headers: { Authorization: `Bearer ${token}` } }
           );
 
           // Update status after setting duration
           await axios.put(
-            `http://localhost:8080/api/admin/videos/status`,
+            `https://random-rainbow-database.onrender.com/api/admin/videos/status`,
             { id: videoId, videoStatus: newStatus },
-            { headers: { ...headers, Authorization: `Bearer ${token}` } }
+            { headers: { Authorization: `Bearer ${token}` } }
           );
 
           fetchVideos();
@@ -102,9 +105,9 @@ const VideoList = () => {
         try {
           const token = await getUpdatedToken();
           await axios.put(
-            `http://localhost:8080/api/admin/videos/status`,
-            { id: videoId, videoStatus: newStatus, messageError: errorMsg },
-            { headers: { ...headers, Authorization: `Bearer ${token}` } }
+            `https://random-rainbow-database.onrender.com/api/admin/videos/status`,
+            { id: videoId, videoStatus: newStatus, error: errorMsg },
+            { headers: { Authorization: `Bearer ${token}` } }
           );
           fetchVideos();
         } catch (error) {
@@ -152,7 +155,7 @@ const VideoList = () => {
               <td>{video.title}</td>
               <td>
                 <a
-                  href={`http://localhost:3000/home/${video.endpoint}`}
+                  href={`http://www.randomrainbow.art/home/${video.endpoint}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

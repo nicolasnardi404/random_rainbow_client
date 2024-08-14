@@ -35,7 +35,7 @@ const VideoList = () => {
     try {
       const token = await getUpdatedToken();
       const response = await axios.get(
-        `http://localhost:8080/api/users/${idUser}/videos`,
+        `https://random-rainbow-database.onrender.com/api/users/${idUser}/videos`,
         {
           headers: {
             ...headers,
@@ -63,7 +63,7 @@ const VideoList = () => {
     try {
       const token = await getUpdatedToken();
       await axios.delete(
-        `http://localhost:8080/api/users/${idUser}/videos/delete/${videoId}`,
+        `https://random-rainbow-database.onrender.com/api/users/${idUser}/videos/delete/${videoId}`,
         {
           headers: {
             ...headers,
@@ -81,7 +81,7 @@ const VideoList = () => {
     try {
       const token = await getUpdatedToken();
       const response = await axios.get(
-        `http://localhost:8080/api/users/${idUser}/videos/${videoId}`,
+        `https://random-rainbow-database.onrender.com/api/users/${idUser}/videos/${videoId}`,
         {
           headers: {
             ...headers,
@@ -145,7 +145,9 @@ const VideoList = () => {
                 onClick={() => handleStatusClick(video)}
               >
                 {video.videoStatus === "AVAILABLE" ? (
-                  <a href={`http://localhost:3000/home/${video.endpoint}`}>
+                  <a
+                    href={`http://www.randomrainbow.art/home/${video.endpoint}`}
+                  >
                     View Video
                   </a>
                 ) : video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ? (
