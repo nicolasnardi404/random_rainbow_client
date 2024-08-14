@@ -1,5 +1,3 @@
-// src/components/VideoList.js
-
 import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
@@ -36,12 +34,11 @@ const VideoList = () => {
   async function fetchVideos() {
     try {
       const token = await getUpdatedToken();
-
       const response = await axios.get(
         `http://localhost:8080/api/users/${idUser}/videos`,
         {
           headers: {
-            headers,
+            ...headers,
             Authorization: `Bearer ${token}`,
           },
         }
@@ -64,18 +61,12 @@ const VideoList = () => {
     }
 
     try {
-      const token = await refreshTokenIfNeeded({
-        accessToken,
-        refreshToken,
-        setAccessTokenLocal,
-        setRefreshTokenLocal,
-      });
-
+      const token = await getUpdatedToken();
       await axios.delete(
         `http://localhost:8080/api/users/${idUser}/videos/delete/${videoId}`,
         {
           headers: {
-            headers,
+            ...headers,
             Authorization: `Bearer ${token}`,
           },
         }
@@ -89,12 +80,11 @@ const VideoList = () => {
   async function handleUpdate(videoId) {
     try {
       const token = await getUpdatedToken();
-
       const response = await axios.get(
         `http://localhost:8080/api/users/${idUser}/videos/${videoId}`,
         {
           headers: {
-            headers,
+            ...headers,
             Authorization: `Bearer ${token}`,
           },
         }
@@ -106,6 +96,16 @@ const VideoList = () => {
       console.error("Failed to fetch video details:", error);
     }
   }
+
+  const handleStatusClick = (video) => {
+    if (
+      video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ||
+      video.videoStatus === "ERROR"
+    ) {
+      // Show error message in an alert or modal
+      alert(`Error Message: ${video.messageError}`);
+    }
+  };
 
   useEffect(() => {
     if (idUser) {
@@ -134,13 +134,24 @@ const VideoList = () => {
           {videos.map((video) => (
             <tr key={video.id}>
               <td>{video.title}</td>
-              <td>
+              <td
+                style={{
+                  cursor:
+                    video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ||
+                    video.videoStatus === "ERROR"
+                      ? "pointer"
+                      : "default",
+                }}
+                onClick={() => handleStatusClick(video)}
+              >
                 {video.videoStatus === "AVAILABLE" ? (
                   <a href={`http://localhost:3000/home/${video.endpoint}`}>
                     View Video
                   </a>
                 ) : video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ? (
                   <span>Not Respecting Guidelines</span>
+                ) : video.videoStatus === "ERROR" ? (
+                  <span>Error</span>
                 ) : (
                   <span>Unchecked</span>
                 )}

@@ -8,10 +8,10 @@ const VideoList = () => {
   const history = useHistory();
   const [videos, setVideos] = useState([]);
   const [showAllVideos, setShowAllVideos] = useState(true);
+
   const {
     accessToken,
     refreshToken,
-    idUser,
     setAccessTokenLocal,
     setRefreshTokenLocal,
   } = useContext(AuthContext);
@@ -42,7 +42,6 @@ const VideoList = () => {
       setVideos(response.data);
     } catch (error) {
       console.error("Failed to fetch videos:", error);
-      // Consider adding user-friendly error handling here
     }
   };
 
@@ -61,44 +60,9 @@ const VideoList = () => {
       await axios.delete(`http://localhost:8080/api/admin/videos/${videoId}`, {
         headers: { ...headers, Authorization: `Bearer ${token}` },
       });
-      fetchVideos(); // Refresh video list
+      fetchVideos();
     } catch (error) {
       console.error("Failed to delete video:", error);
-    }
-  };
-
-  const handleToggleApprove = async (video) => {
-    const confirmToggle = window.confirm(
-      `Are you sure you want to ${video.videoStatus === "AVAILABLE" ? "cancel" : "approve"} this video?`
-    );
-    if (!confirmToggle) return;
-
-    try {
-      const token = await getUpdatedToken();
-      let approveUrl =
-        video.videoStatus === "AVAILABLE"
-          ? `http://localhost:8080/api/admin/videos/${video.id}/toggle-cancel`
-          : `http://localhost:8080/api/admin/videos/${video.id}/toggle-approve`;
-      let payload = {};
-
-      if (video.videoStatus === "UNCHECKED") {
-        const newDuration = prompt(
-          "Please enter the new duration for the video:"
-        );
-        if (newDuration !== null && newDuration.trim() !== "") {
-          payload = { duration: parseInt(newDuration) };
-        }
-      }
-
-      await axios.put(approveUrl, payload, {
-        headers: { ...headers, Authorization: `Bearer ${token}` },
-      });
-      fetchVideos(); // Refresh video list
-    } catch (error) {
-      console.error(
-        "Failed to toggle approval/cancellation status of video:",
-        error
-      );
     }
   };
 
@@ -106,9 +70,67 @@ const VideoList = () => {
     history.push(`/admin/videos/update/${videoId}`);
   };
 
+  const handleStatusChange = async (videoId, newStatus) => {
+    if (newStatus === "AVAILABLE") {
+      // Prompt for duration
+      const duration = prompt("Please enter the video duration (in seconds):");
+      if (duration !== null && !isNaN(duration) && duration.trim() !== "") {
+        try {
+          const token = await getUpdatedToken();
+          await axios.put(
+            `http://localhost:8080/api/admin/videos/duration/${videoId}`,
+            { duration: parseInt(duration) },
+            { headers: { ...headers, Authorization: `Bearer ${token}` } }
+          );
+
+          // Update status after setting duration
+          await axios.put(
+            `http://localhost:8080/api/admin/videos/status`,
+            { id: videoId, videoStatus: newStatus },
+            { headers: { ...headers, Authorization: `Bearer ${token}` } }
+          );
+
+          fetchVideos();
+        } catch (error) {
+          console.error("Failed to update video:", error);
+        }
+      }
+    } else {
+      // Prompt for error message
+      const errorMsg = prompt("Please enter an error message for this video:");
+      if (errorMsg !== null && errorMsg.trim() !== "") {
+        try {
+          const token = await getUpdatedToken();
+          await axios.put(
+            `http://localhost:8080/api/admin/videos/status`,
+            { id: videoId, videoStatus: newStatus, messageError: errorMsg },
+            { headers: { ...headers, Authorization: `Bearer ${token}` } }
+          );
+          fetchVideos();
+        } catch (error) {
+          console.error("Failed to update video status:", error);
+        }
+      }
+    }
+  };
+
+  const handleActionChange = async (action, videoId) => {
+    switch (action) {
+      case "delete":
+        await handleDelete(videoId);
+        break;
+      case "update":
+        handleUpdate(videoId);
+        break;
+      default:
+        console.log(`Unsupported action: ${action}`);
+    }
+  };
+
   const toggleVideoList = () => {
     setShowAllVideos(!showAllVideos);
   };
+
   return (
     <div>
       <h1>{showAllVideos ? "ALL VIDEOS" : "REVIEW VIDEOS"}</h1>
@@ -118,7 +140,8 @@ const VideoList = () => {
             <th>User</th>
             <th>Title</th>
             <th>Link</th>
-            <th>Approved</th>
+            <th>Status</th>
+            <th>Error Message</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -137,20 +160,27 @@ const VideoList = () => {
                 </a>
               </td>
               <td>
-                {video.videoStatus === "AVAILABLE" ? (
-                  <a>Available</a>
-                ) : video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ? (
-                  <span>Not Respecting Guidelines</span>
-                ) : (
-                  <span>Unchecked</span>
-                )}
+                <select
+                  value={video.videoStatus}
+                  onChange={(e) => handleStatusChange(video.id, e.target.value)}
+                >
+                  <option value="AVAILABLE">Available</option>
+                  <option value="ERROR">Error</option>
+                  <option value="DOESNT_RESPECT_GUIDELINES">
+                    Doesn't Respect Guidelines
+                  </option>
+                  <option value="UNCHECKED">Unchecked</option>
+                </select>
               </td>
+              <td>{video.messageError}</td>
               <td>
-                <button onClick={() => handleToggleApprove(video)}>
-                  {video.videoStatus === "AVAILABLE" ? "Disapprove" : "Approve"}
-                </button>
-                <button onClick={() => handleDelete(video.id)}>Delete</button>
-                <button onClick={() => handleUpdate(video.id)}>Update</button>
+                <select
+                  onChange={(e) => handleActionChange(e.target.value, video.id)}
+                >
+                  <option value="">Select Action</option>
+                  <option value="delete">Delete</option>
+                  <option value="update">Update</option>
+                </select>
               </td>
             </tr>
           ))}
