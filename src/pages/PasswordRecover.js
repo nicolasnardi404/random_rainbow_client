@@ -12,14 +12,11 @@ export default function PasswordRecovery() {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    // Correctly spread the previous state
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
-  };
-
-  const handleDoubleClick = (path) => {
-    history.push(`/${path}`);
   };
 
   const handleSubmit = async (event) => {
@@ -37,6 +34,8 @@ export default function PasswordRecovery() {
       );
       if (response.ok) {
         alert("Password reset email sent!");
+        // Redirect to /welcome after successful password reset email send
+        history.push("/welcome");
       } else {
         console.log(formData);
         alert("Failed to send password reset email.");
@@ -66,7 +65,11 @@ export default function PasswordRecovery() {
               required
             />
           </label>
-          <input type="submit" value="LOG IN" />
+          <input
+            className="default-btn special-btn"
+            type="submit"
+            value="LOG IN"
+          />
         </form>
       </header>
     </div>

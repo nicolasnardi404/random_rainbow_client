@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 
 export default function HeaderUserOn() {
-  const { username } = useContext(AuthContext);
+  const { username, setAccessTokenLocal } = useContext(AuthContext);
 
   const history = useHistory();
 
@@ -22,6 +22,8 @@ export default function HeaderUserOn() {
     localStorage.removeItem("username");
     localStorage.removeItem("userId");
     localStorage.removeItem("role");
+    setAccessTokenLocal("");
+    console.log(localStorage);
     history.push("/welcome");
   }
 

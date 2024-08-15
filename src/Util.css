@@ -1,0 +1,70 @@
+/* 
+COLOR PALLETE WEBSITE:
+Carnation Pink: #FF99C9
+Light Green: #7EE280
+Maize Yellow: #F8E777
+Veronica Purple: #8447FF
+Light Blue Sky: #85C7F2
+Red: #E42525
+*/
+
+/* buttons */
+
+.default-btn {
+  font-size: 20px;
+  color: #8447ff;
+  background-color: #85c7f2;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 1px solid #7ee280;
+  margin: 1.2em;
+}
+
+.default-btn:hover {
+  color: #85c7f2;
+  background-color: #8447ff;
+  cursor: url("../images/rainbow-reverse.png"), auto;
+  border: 1px solid #e42525;
+}
+
+.update-btn {
+  background: #7ee280;
+  color: #e42525;
+  font-size: 1em;
+}
+
+.delete-btn {
+  background: #e42525;
+  color: #7ee280;
+  font-size: 1em;
+}
+
+.special-btn {
+  background: #8447ff;
+  color: #f8e777;
+}
+
+.special-btn:hover {
+  color: #e42525;
+  background-color: #f8e777;
+}
+
+/* title */
+
+.special-title {
+  margin: 30px auto;
+  max-width: 60%;
+  text-shadow: 2px 2px #e42525;
+  line-height: 60px;
+  padding: 10px;
+  border: 3px dashed #8447ff;
+}
+
+.special-select {
+  background-color: #85c7f2;
+  border-radius: 10px;
+  text-align: center;
+  border: none;
+  color: #8447ff;
+  padding: 5px;
+}

@@ -111,7 +111,7 @@ function ProfileEdit() {
           className="form-control edit-profile-form"
           placeholder="Social Media Link"
         />
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="default-btn special-btn">
           Update Profile
         </button>
       </form>

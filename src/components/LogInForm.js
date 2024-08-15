@@ -105,7 +105,7 @@ export default function LogInForm() {
         />
       </label>
       <br />
-      <input type="submit" value="LOG IN" />
+      <input className="default-btn special-btn" type="submit" value="LOG IN" />
       {error && <p>{error}</p>}
     </form>
   );

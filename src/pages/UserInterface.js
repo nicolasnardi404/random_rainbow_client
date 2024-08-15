@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import VideoList from "../components/VideoList";
-import Dragbtn from "../components/Dragbtn";
 import { useParams } from "react-router-dom";
 import HeaderUserOn from "../components/HeaderUserOn";
 import HeaderUserOff from "../components/HeaderUserOff";
@@ -12,7 +11,7 @@ const UserInterface = () => {
   const history = useHistory();
   const { idUser } = useParams();
 
-  function handleDoubleClick(path) {
+  function handleClick(path) {
     history.push(`/${path}`);
   }
 
@@ -29,15 +28,13 @@ const UserInterface = () => {
           <HeaderUserOff />
         )}
         <VideoList idUser={idUser} />
-        <Dragbtn
-          name="return"
-          onDoubleClick={() => handleDoubleClick("videos")}
-        />
         {role === "ROLE_ADMIN" && (
-          <Dragbtn
-            name="ADMIN"
-            onDoubleClick={() => handleAdminButtonClick()}
-          />
+          <button
+            className="default-btn"
+            onClick={() => handleAdminButtonClick()}
+          >
+            ADMIN
+          </button>
         )}
       </header>
     </div>

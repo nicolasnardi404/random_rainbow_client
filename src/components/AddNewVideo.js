@@ -140,7 +140,7 @@ function AddNewVideo() {
             required
           />
         )}
-        <button type="submit" className="btn btn-info">
+        <button type="submit" className="default-btn special-btn">
           Save
         </button>
       </form>

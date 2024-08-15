@@ -1,6 +1,5 @@
 import { useHistory } from "react-router-dom";
 import VideoListAdmin from "../components/VideoListAdmin";
-import Dragbtn from "../components/Dragbtn";
 import { useParams } from "react-router-dom";
 import HeaderUserOn from "../components/HeaderUserOn";
 import HeaderUserOff from "../components/HeaderUserOff";
@@ -14,7 +13,7 @@ const AdminController = () => {
   const history = useHistory();
   const { idUser } = useParams();
 
-  function handleDoubleClick(path) {
+  function handleClick(path) {
     history.push(`/${path}`);
   }
 
@@ -27,10 +26,9 @@ const AdminController = () => {
           <HeaderUserOff />
         )}
         <VideoListAdmin />
-        <Dragbtn
-          name="return"
-          onDoubleClick={() => handleDoubleClick("videos")}
-        />
+        <button className="default-btn" onClick={() => handleClick("videos")}>
+          return
+        </button>
       </header>
     </div>
   );

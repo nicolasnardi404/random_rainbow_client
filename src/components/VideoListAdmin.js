@@ -136,7 +136,9 @@ const VideoList = () => {
 
   return (
     <div>
-      <h1>{showAllVideos ? "ALL VIDEOS" : "REVIEW VIDEOS"}</h1>
+      <h1 className="special-title">
+        {showAllVideos ? "ALL VIDEOS" : "REVIEW VIDEOS"}
+      </h1>
       <table className="table-header">
         <thead>
           <tr>
@@ -164,6 +166,7 @@ const VideoList = () => {
               </td>
               <td>
                 <select
+                  className="special-select"
                   value={video.videoStatus}
                   onChange={(e) => handleStatusChange(video.id, e.target.value)}
                 >
@@ -178,6 +181,7 @@ const VideoList = () => {
               <td>{video.messageError}</td>
               <td>
                 <select
+                  className="special-select"
                   onChange={(e) => handleActionChange(e.target.value, video.id)}
                 >
                   <option value="">Select Action</option>
@@ -189,7 +193,7 @@ const VideoList = () => {
           ))}
         </tbody>
       </table>
-      <button onClick={toggleVideoList}>
+      <button className="default-btn special-btn" onClick={toggleVideoList}>
         {showAllVideos ? "GO TO REVIEW VIDEOS" : "GO TO ALL VIDEOS"}
       </button>
     </div>

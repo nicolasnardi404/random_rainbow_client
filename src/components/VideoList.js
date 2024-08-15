@@ -176,7 +176,7 @@ const VideoList = () => {
           ))}
         </tbody>
       </table>
-      <button onClick={handleClick} className="default-btn add-video-btn">
+      <button onClick={handleClick} className="default-btn special-btn">
         {canAddVideo ? "ADD NEW VIDEO" : "You cannot add more than 3 videos"}
       </button>
     </div>

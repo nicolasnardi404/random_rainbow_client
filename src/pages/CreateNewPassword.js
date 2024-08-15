@@ -90,7 +90,11 @@ export default function PasswordRecovery() {
           </label>
           {passwordError && <p style={{ color: "red" }}>{passwordError}</p>}{" "}
           {/* Display error message if passwords don't match */}
-          <input type="submit" value="CHANGE PASSWORD" />
+          <input
+            className="default-btn special-btn"
+            type="submit"
+            value="CHANGE PASSWORD"
+          />
         </form>
       </header>
     </div>

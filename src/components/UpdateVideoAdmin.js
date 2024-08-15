@@ -112,7 +112,7 @@ function UpdateVideoAdmin() {
           onChange={handleChange}
           className="form-control add-video-form"
           placeholder="Description"
-          rows="5" // Corrected attribute name
+          rows="5"
         />
         <input
           type="text"
@@ -122,7 +122,7 @@ function UpdateVideoAdmin() {
           className="form-control add-video-form"
           placeholder="Video Link"
         />
-        <button type="submit" className="btn btn-info">
+        <button type="submit" className="default-btn special-btn">
           Save
         </button>
       </form>

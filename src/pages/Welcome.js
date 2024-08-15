@@ -1,16 +1,11 @@
 import React from "react";
-import Dragbtn from "../components/Dragbtn";
 import { useHistory } from "react-router-dom";
-import "../App.css";
-import { faUserAstronaut } from "@fortawesome/free-solid-svg-icons";
-import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import BackGroundVideo from "../components/BackGroundVideo";
-import DragIcon from "../components/DragIcon";
 
 const Welcome = () => {
   const history = useHistory();
 
-  function handleDoubleClick(path) {
+  function handleClick(path) {
     history.push(`/${path}`);
   }
 
@@ -19,14 +14,15 @@ const Welcome = () => {
       <header className="App-header">
         <h1 className="app-title changing-colors">RANDOM RAINBOW</h1>
         <div className="icons-group">
-          <Dragbtn
-            name="manifesto"
-            onDoubleClick={() => handleDoubleClick("manifesto")}
-          />
-          <Dragbtn
-            name="home"
-            onDoubleClick={() => handleDoubleClick("home/0")}
-          />
+          <button
+            className="default-btn"
+            onClick={() => handleClick("manifesto")}
+          >
+            MANIFESTO
+          </button>
+          <button className="default-btn" onClick={() => handleClick("home/0")}>
+            HOME
+          </button>
         </div>
         <BackGroundVideo />
       </header>

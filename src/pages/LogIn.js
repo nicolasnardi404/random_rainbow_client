@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import Dragbtn from "../components/Dragbtn";
 import { useHistory } from "react-router-dom";
 import "../App.css";
 import LogInForm from "../components/LogInForm";
@@ -11,7 +10,7 @@ const LogIn = () => {
   const history = useHistory();
   const { accessToken } = useContext(AuthContext);
 
-  function handleDoubleClick(path) {
+  function handleClick(path) {
     history.push(`/${path}`);
   }
 
@@ -24,10 +23,12 @@ const LogIn = () => {
           <HeaderUserOff />
         )}
         <LogInForm />
-        <Dragbtn
-          name="forgot my password"
-          onDoubleClick={() => handleDoubleClick("password-recovery")}
-        />
+        <button
+          className="default-btn "
+          onClick={() => handleClick("password-recovery")}
+        >
+          forgot my password
+        </button>
       </header>
     </div>
   );

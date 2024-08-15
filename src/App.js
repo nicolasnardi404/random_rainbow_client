@@ -1,4 +1,5 @@
 import "./App.css";
+import "./Util.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   BrowserRouter as Router,
@@ -58,8 +59,8 @@ function App() {
             element={UserInterface}
           />
           <ProtectedRoute path="/profile" element={<ProfileUser />} />
-          <Route path="/password-recovery" component={<PasswordRecovery />} />
-          <Route path="/new-password/:token" component={<CreateNewPassord />} />
+          <Route path="/password-recovery" component={PasswordRecovery} />
+          <Route path="/new-password/:token" component={CreateNewPassord} />
           <ProtectedAdminRoute
             path="/admin-controller"
             element={<AdminController />}

@@ -64,23 +64,6 @@ Red: #E42525
   font-size: 8em;
 }
 
-.default-btn {
-  font-size: 20px;
-  color: #8447ff;
-  background-color: #85c7f2;
-  padding: 10px 15px;
-  border-radius: 10px;
-  border: 1px solid #7ee280;
-  margin: 1.2em;
-}
-
-.default-btn:hover {
-  color: #85c7f2;
-  background-color: #8447ff;
-  cursor: url("../images/rainbow-reverse.png"), auto;
-  border: 1px solid #e42525;
-}
-
 .icons-style {
   font-size: 1.4em;
   color: #e42525;
@@ -129,28 +112,6 @@ Red: #E42525
   border: 3px dotted #85c7f2;
   color: #8447ff;
   font-size: 0.5em;
-}
-
-.update-btn {
-  background: #7ee280;
-  color: #e42525;
-  font-size: 1em;
-}
-
-.delete-btn {
-  background: #e42525;
-  color: #7ee280;
-  font-size: 1em;
-}
-
-.add-video-btn {
-  background: #8447ff;
-  color: #f8e777;
-}
-
-.add-video-btn:hover {
-  color: #e42525;
-  background-color: #f8e777;
 }
 
 /*  */
