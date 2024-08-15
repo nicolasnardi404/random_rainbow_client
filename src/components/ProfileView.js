@@ -41,12 +41,14 @@ const ProfileView = () => {
     <div>
       {profileData.username && (
         <p>
-          <strong>{profileData.username}</strong>
+          <h1 className="title-username">*{profileData.username}*</h1>
         </p>
       )}
       {profileData.dataUserProfile && (
         <>
-          <p>{profileData.dataUserProfile.artistDescription}</p>
+          <p className="description-user">
+            {profileData.dataUserProfile.artistDescription}
+          </p>
           <p>
             <a
               href={cleanSocialMediaUrl(

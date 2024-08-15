@@ -70,6 +70,24 @@ Red: #E42525
   padding: 5px;
 }
 
+.title-username {
+  color: #8447ff;
+  text-shadow: 2px 2px 2px #e42525;
+}
+
+.description-user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #8447ff;
+  background-color: #f8e777;
+  padding: 5px;
+  max-width: 80%;
+  margin: 20px auto;
+  font-size: 0.8em;
+  border-radius: 5px;
+}
+
 .player {
   margin: auto;
   min-width: 50%;

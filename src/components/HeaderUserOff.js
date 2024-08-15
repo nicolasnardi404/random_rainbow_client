@@ -43,7 +43,7 @@ export default function HeaderUserOff() {
           onClick={() => handleClick("sign-in")}
         >
           <FontAwesomeIcon icon={faUsers} />
-          <h3>Sign In</h3>
+          <h3>Sign Up</h3>
         </div>
         <button
           className="default-btn menu-btn"

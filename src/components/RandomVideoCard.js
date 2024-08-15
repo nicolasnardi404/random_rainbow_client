@@ -29,16 +29,16 @@ export default function RandomVideoCard() {
     }
   };
 
-  const selectRandomVideo = async () => {
+  const selectRandomVideo = async (e) => {
     try {
       const response = await fetch(
         `https://random-rainbow-database.onrender.com/api/randomvideo/${durationOption}`
       );
       const videoData = await response.json();
       setSelectedVideo(videoData);
-      console.log(videoData);
 
       history.push(`/home/${videoData.endpoint}`);
+      e.currentTarget.blur();
     } catch (error) {
       console.error("Failed to fetch random video:", error);
     }
