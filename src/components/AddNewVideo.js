@@ -136,7 +136,7 @@ function AddNewVideo() {
             value={video.videoLink}
             onChange={handleChange}
             className="form-control add-video-form"
-            placeholder="Video Link"
+            placeholder="Video Link (youtube or vimeo)"
             required
           />
         )}

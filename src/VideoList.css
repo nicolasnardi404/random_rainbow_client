@@ -1,0 +1,62 @@
+/* 
+COLOR PALLETE WEBSITE:
+Carnation Pink: #FF99C9
+Light Green: #7EE280
+Maize Yellow: #F8E777
+Veronica Purple: #8447FF
+Light Blue Sky: #85C7F2
+Red: #E42525
+*/
+
+.video-title {
+  text-shadow: 2px 2px #ff99c9;
+  margin: 10px auto;
+  max-width: 80%;
+  padding: 1em;
+  font-size: 1.2em;
+}
+
+.video-list-container {
+  padding: 10px;
+}
+
+.video-list-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.video-username {
+  color: #e42525;
+}
+
+.video-error {
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 50px;
+}
+
+.video-list-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.video-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #f8e777;
+}
+
+.video-select {
+  max-width: 70%;
+  min-width: 50%;
+  padding: 5px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #28a745;
+  text-align: center;
+  background-color: #85c7f2;
+  color: #8447ff;
+}

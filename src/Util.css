@@ -53,7 +53,8 @@ Red: #E42525
 
 .special-title {
   margin: 30px auto;
-  max-width: 60%;
+  max-width: 70%;
+  min-width: 50%;
   text-shadow: 2px 2px #e42525;
   line-height: 60px;
   padding: 10px;

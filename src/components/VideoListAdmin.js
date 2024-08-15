@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
 import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded";
+import "../VideoList.css"; // Import the CSS file
 
 const VideoList = () => {
   const history = useHistory();
@@ -75,7 +76,6 @@ const VideoList = () => {
 
   const handleStatusChange = async (videoId, newStatus) => {
     if (newStatus === "AVAILABLE") {
-      // Prompt for duration
       const duration = prompt("Please enter the video duration (in seconds):");
       if (duration !== null && !isNaN(duration) && duration.trim() !== "") {
         try {
@@ -86,7 +86,6 @@ const VideoList = () => {
             { headers: { Authorization: `Bearer ${token}` } }
           );
 
-          // Update status after setting duration
           await axios.put(
             `https://random-rainbow-database.onrender.com/api/admin/videos/status`,
             { id: videoId, videoStatus: newStatus },
@@ -99,7 +98,6 @@ const VideoList = () => {
         }
       }
     } else {
-      // Prompt for error message
       const errorMsg = prompt("Please enter an error message for this video:");
       if (errorMsg !== null && errorMsg.trim() !== "") {
         try {
@@ -135,64 +133,60 @@ const VideoList = () => {
   };
 
   return (
-    <div>
+    <div className="video-list-container">
       <h1 className="special-title">
         {showAllVideos ? "ALL VIDEOS" : "REVIEW VIDEOS"}
       </h1>
-      <table className="table-header">
-        <thead>
-          <tr>
-            <th>User</th>
-            <th>Title</th>
-            <th>Link</th>
-            <th>Status</th>
-            <th>Error Message</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {videos.map((video) => (
-            <tr key={video.id}>
-              <td>{video.user.username}</td>
-              <td>{video.title}</td>
-              <td>
-                <a
-                  href={`http://www.randomrainbow.art/home/${video.endpoint}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  video url
-                </a>
-              </td>
-              <td>
-                <select
-                  className="special-select"
-                  value={video.videoStatus}
-                  onChange={(e) => handleStatusChange(video.id, e.target.value)}
-                >
-                  <option value="AVAILABLE">Available</option>
-                  <option value="ERROR">Error</option>
-                  <option value="DOESNT_RESPECT_GUIDELINES">
-                    Doesn't Respect Guidelines
-                  </option>
-                  <option value="UNCHECKED">Unchecked</option>
-                </select>
-              </td>
-              <td>{video.messageError}</td>
-              <td>
-                <select
-                  className="special-select"
-                  onChange={(e) => handleActionChange(e.target.value, video.id)}
-                >
-                  <option value="">Select Action</option>
-                  <option value="delete">Delete</option>
-                  <option value="update">Update</option>
-                </select>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="video-list-cards">
+        {videos.map((video) => (
+          <div key={video.id} className="video-card">
+            <h2 className="video-title">{video.title}</h2>
+            <p className="video-username">{video.user.username}</p>
+            <p>
+              <select
+                className="video-select"
+                value={video.videoStatus}
+                onChange={(e) => handleStatusChange(video.id, e.target.value)}
+              >
+                <option value="AVAILABLE">Available</option>
+                <option value="ERROR">Error</option>
+                <option value="DOESNT_RESPECT_GUIDELINES">
+                  Doesn't Respect Guidelines
+                </option>
+                <option value="UNCHECKED">Unchecked</option>
+              </select>
+            </p>
+            <p>
+              <h4 className="video-error">
+                {video.messageError ? `Error: ${video.messageError}` : ""}
+              </h4>
+            </p>
+            <p>
+              <a
+                href={`http://www.randomrainbow.art/home/${video.endpoint}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Video
+              </a>
+            </p>
+            <div className="video-actions">
+              <button
+                className="default-btn update-btn"
+                onClick={() => handleUpdate(video.id)}
+              >
+                Update
+              </button>
+              <button
+                className="default-btn delete-btn"
+                onClick={() => handleDelete(video.id)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
       <button className="default-btn special-btn" onClick={toggleVideoList}>
         {showAllVideos ? "GO TO REVIEW VIDEOS" : "GO TO ALL VIDEOS"}
       </button>
