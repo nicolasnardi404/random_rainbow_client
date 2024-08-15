@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import ReactPlayer from "react-player";
 import "../App.css";
+import "../Util.css";
 
 export default function RandomVideoCard() {
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -60,15 +61,9 @@ export default function RandomVideoCard() {
             * {selectedVideo.user.username} *
           </div>
           <div>
-            <ReactPlayer
-              className="player"
-              url={videoUrl}
-              controls={true}
-              width="640px"
-              height="390px"
-            />
+            <ReactPlayer className="player" url={videoUrl} controls={true} />
           </div>
-          <div className="description">{selectedVideo.description}</div>
+          <div className="description">{selectedVideo.videoDescription}</div>
           <button
             className="btn-random-video btn-random-video-after"
             onClick={selectRandomVideo}
