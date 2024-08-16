@@ -11,24 +11,31 @@ const EmailVerified = () => {
 
   const [isVerified, setIsVerified] = useState(false); // State to manage verification status
   const [verificationError, setVerificationError] = useState(""); // State to manage error message
+  const [loading, setLoading] = useState(true); // State to manage loading status
 
   useEffect(() => {
     const verifyEmail = async () => {
+      setLoading(true); // Start loading
+
       try {
         const response = await fetch(
           `${process.env.REACT_APP_API_BASE_URL}/api/verify?token=${token}`
         );
-        console.log(response);
 
         if (response.status === 200) {
           setIsVerified(true);
         } else {
           setIsVerified(false);
-          setVerificationError(response.message || "Email verification failed");
+          const errorData = await response.json();
+          setVerificationError(
+            errorData.message || "Email verification failed"
+          );
         }
       } catch (error) {
         setIsVerified(false);
         setVerificationError("An error occurred during email verification");
+      } finally {
+        setLoading(false); // End loading
       }
     };
 
@@ -44,7 +51,9 @@ const EmailVerified = () => {
           <HeaderUserOff />
         )}
         <div className="email-confirmation">
-          {isVerified ? (
+          {loading ? ( // Display loading message if loading is true
+            <h2 className="email-confirmation-child">Loading...</h2>
+          ) : isVerified ? ( // Display verification result if not loading
             <>
               <h2 className="email-confirmation-child">
                 WELCOME TO RANDOM RAINBOW
