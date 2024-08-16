@@ -38,7 +38,7 @@ export default function SignInForm() {
 
     try {
       const response = await fetch(
-        "https://random-rainbow-database.onrender.com/api/v1/auth/register",
+        `${process.env.REACT_APP_API_BASE_URL}/api/v1/auth/register`,
         {
           method: "POST",
           headers: {

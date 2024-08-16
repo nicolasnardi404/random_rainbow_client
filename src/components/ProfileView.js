@@ -13,7 +13,7 @@ const ProfileView = () => {
   const fetchProfileData = async () => {
     try {
       const response = await axios.get(
-        `https://random-rainbow-database.onrender.com/api/randomvideo/videosbyartist/${userId}`
+        `${process.env.REACT_APP_API_BASE_URL}/api/randomvideo/videosbyartist/${userId}`
       );
       const { dataUserProfile, username, listVideos } = response.data;
       setProfileData({ dataUserProfile, username });

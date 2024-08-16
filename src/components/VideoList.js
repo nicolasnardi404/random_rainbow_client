@@ -35,7 +35,7 @@ const VideoList = () => {
     try {
       const token = await getUpdatedToken();
       const response = await axios.get(
-        `https://random-rainbow-database.onrender.com/api/users/${idUser}/videos`,
+        `${process.env.REACT_APP_API_BASE_URL}/api/users/${idUser}/videos`,
         {
           headers: {
             ...headers,
@@ -63,7 +63,7 @@ const VideoList = () => {
     try {
       const token = await getUpdatedToken();
       await axios.delete(
-        `https://random-rainbow-database.onrender.com/api/users/${idUser}/videos/delete/${videoId}`,
+        `${process.env.REACT_APP_API_BASE_URL}/api/users/${idUser}/videos/delete/${videoId}`,
         {
           headers: {
             ...headers,
@@ -81,7 +81,7 @@ const VideoList = () => {
     try {
       const token = await getUpdatedToken();
       const response = await axios.get(
-        `https://random-rainbow-database.onrender.com/api/users/${idUser}/videos/${videoId}`,
+        `${process.env.REACT_APP_API_BASE_URL}/api/users/${idUser}/videos/${videoId}`,
         {
           headers: {
             ...headers,

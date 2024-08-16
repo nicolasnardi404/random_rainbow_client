@@ -32,7 +32,7 @@ export default function LogInForm() {
     e.preventDefault();
     try {
       const response = await fetch(
-        "https://random-rainbow-database.onrender.com/api/v1/auth/authenticate",
+        `${process.env.REACT_APP_API_BASE_URL}/api/v1/auth/authenticate`,
         {
           method: "POST",
           headers: {

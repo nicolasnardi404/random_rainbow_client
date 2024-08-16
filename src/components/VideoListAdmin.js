@@ -35,8 +35,8 @@ const VideoList = () => {
     try {
       const token = await getUpdatedToken();
       const url = showAllVideos
-        ? "https://random-rainbow-database.onrender.com/api/admin/allvideos"
-        : "https://random-rainbow-database.onrender.com/api/admin/review";
+        ? `${process.env.REACT_APP_API_BASE_URL}/api/admin/allvideos`
+        : `${process.env.REACT_APP_API_BASE_URL}/api/admin/review`;
       const response = await axios.get(url, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -59,7 +59,7 @@ const VideoList = () => {
     try {
       const token = await getUpdatedToken();
       await axios.delete(
-        `https://random-rainbow-database.onrender.com/api/admin/videos/${videoId}`,
+        `${process.env.REACT_APP_API_BASE_URL}/api/admin/videos/${videoId}`,
         {
           headers: { ...headers, Authorization: `Bearer ${token}` },
         }
@@ -81,13 +81,13 @@ const VideoList = () => {
         try {
           const token = await getUpdatedToken();
           await axios.put(
-            `https://random-rainbow-database.onrender.com/api/admin/videos/duration/${videoId}`,
+            `${process.env.REACT_APP_API_BASE_URL}/api/admin/videos/duration/${videoId}`,
             { duration: parseInt(duration) },
             { headers: { Authorization: `Bearer ${token}` } }
           );
 
           await axios.put(
-            `https://random-rainbow-database.onrender.com/api/admin/videos/status`,
+            `${process.env.REACT_APP_API_BASE_URL}/api/admin/videos/status`,
             { id: videoId, videoStatus: newStatus },
             { headers: { Authorization: `Bearer ${token}` } }
           );
@@ -103,7 +103,7 @@ const VideoList = () => {
         try {
           const token = await getUpdatedToken();
           await axios.put(
-            `https://random-rainbow-database.onrender.com/api/admin/videos/status`,
+            `${process.env.REACT_APP_API_BASE_URL}/api/admin/videos/status`,
             { id: videoId, videoStatus: newStatus, error: errorMsg },
             { headers: { Authorization: `Bearer ${token}` } }
           );

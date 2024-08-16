@@ -34,11 +34,9 @@ export default function RandomVideoCard() {
         `${process.env.REACT_APP_API_BASE_URL}/api/randomvideo/${durationOption}`
       );
       const data = await response.json();
-      console.log("Fetched video data:", data);
       setSelectedVideo(data);
 
       history.push(`/home/${data.endpoint}`);
-      e.currentTarget.blur();
     } catch (error) {
       console.error("Failed to fetch random video:", error);
     }

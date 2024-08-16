@@ -39,7 +39,7 @@ function ProfileEdit() {
 
       // Fetch user profile
       const response = await axios.get(
-        `https://random-rainbow-database.onrender.com/api/users/profile/${idUser}`,
+        `${process.env.REACT_APP_API_BASE_URL}/api/users/profile/${idUser}`,
         { headers }
       );
       setProfile(response.data);
@@ -69,7 +69,7 @@ function ProfileEdit() {
       };
 
       const response = await axios.put(
-        `https://random-rainbow-database.onrender.com/api/users/profile/${idUser}`,
+        `${process.env.REACT_APP_API_BASE_URL}/api/users/profile/${idUser}`,
         payload,
         { headers }
       );

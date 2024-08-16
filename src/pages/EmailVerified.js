@@ -16,7 +16,7 @@ const EmailVerified = () => {
     const verifyEmail = async () => {
       try {
         const response = await fetch(
-          `https://random-rainbow-database.onrender.com/api/verify?token=${token}`
+          `${process.env.REACT_APP_API_BASE_URL}/api/verify?token=${token}`
         );
         console.log(response);
 

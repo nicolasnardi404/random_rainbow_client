@@ -41,7 +41,7 @@ function UpdateVideoAdmin() {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `https://random-rainbow-database.onrender.com/api/admin/videos/${videoId}`,
+            `${process.env.REACT_APP_API_BASE_URL}/api/admin/videos/${videoId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -67,7 +67,7 @@ function UpdateVideoAdmin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let url = `https://random-rainbow-database.onrender.com/api/admin/videos/${videoId}`;
+    let url = `${process.env.REACT_APP_API_BASE_URL}/api/admin/videos/${videoId}`;
     let method = "PUT";
 
     try {

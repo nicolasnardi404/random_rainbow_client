@@ -40,7 +40,7 @@ function AddNewVideo() {
         try {
           const token = await getUpdatedToken();
           const response = await axios.get(
-            `https://random-rainbow-database.onrender.com/api/users/${idUser}/videos/${videoId}`,
+            `${process.env.REACT_APP_API_BASE_URL}/api/users/${idUser}/videos/${videoId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -71,11 +71,11 @@ function AddNewVideo() {
       videoLink: video.videoLink,
     };
 
-    let url = `https://random-rainbow-database.onrender.com/api/users/${idUser}/videos/addNewVideo`;
+    let url = `${process.env.REACT_APP_API_BASE_URL}/api/users/${idUser}/videos/addNewVideo`;
     let method = "POST";
 
     if (videoId) {
-      url = `https://random-rainbow-database.onrender.com/api/users/${idUser}/videos/update/${videoId}`;
+      url = `${process.env.REACT_APP_API_BASE_URL}/api/users/${idUser}/videos/update/${videoId}`;
       method = "PUT";
     }
 
