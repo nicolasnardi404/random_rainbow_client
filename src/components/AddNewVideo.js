@@ -20,10 +20,8 @@ function AddNewVideo() {
     videoLink: "",
   });
   const [errorMessage, setErrorMessage] = useState(""); // State for error messages
-
-  const headers = {
-    Authorization: `Bearer ${accessToken}`,
-  };
+  const [loading, setLoading] = useState(false); // Add loading state for submission
+  const [fetchingData, setFetchingData] = useState(false); // Add loading state for fetching data
 
   const getUpdatedToken = async () => {
     return await refreshTokenIfNeeded({
@@ -37,6 +35,7 @@ function AddNewVideo() {
   useEffect(() => {
     if (videoId) {
       const fetchData = async () => {
+        setFetchingData(true); // Start loading when fetching data
         try {
           const token = await getUpdatedToken();
           const response = await axios.get(
@@ -48,9 +47,11 @@ function AddNewVideo() {
             }
           );
           const videos = response.data;
-          setVideo(videos); // This should trigger a re-render
+          setVideo(videos); // Set video data
         } catch (error) {
           console.error("Failed to fetch video details:", error);
+        } finally {
+          setFetchingData(false); // End loading after fetching data
         }
       };
       fetchData();
@@ -63,6 +64,7 @@ function AddNewVideo() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Start loading when submitting
 
     // Prepare the JSON payload
     const payload = {
@@ -105,45 +107,58 @@ function AddNewVideo() {
         "There has been a problem with your fetch operation:",
         error.response ? error.response : error.message
       );
+    } finally {
+      setLoading(false); // End loading after submission
     }
   };
 
   return (
     <div className="add-video-style">
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="title"
-          value={video.title} // Displaying the fetched title
-          onChange={handleChange}
-          className="form-control add-video-form"
-          placeholder="Title"
-          required
-        />
-        <textarea
-          name="videoDescription"
-          value={video.videoDescription}
-          onChange={handleChange}
-          className="form-control add-video-form"
-          placeholder="Description"
-          rows="5"
-          required
-        />
-        {!videoId && (
+      {fetchingData ? ( // Show loading indicator when fetching data
+        <div className="special-title">Loading...</div>
+      ) : (
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
-            name="videoLink"
-            value={video.videoLink}
+            name="title"
+            value={video.title} // Displaying the fetched title
             onChange={handleChange}
             className="form-control add-video-form"
-            placeholder="Video Link (youtube/vimeo)"
+            placeholder="Title"
             required
+            disabled={loading} // Disable input when saving
           />
-        )}
-        <button type="submit" className="default-btn special-btn">
-          Save
-        </button>
-      </form>
+          <textarea
+            name="videoDescription"
+            value={video.videoDescription}
+            onChange={handleChange}
+            className="form-control add-video-form"
+            placeholder="Description"
+            rows="5"
+            required
+            disabled={loading} // Disable textarea when saving
+          />
+          {!videoId && (
+            <input
+              type="text"
+              name="videoLink"
+              value={video.videoLink}
+              onChange={handleChange}
+              className="form-control add-video-form"
+              placeholder="Video Link (youtube/vimeo)"
+              required
+              disabled={loading} // Disable input when saving
+            />
+          )}
+          <button
+            type="submit"
+            className="default-btn special-btn"
+            disabled={loading} // Disable button when saving
+          >
+            {loading ? "Saving..." : "Save"} {/* Show loading text */}
+          </button>
+        </form>
+      )}
       {/* Display error message if present */}
       {errorMessage && <div className="error">{errorMessage}</div>}
     </div>
