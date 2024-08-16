@@ -19,11 +19,10 @@ export default function RandomVideoCard() {
   const fetchVideoByToken = async (token) => {
     try {
       const response = await fetch(
-        `https://random-rainbow-database.onrender.com/api/randomvideo/video/${token}`
+        `${process.env.REACT_APP_API_BASE_URL}/api/randomvideo/video/${token}`
       );
-      const videoData = await response.json();
-      setSelectedVideo(videoData);
-      console.log(videoData);
+      const data = await response.json();
+      setSelectedVideo(data);
     } catch (error) {
       console.error("Failed to fetch video by token:", error);
     }
@@ -32,12 +31,13 @@ export default function RandomVideoCard() {
   const selectRandomVideo = async (e) => {
     try {
       const response = await fetch(
-        `https://random-rainbow-database.onrender.com/api/randomvideo/${durationOption}`
+        `${process.env.REACT_APP_API_BASE_URL}/api/randomvideo/${durationOption}`
       );
-      const videoData = await response.json();
-      setSelectedVideo(videoData);
+      const data = await response.json();
+      console.log("Fetched video data:", data);
+      setSelectedVideo(data);
 
-      history.push(`/home/${videoData.endpoint}`);
+      history.push(`/home/${data.endpoint}`);
       e.currentTarget.blur();
     } catch (error) {
       console.error("Failed to fetch random video:", error);
@@ -54,11 +54,9 @@ export default function RandomVideoCard() {
           <div className="title">{selectedVideo.title}</div>
           <div
             className="artist"
-            onClick={() =>
-              history.push(`/profile/${selectedVideo.user.username}`)
-            }
+            onClick={() => history.push(`/profile/${selectedVideo.username}`)}
           >
-            * {selectedVideo.user.username} *
+            * {selectedVideo.username} *
           </div>
           <div>
             <ReactPlayer className="player" url={videoUrl} controls={true} />

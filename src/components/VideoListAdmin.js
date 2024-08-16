@@ -38,7 +38,7 @@ const VideoList = () => {
         ? "https://random-rainbow-database.onrender.com/api/admin/allvideos"
         : "https://random-rainbow-database.onrender.com/api/admin/review";
       const response = await axios.get(url, {
-        headers: { ...headers, Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
       setVideos(response.data);
     } catch (error) {
