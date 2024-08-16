@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
 import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded";
@@ -10,6 +10,8 @@ function ProfileEdit() {
     artistDescription: "",
     socialMedia: "",
   });
+  const [loading, setLoading] = useState(true); // Loading state
+
   const {
     accessToken,
     refreshToken,
@@ -29,6 +31,7 @@ function ProfileEdit() {
   };
 
   const fetchData = async () => {
+    setLoading(true); // Start loading
     try {
       const newAccessToken = await getUpdatedToken();
 
@@ -45,15 +48,20 @@ function ProfileEdit() {
       setProfile(response.data);
     } catch (error) {
       console.error("Failed to fetch profile details:", error);
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
   useEffect(() => {
-    fetchData();
+    if (idUser) {
+      fetchData();
+    }
   }, [idUser]); // Fetch data when `idUser` changes
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Start loading
 
     const payload = {
       artistDescription: profile.artistDescription,
@@ -84,37 +92,45 @@ function ProfileEdit() {
         "There has been a problem with your fetch operation:",
         error.response ? error.response : error.message
       );
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
   return (
     <div className="edit-profile-style">
-      <form onSubmit={handleSubmit}>
-        <textarea
-          type="text"
-          name="artistDescription"
-          value={profile.artistDescription}
-          onChange={(e) =>
-            setProfile({ ...profile, artistDescription: e.target.value })
-          }
-          className="form-control edit-profile-form"
-          placeholder="Artist Description"
-          rows="5"
-        />
-        <input
-          type="text"
-          name="socialMedia"
-          value={profile.socialMedia}
-          onChange={(e) =>
-            setProfile({ ...profile, socialMedia: e.target.value })
-          }
-          className="form-control edit-profile-form"
-          placeholder="Social Media Link"
-        />
-        <button type="submit" className="default-btn special-btn">
-          Update Profile
-        </button>
-      </form>
+      {loading ? (
+        <div className="special-title" style={{ border: "none" }}>
+          Loading...
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <textarea
+            type="text"
+            name="artistDescription"
+            value={profile.artistDescription}
+            onChange={(e) =>
+              setProfile({ ...profile, artistDescription: e.target.value })
+            }
+            className="form-control edit-profile-form"
+            placeholder="Artist Description"
+            rows="5"
+          />
+          <input
+            type="text"
+            name="socialMedia"
+            value={profile.socialMedia}
+            onChange={(e) =>
+              setProfile({ ...profile, socialMedia: e.target.value })
+            }
+            className="form-control edit-profile-form"
+            placeholder="Social Media Link"
+          />
+          <button type="submit" className="default-btn special-btn">
+            Update Profile
+          </button>
+        </form>
+      )}
     </div>
   );
 }
