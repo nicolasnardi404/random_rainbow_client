@@ -19,6 +19,7 @@ export default function LogInForm() {
   });
 
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // Add loading state
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -30,6 +31,8 @@ export default function LogInForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true); // Start loading
+
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_BASE_URL}/api/v1/auth/authenticate`,
@@ -61,7 +64,6 @@ export default function LogInForm() {
               // Redirect to another page
               history.push("/videos");
             } catch (err) {
-              // Handle decoding errors
               setError("Invalid token format");
             }
           } else {
@@ -71,13 +73,14 @@ export default function LogInForm() {
           throw new Error(`Expected JSON but got ${contentType}`);
         }
       } else {
-        // Handle HTTP errors
         const errorMessage = await response.text();
         setError(`Server error: ${errorMessage}`);
       }
     } catch (error) {
       console.error("Error on log in:", error);
       setError("An unexpected error occurred");
+    } finally {
+      setLoading(false); // End loading
     }
   }
 
@@ -105,7 +108,12 @@ export default function LogInForm() {
         />
       </label>
       <br />
-      <input className="default-btn special-btn" type="submit" value="LOG IN" />
+      <input
+        className="default-btn special-btn"
+        type="submit"
+        value={loading ? "Loading..." : "LOG IN"} // Show loading text
+        disabled={loading} // Disable button when loading
+      />
       {error && <p>{error}</p>}
     </form>
   );
