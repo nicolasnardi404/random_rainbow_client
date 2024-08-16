@@ -115,7 +115,9 @@ function AddNewVideo() {
   return (
     <div className="add-video-style">
       {fetchingData ? ( // Show loading indicator when fetching data
-        <div className="special-title">Loading...</div>
+        <div className="special-title" style={{ border: "none" }}>
+          Loading...
+        </div>
       ) : (
         <form onSubmit={handleSubmit}>
           <input

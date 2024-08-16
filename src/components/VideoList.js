@@ -7,8 +7,8 @@ import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded"; // Adjust t
 const VideoList = () => {
   const history = useHistory();
   const [videos, setVideos] = useState([]);
-  const [editingVideo, setEditingVideo] = useState({});
-  const [canAddVideo, setCanAddVideo] = useState(true);
+  const [loading, setLoading] = useState(true); // Single loading state
+
   const {
     accessToken,
     refreshToken,
@@ -31,23 +31,35 @@ const VideoList = () => {
     });
   };
 
+  const handleStatusClick = (video) => {
+    if (
+      video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ||
+      video.videoStatus === "ERROR"
+    ) {
+      // Show error message in an alert or modal
+      alert(
+        `${video.messageError} if you want to ask any other question or ask for more info send us an email info@randomrainbow.com`
+      );
+    }
+  };
+
   async function fetchVideos() {
+    setLoading(true); // Start loading
     try {
       const token = await getUpdatedToken();
       const response = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL}/api/users/${idUser}/videos`,
         {
           headers: {
-            ...headers,
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      const userVideos = response.data;
-      setVideos(userVideos);
-      setCanAddVideo(userVideos.length < 3);
+      setVideos(response.data);
     } catch (error) {
       console.error("Failed to fetch videos:", error);
+    } finally {
+      setLoading(false); // End loading
     }
   }
 
@@ -60,13 +72,13 @@ const VideoList = () => {
       return;
     }
 
+    setLoading(true); // Start loading
     try {
       const token = await getUpdatedToken();
       await axios.delete(
         `${process.env.REACT_APP_API_BASE_URL}/api/users/${idUser}/videos/delete/${videoId}`,
         {
           headers: {
-            ...headers,
             Authorization: `Bearer ${token}`,
           },
         }
@@ -74,10 +86,12 @@ const VideoList = () => {
       fetchVideos();
     } catch (error) {
       console.error("Failed to delete video:", error);
+      setLoading(false);
     }
   }
 
   async function handleUpdate(videoId) {
+    setLoading(true);
     try {
       const token = await getUpdatedToken();
       const response = await axios.get(
@@ -89,23 +103,13 @@ const VideoList = () => {
           },
         }
       );
-      const videoDetails = response.data;
-      setEditingVideo(videoDetails);
       history.push(`/${idUser}/update/${videoId}`);
     } catch (error) {
       console.error("Failed to fetch video details:", error);
+    } finally {
+      setLoading(false); // End loading
     }
   }
-
-  const handleStatusClick = (video) => {
-    if (
-      video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ||
-      video.videoStatus === "ERROR"
-    ) {
-      // Show error message in an alert or modal
-      alert(`Error Message: ${video.messageError}`);
-    }
-  };
 
   useEffect(() => {
     if (idUser) {
@@ -115,70 +119,81 @@ const VideoList = () => {
 
   function handleClick(e) {
     e.preventDefault();
-    if (canAddVideo) {
+    if (videos.length < 3) {
+      setLoading(true);
       history.push(`/${idUser}/add-new-video`);
     }
   }
 
   return (
     <div>
-      <table className="table-header">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Video Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {videos.map((video) => (
-            <tr key={video.id}>
-              <td>{video.title}</td>
-              <td
-                style={{
-                  cursor:
-                    video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ||
-                    video.videoStatus === "ERROR"
-                      ? "pointer"
-                      : "default",
-                }}
-                onClick={() => handleStatusClick(video)}
-              >
-                {video.videoStatus === "AVAILABLE" ? (
-                  <a
-                    href={`http://www.randomrainbow.art/home/${video.endpoint}`}
+      {loading ? (
+        <div className="special-title" style={{ border: "none" }}>
+          Loading...
+        </div>
+      ) : (
+        <>
+          <table className="table-header">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Video Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {videos.map((video) => (
+                <tr key={video.id}>
+                  <td>{video.title}</td>
+                  <td
+                    style={{
+                      cursor:
+                        video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ||
+                        video.videoStatus === "ERROR"
+                          ? "pointer"
+                          : "default",
+                    }}
+                    onClick={() => handleStatusClick(video)}
                   >
-                    View Video
-                  </a>
-                ) : video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ? (
-                  <span>Not Respecting Guidelines</span>
-                ) : video.videoStatus === "ERROR" ? (
-                  <span>Error</span>
-                ) : (
-                  <span>Unchecked</span>
-                )}
-              </td>
-              <td>
-                <button
-                  className="default-btn update-btn"
-                  onClick={() => handleUpdate(video.id)}
-                >
-                  UPDATE
-                </button>
-                <button
-                  className="default-btn delete-btn"
-                  onClick={() => handleDelete(video.id)}
-                >
-                  DELETE
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <button onClick={handleClick} className="default-btn special-btn">
-        {canAddVideo ? "ADD NEW VIDEO" : "You cannot add more than 3 videos"}
-      </button>
+                    {video.videoStatus === "AVAILABLE" ? (
+                      <a
+                        href={`http://www.randomrainbow.art/home/${video.endpoint}`}
+                      >
+                        View Video
+                      </a>
+                    ) : video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ? (
+                      <span>Not Respecting Guidelines</span>
+                    ) : video.videoStatus === "ERROR" ? (
+                      <span>Error</span>
+                    ) : (
+                      <span>Unchecked</span>
+                    )}
+                  </td>
+                  <td>
+                    <button
+                      className="default-btn update-btn"
+                      onClick={() => handleUpdate(video.id)}
+                    >
+                      UPDATE
+                    </button>
+                    <button
+                      className="default-btn delete-btn"
+                      onClick={() => handleDelete(video.id)}
+                    >
+                      DELETE
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button onClick={handleClick} className="default-btn special-btn">
+            {videos.length < 3
+              ? "ADD NEW VIDEO"
+              : "You cannot add more than 3 videos"}
+          </button>
+        </>
+      )}
     </div>
   );
 };
