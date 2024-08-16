@@ -46,6 +46,8 @@ Red: #E42525
   background-color: #f8e777;
   margin: 0.5em;
   max-width: 80%;
+  color: #e42525;
+  border: 3px solid #7ee280;
 }
 
 .group-form {
