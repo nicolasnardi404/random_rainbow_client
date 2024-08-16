@@ -9,10 +9,10 @@ export default function PasswordRecovery() {
   const { accessToken } = useContext(AuthContext);
   const history = useHistory();
   const [formData, setFormData] = useState({ email: "" });
+  const [loading, setLoading] = useState(false); // State to manage loading status
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    // Correctly spread the previous state
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -21,6 +21,8 @@ export default function PasswordRecovery() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true); // Start loading
+
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_BASE_URL}/api/v1/auth/reset-password`,
@@ -37,11 +39,13 @@ export default function PasswordRecovery() {
         // Redirect to /welcome after successful password reset email send
         history.push("/welcome");
       } else {
-        console.log(formData);
         alert("Failed to send password reset email.");
       }
     } catch (error) {
       console.error("Error sending password reset email:", error);
+      alert("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
@@ -68,9 +72,11 @@ export default function PasswordRecovery() {
           <input
             className="default-btn special-btn"
             type="submit"
-            value="LOG IN"
+            value={loading ? "Sending..." : "Send Reset Email"} // Display loading message if in loading state
+            disabled={loading} // Disable button while loading
           />
         </form>
+        {loading && <p>Loading...</p>} {/* Show loading message */}
       </header>
     </div>
   );
