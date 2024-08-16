@@ -7,7 +7,7 @@ import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded"; // Adjust t
 const VideoList = () => {
   const history = useHistory();
   const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true); // Single loading state
+  const [loading, setLoading] = useState(true);
 
   const {
     accessToken,
@@ -36,7 +36,6 @@ const VideoList = () => {
       video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ||
       video.videoStatus === "ERROR"
     ) {
-      // Show error message in an alert or modal
       alert(
         `${video.messageError} if you want to ask any other question or ask for more info send us an email info@randomrainbow.com`
       );
@@ -44,7 +43,7 @@ const VideoList = () => {
   };
 
   async function fetchVideos() {
-    setLoading(true); // Start loading
+    setLoading(true);
     try {
       const token = await getUpdatedToken();
       const response = await axios.get(
