@@ -7,6 +7,7 @@ import "../Util.css";
 export default function RandomVideoCard() {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [durationOption, setDurationOption] = useState("1000");
+  const [loading, setLoading] = useState(false); // Add loading state
   const { token } = useParams();
   const history = useHistory();
 
@@ -18,6 +19,7 @@ export default function RandomVideoCard() {
 
   const fetchVideoByToken = async (token) => {
     try {
+      setLoading(true); // Start loading
       const response = await fetch(
         `${process.env.REACT_APP_API_BASE_URL}/api/randomvideo/video/${token}`
       );
@@ -25,20 +27,24 @@ export default function RandomVideoCard() {
       setSelectedVideo(data);
     } catch (error) {
       console.error("Failed to fetch video by token:", error);
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
-  const selectRandomVideo = async (e) => {
+  const selectRandomVideo = async () => {
     try {
+      setLoading(true); // Start loading
       const response = await fetch(
         `${process.env.REACT_APP_API_BASE_URL}/api/randomvideo/${durationOption}`
       );
       const data = await response.json();
       setSelectedVideo(data);
-
       history.push(`/home/${data.endpoint}`);
     } catch (error) {
       console.error("Failed to fetch random video:", error);
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
@@ -63,13 +69,20 @@ export default function RandomVideoCard() {
           <button
             className="btn-random-video btn-random-video-after"
             onClick={selectRandomVideo}
+            disabled={loading} // Disable button when loading
           >
-            Select Another Video
+            {loading ? "Loading..." : "Select Another Video"}{" "}
+            {/* Show loading text */}
           </button>
         </div>
       ) : (
-        <button className="btn-random-video" onClick={selectRandomVideo}>
-          🌈 Select a Random Video 🦄{" "}
+        <button
+          className="btn-random-video"
+          onClick={selectRandomVideo}
+          disabled={loading} // Disable button when loading
+        >
+          {loading ? "Loading..." : "🌈 Select a Random Video 🦄"}{" "}
+          {/* Show loading text */}
         </button>
       )}
       <div className="duration">
