@@ -43,7 +43,7 @@ function App() {
             path="/email-verification-sent"
             component={EmailVerificationSent}
           />
-          <Route path="/profile/:username" component={ArtistProfile} />
+          <Route path="/profile/:usernameData" component={ArtistProfile} />
           <Route path="/email-verified/:token" component={EmailVerified} />
           <ProtectedRoute
             path="/:idUser/add-new-video"

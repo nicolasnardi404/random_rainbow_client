@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const ProfileView = () => {
+  const { usernameData } = useParams(); // Extract username from the URL
   const [videos, setVideos] = useState([]);
   const [profileData, setProfileData] = useState({
     dataUserProfile: {},
@@ -10,17 +12,18 @@ const ProfileView = () => {
   const [loading, setLoading] = useState(true); // State to manage loading status
   const [error, setError] = useState(""); // State to manage error messages
 
-  const userId = localStorage.getItem("idUser");
-
   const fetchProfileData = async () => {
     setLoading(true); // Start loading
     setError(""); // Reset error state
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/api/randomvideo/videosbyartist/${userId}`
+        `${process.env.REACT_APP_API_BASE_URL}/api/randomvideo/videosbyartist/${usernameData}` // Use username from useParams
       );
       const { dataUserProfile, username, listVideos } = response.data;
+      console.log(response.data);
+      console.log(username);
       setProfileData({ dataUserProfile, username });
+      console.log(profileData);
       setVideos(listVideos || []);
     } catch (error) {
       console.error("Failed to fetch profile data:", error);
@@ -31,10 +34,10 @@ const ProfileView = () => {
   };
 
   useEffect(() => {
-    if (userId) {
-      fetchProfileData();
+    if (usernameData) {
+      fetchProfileData(); // Fetch profile data when username is available
     }
-  }, [userId]);
+  }, [usernameData]);
 
   const cleanSocialMediaUrl = (url) => {
     if (!url) return "#";
@@ -50,21 +53,22 @@ const ProfileView = () => {
         <div className="special-title" style={{ border: "none" }}>
           Loading...
         </div>
-      )}{" "}
-      {/* Show loading message */}
-      {error && <p className="error">{error}</p>} {/* Show error message */}
+      )}
+      {error && <p className="error">{error}</p>}
       {!loading && !error && (
         <>
           {profileData.username && (
-            <p>
-              <h1 className="title-username">*{profileData.username}*</h1>
-            </p>
+            <h1 className="title-username">*{profileData.username}*</h1>
           )}
-          {profileData.dataUserProfile && (
-            <>
+          {profileData.dataUserProfile.artistDescription && (
+            <div>
               <p className="description-user">
                 {profileData.dataUserProfile.artistDescription}
               </p>
+            </div>
+          )}
+          {profileData.dataUserProfile.socialMedia && (
+            <div>
               <p>
                 <a
                   href={cleanSocialMediaUrl(
@@ -76,7 +80,7 @@ const ProfileView = () => {
                   Social Media
                 </a>
               </p>
-            </>
+            </div>
           )}
           <table className="table-header">
             <thead>
