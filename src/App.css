@@ -1,7 +1,7 @@
 /* 
 COLOR PALLETE WEBSITE:
 Carnation Pink: #FF99C9
-Light Green: #7EE280
+Light Green: #
 Maize Yellow: #F8E777
 Veronica Purple: #8447FF
 Light Blue Sky: #85C7F2
@@ -10,7 +10,7 @@ Red: #E42525
 .App {
   text-align: center;
   background-color: rgba(255, 153, 201, 0.85);
-  cursor: url("../images/rainbow.png"), auto;
+  cursor: url("../images/cursor.png"), auto;
   animation: cursorChange 1s infinite;
   margin: auto;
   padding: 1em 2em;
@@ -76,6 +76,7 @@ Red: #E42525
 }
 .icons-style:hover {
   color: #7ee280;
+  cursor: url("../images/rainbow-reverse.png"), auto;
 }
 
 .icons-group {
@@ -298,17 +299,17 @@ Red: #E42525
   }
 }
 
-@keyframes cursorChange {
+/* @keyframes cursorChange {
   0% {
-    cursor: url("../images/rainbow.png"), auto;
+    cursor: url("../images/cursor.png"), auto;
   }
   50% {
-    cursor: url("../images/rainbow-reverse.png"), auto;
+    cursor: url("../images/cursor-reverse.png"), auto;
   }
   100% {
-    cursor: url("../images/rainbow.png"), auto;
+    cursor: url("../images/cursor.png"), auto;
   }
-}
+} */
 
 /* fonts */
 
