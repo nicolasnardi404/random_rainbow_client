@@ -11,8 +11,8 @@ export async function refreshTokenIfNeeded(context) {
     setRefreshTokenLocal,
   } = context;
 
-  if (!isTokenExpired(accessToken)) {
-    return accessToken;
+  if (!isTokenExpired(refreshToken)) {
+    return refreshToken;
   }
 
   try {
@@ -25,7 +25,7 @@ export async function refreshTokenIfNeeded(context) {
     setAccessTokenLocal(responseData.accessToken);
     setRefreshTokenLocal(responseData.refreshToken);
 
-    return responseData.accessToken;
+    return responseData.refreshToken;
   } catch (error) {
     console.error("Failed to refresh token:", error);
     throw new Error("Token refresh failed");

@@ -18,7 +18,7 @@ const VideoList = () => {
   } = useContext(AuthContext);
 
   const headers = {
-    Authorization: `Bearer ${accessToken}`,
+    Authorization: `Bearer ${refreshToken}`,
     "Content-Type": "application/json",
   };
 
@@ -54,7 +54,10 @@ const VideoList = () => {
           },
         }
       );
-      setVideos(response.data);
+      const videos = response.data;
+      setVideos(videos);
+
+      console.log(response.data);
     } catch (error) {
       console.error("Failed to fetch videos:", error);
     } finally {
@@ -142,7 +145,7 @@ const VideoList = () => {
             </thead>
             <tbody>
               {videos.map((video) => (
-                <tr key={video.id}>
+                <tr key={video.videoId}>
                   <td>{video.title}</td>
                   <td
                     style={{
@@ -171,13 +174,13 @@ const VideoList = () => {
                   <td>
                     <button
                       className="default-btn update-btn"
-                      onClick={() => handleUpdate(video.id)}
+                      onClick={() => handleUpdate(video.videoId)}
                     >
                       UPDATE
                     </button>
                     <button
                       className="default-btn delete-btn"
-                      onClick={() => handleDelete(video.id)}
+                      onClick={() => handleDelete(video.videoId)}
                     >
                       DELETE
                     </button>

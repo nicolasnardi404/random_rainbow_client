@@ -47,7 +47,8 @@ function AddNewVideo() {
             }
           );
           const videos = response.data;
-          setVideo(videos); // Set video data
+          setVideo(videos);
+          console.logs(videos);
         } catch (error) {
           console.error("Failed to fetch video details:", error);
         } finally {
@@ -67,6 +68,7 @@ function AddNewVideo() {
     setLoading(true); // Start loading when submitting
 
     // Prepare the JSON payload
+    console.log(video);
     const payload = {
       title: video.title,
       videoDescription: video.videoDescription,
