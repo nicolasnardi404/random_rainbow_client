@@ -4,6 +4,7 @@ import "../App.css";
 import HeaderUserOn from "../components/HeaderUserOn";
 import HeaderUserOff from "../components/HeaderUserOff";
 import { AuthContext } from "../components/AuthContext";
+import axios from "axios";
 
 export default function PasswordRecovery() {
   const { accessToken } = useContext(AuthContext);
@@ -24,17 +25,11 @@ export default function PasswordRecovery() {
     setLoading(true); // Start loading
 
     try {
-      const response = await fetch(
+      const response = await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/api/v1/auth/reset-password`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
+        formData
       );
-      if (response.ok) {
+      if (response.status === 200) {
         alert("Password reset email sent!");
         // Redirect to /welcome after successful password reset email send
         history.push("/welcome");

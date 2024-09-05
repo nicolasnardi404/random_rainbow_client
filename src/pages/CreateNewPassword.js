@@ -4,6 +4,7 @@ import { AuthContext } from "../components/AuthContext";
 import React, { useContext, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import "../App.css";
+import axios from "axios";
 
 export default function PasswordRecovery() {
   const { accessToken } = useContext(AuthContext);
@@ -35,20 +36,12 @@ export default function PasswordRecovery() {
     event.preventDefault();
 
     try {
-      const response = await fetch(
+      const response = await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/api/v1/auth/new-password/${token}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            newPassword: formData.password,
-          }),
-        }
+        { password: formData.password }
       );
-      console.log(formData.password);
-      if (response.ok) {
+
+      if (!response.error) {
         alert("Password successfully updated!");
         history.push("/log-in"); // Redirect to login page after success
       } else {

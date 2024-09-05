@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import * as jose from "jose";
 import { AuthContext } from "./AuthContext";
+import axios from "axios";
 
 export default function LogInForm() {
   const history = useHistory();
@@ -34,29 +35,23 @@ export default function LogInForm() {
     setLoading(true); // Start loading
 
     try {
-      const response = await fetch(
+      const response = await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/api/v1/auth/authenticate`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
+        formData
       );
+      console.log(response);
 
-      if (response.ok) {
+      if (response.status === 200) {
         const contentType = response.headers.get("content-type");
 
         if (contentType && contentType.includes("application/json")) {
-          const responseData = await response.json();
-
-          if (responseData.accessToken) {
+          console.log(response);
+          if (response.data.accessToken) {
             try {
-              const decodedToken = jose.decodeJwt(responseData.accessToken);
+              const decodedToken = jose.decodeJwt(response.data.accessToken);
 
-              setAccessTokenLocal(responseData.accessToken);
-              setRefreshTokenLocal(responseData.refreshToken);
+              setAccessTokenLocal(response.data.accessToken);
+              setRefreshTokenLocal(response.data.refreshToken);
               setRole(decodedToken.role);
               setId(decodedToken.userId);
               setUsername(decodedToken.sub);
@@ -73,8 +68,7 @@ export default function LogInForm() {
           throw new Error(`Expected JSON but got ${contentType}`);
         }
       } else {
-        const errorMessage = await response.text();
-        setError(`Server error: ${errorMessage}`);
+        setError(`Server error`);
       }
     } catch (error) {
       console.error("Error on log in:", error);

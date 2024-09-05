@@ -25,7 +25,6 @@ export default function HeaderUserOn() {
     localStorage.removeItem("userId");
     localStorage.removeItem("role");
     setAccessTokenLocal("");
-    console.log(localStorage);
     history.push("/welcome");
   }
 

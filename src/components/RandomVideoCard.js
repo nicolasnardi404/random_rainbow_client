@@ -3,6 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import ReactPlayer from "react-player";
 import "../App.css";
 import "../Util.css";
+import axios from "axios";
 
 export default function RandomVideoCard() {
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -19,11 +20,10 @@ export default function RandomVideoCard() {
 
   const fetchVideoByToken = async (token) => {
     try {
-      const response = await fetch(
+      const response = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL}/api/randomvideo/video/${token}`
       );
-      const data = await response.json();
-      setSelectedVideo(data);
+      setSelectedVideo(response.data);
     } catch (error) {
       console.error("Failed to fetch video by token:", error);
     } finally {
@@ -34,12 +34,11 @@ export default function RandomVideoCard() {
   const selectRandomVideo = async () => {
     try {
       setLoading(true); // Start loading
-      const response = await fetch(
+      const response = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL}/api/randomvideo/${durationOption}`
       );
-      const data = await response.json();
-      setSelectedVideo(data);
-      history.push(`/home/${data.endpoint}`);
+      setSelectedVideo(response.data);
+      history.push(`/home/${response.data.endpoint}`);
     } catch (error) {
       console.error("Failed to fetch random video:", error);
     } finally {

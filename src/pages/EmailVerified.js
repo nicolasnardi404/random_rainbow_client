@@ -4,6 +4,7 @@ import "../App.css";
 import HeaderUserOn from "../components/HeaderUserOn";
 import HeaderUserOff from "../components/HeaderUserOff";
 import { AuthContext } from "../components/AuthContext";
+import axios from "axios";
 
 const EmailVerified = () => {
   const { accessToken } = useContext(AuthContext);
@@ -18,7 +19,7 @@ const EmailVerified = () => {
       setLoading(true); // Start loading
 
       try {
-        const response = await fetch(
+        const response = await axios.get(
           `${process.env.REACT_APP_API_BASE_URL}/api/verify?token=${token}`
         );
 
@@ -26,10 +27,7 @@ const EmailVerified = () => {
           setIsVerified(true);
         } else {
           setIsVerified(false);
-          const errorData = await response.json();
-          setVerificationError(
-            errorData.message || "Email verification failed"
-          );
+          setVerificationError(response.error || "Email verification failed");
         }
       } catch (error) {
         setIsVerified(false);

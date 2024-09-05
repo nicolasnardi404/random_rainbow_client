@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 export default function SignInForm() {
   const history = useHistory();
@@ -36,34 +37,20 @@ export default function SignInForm() {
       setPasswordError("Passwords do not match.");
       return;
     }
+    console.log("hey");
 
     setLoading(true); // Start loading
 
     try {
-      const response = await fetch(
+      const response = await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/api/v1/auth/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
+        formData
       );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        if (errorData && errorData.errorMessage) {
-          setError(errorData.errorMessage);
-        } else {
-          setError("An unexpected error occurred. Please try again later.");
-        }
-      } else {
-        history.push("/email-verification-sent");
-      }
+      history.push("/email-verification-sent");
     } catch (error) {
       console.error("Error submitting form:", error);
-      setError("An unexpected error occurred");
+      setError(error.response.data.errorMessage);
     } finally {
       setLoading(false); // End loading
     }
