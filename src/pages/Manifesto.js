@@ -30,10 +30,9 @@ export default function Manifesto() {
             info@randomrainbow.art.{" "}
           </h1>
           <h1>
-            For computer nerds to know: This independent website is built
-            entirely from scratch, with Java powering the backend and JavaScript
-            with React for the frontend. If you're a fellow tech enthusiast, you
-            might appreciate the care that went into crafting this project.
+            This an independent website and it is built entirely from scratch,
+            with Java powering the backend and JavaScript with React for the
+            frontend.
           </h1>
         </div>
       </header>

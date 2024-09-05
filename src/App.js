@@ -25,8 +25,10 @@ import { ProvideAuth } from "./components/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
 import EmailVerified from "./pages/EmailVerified";
+import { inject } from "@vercel/analytics";
 
 function App() {
+  inject();
   return (
     <ProvideAuth>
       <Router>

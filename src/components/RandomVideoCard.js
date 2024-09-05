@@ -19,7 +19,6 @@ export default function RandomVideoCard() {
 
   const fetchVideoByToken = async (token) => {
     try {
-      console.log("hello");
       const response = await fetch(
         `${process.env.REACT_APP_API_BASE_URL}/api/randomvideo/video/${token}`
       );
