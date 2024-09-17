@@ -38,6 +38,7 @@ const VideoList = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setVideos(response.data);
+      console.log("the data" + JSON.stringify(response.data));
     } catch (error) {
       console.error("Failed to fetch videos:", error);
     } finally {
@@ -158,14 +159,16 @@ const VideoList = () => {
       ) : (
         <div className="video-list-cards">
           {videos.map((video) => (
-            <div key={video.id} className="video-card">
+            <div key={video.videoId} className="video-card">
               <h2 className="video-title">{video.title}</h2>
-              <p className="video-username">{video.user.username}</p>
+              <p className="video-username">{video.username}</p>
               <p>
                 <select
                   className="video-select"
                   value={video.videoStatus}
-                  onChange={(e) => handleStatusChange(video.id, e.target.value)}
+                  onChange={(e) =>
+                    handleStatusChange(video.videoId, e.target.value)
+                  }
                 >
                   <option value="AVAILABLE">Available</option>
                   <option value="ERROR">Error</option>
@@ -192,13 +195,13 @@ const VideoList = () => {
               <div className="video-actions">
                 <button
                   className="default-btn update-btn"
-                  onClick={() => handleUpdate(video.id)}
+                  onClick={() => handleUpdate(video.videoId)}
                 >
                   Update
                 </button>
                 <button
                   className="default-btn delete-btn"
-                  onClick={() => handleDelete(video.id)}
+                  onClick={() => handleDelete(video.videoId)}
                 >
                   Delete
                 </button>

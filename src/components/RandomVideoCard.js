@@ -69,7 +69,7 @@ export default function RandomVideoCard() {
             onClick={selectRandomVideo}
             disabled={loading} // Disable button when loading
           >
-            {loading ? "Loading..." : "Select Another Video"}{" "}
+            {loading ? "Loading..." : "🌈 RANDOM RAINBOW 🦄"}{" "}
             {/* Show loading text */}
           </button>
         </div>
@@ -79,7 +79,7 @@ export default function RandomVideoCard() {
           onClick={selectRandomVideo}
           disabled={loading} // Disable button when loading
         >
-          {loading ? "Loading..." : "🌈 Select a Random Video 🦄"}{" "}
+          {loading ? "Loading..." : "🌈 RANDOM RAINBOW 🦄"}{" "}
           {/* Show loading text */}
         </button>
       )}

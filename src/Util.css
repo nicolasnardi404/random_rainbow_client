@@ -110,6 +110,10 @@ Red: #E42525
   max-height: 80%;
 }
 
+.error-status:hover{
+  color: #e42525;
+}
+
 @media (max-width: 768px) {
   .menu-btn {
     margin: 0;

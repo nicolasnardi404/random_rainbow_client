@@ -37,7 +37,7 @@ const VideoList = () => {
       video.videoStatus === "ERROR"
     ) {
       alert(
-        `${video.messageError} if you want to ask any other question or ask for more info send us an email info@randomrainbow.com`
+        `${video.messageError} \nif you want to ask any other question or ask for more info send us an email info@randomrainbow.com`
       );
     }
   };
@@ -56,8 +56,6 @@ const VideoList = () => {
       );
       const videos = response.data;
       setVideos(videos);
-
-      console.log(response.data);
     } catch (error) {
       console.error("Failed to fetch videos:", error);
     } finally {
@@ -159,14 +157,14 @@ const VideoList = () => {
                   >
                     {video.videoStatus === "AVAILABLE" ? (
                       <a
-                        href={`http://www.randomrainbow.art/home/${video.endpoint}`}
+                        href={`http://www.randomrainbow.art/home/${video.token}`}
                       >
                         View Video
                       </a>
                     ) : video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ? (
                       <span>Not Respecting Guidelines</span>
                     ) : video.videoStatus === "ERROR" ? (
-                      <span>Error</span>
+                      <span className="error-status">Error</span>
                     ) : (
                       <span>Unchecked</span>
                     )}
