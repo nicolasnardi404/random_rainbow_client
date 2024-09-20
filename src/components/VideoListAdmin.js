@@ -185,7 +185,7 @@ const VideoList = () => {
               </p>
               <p>
                 <a
-                  href={`http://www.randomrainbow.art/home/${video.endpoint}`}
+                  href={`http://www.randomrainbow.art/home/${video.token}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
