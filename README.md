@@ -1,5 +1,5 @@
 
-<img src="./images/randomraimbow.png" alt="Random Rainbow">
+<img width="823" alt="Screenshot 2024-10-29 at 20 57 09" src="https://github.com/user-attachments/assets/1b3aec01-a339-4dec-827e-7eed83c08d1a">
 
 Random Rainbow is a cyber art project designed to connect queer video art through a random experience. Any queer artist can join, create an account, and upload up to three video links to our platform.
 
