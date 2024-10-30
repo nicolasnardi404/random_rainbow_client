@@ -70,5 +70,3 @@
 - **Artist Profiles**: Customizable user space.
 - **Video Management**: Upload and manage up to three videos
 - **Responsive Navigation**: Adaptive menu for both desktop and mobile
-
-Made with 💖 by the Random Rainbow Team
