@@ -4,6 +4,7 @@ import ReactPlayer from "react-player";
 import "../App.css";
 import "../Util.css";
 import axios from "axios";
+import randomButton from "../images/random_button.png";
 
 export default function RandomVideoCard() {
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -69,9 +70,19 @@ export default function RandomVideoCard() {
             onClick={selectRandomVideo}
             disabled={loading} // Disable button when loading
           >
-            {loading ? "Loading..." : "🌈 RANDOM RAINBOW 🦄"}{" "}
+            {loading ? (
+              "Loading..."
+            ) : (
+              <img
+                src={randomButton}
+                alt="RANDOM RAINBOW"
+                className="logo-title"
+              />
+            )}
             {/* Show loading text */}
           </button>
+          <img src={randomButton} alt="Random Button" />
+          <h2>hey</h2>
         </div>
       ) : (
         <button
@@ -79,7 +90,15 @@ export default function RandomVideoCard() {
           onClick={selectRandomVideo}
           disabled={loading} // Disable button when loading
         >
-          {loading ? "Loading..." : "🌈 RANDOM RAINBOW 🦄"}{" "}
+          {loading ? (
+            "Loading..."
+          ) : (
+            <img
+              src={randomButton}
+              alt="Random Button"
+              className="random-button"
+            />
+          )}{" "}
           {/* Show loading text */}
         </button>
       )}
@@ -96,6 +115,7 @@ export default function RandomVideoCard() {
           <option value="1000">all videos</option>
           <option value="5">less than 5 min</option>
           <option value="10">less than 10 minutes</option>
+          <option value="-10">more than 10 minutes</option>
         </select>
       </div>
     </div>

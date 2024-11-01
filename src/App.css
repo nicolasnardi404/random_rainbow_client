@@ -9,12 +9,20 @@ Red: #E42525
 */
 .App {
   text-align: center;
-  background-color: rgba(255, 153, 201, 0.85);
+  background-color: #DEE381;
   cursor: url("../images/cursor.png"), auto;
   animation: cursorChange 1s infinite;
   margin: auto;
   padding: 1em 2em;
   overflow: auto;
+}
+
+.logo-title{
+  max-width: 80%;
+}
+
+.random-button{
+  max-width: 20%;
 }
 
 .cards-style {

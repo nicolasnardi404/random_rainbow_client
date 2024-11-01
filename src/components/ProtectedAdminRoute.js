@@ -16,7 +16,7 @@ const ProtectedAdminRoute = ({ element, requiredRole, ...rest }) => {
         ) : (
           <Redirect
             to={{
-              pathname: "/welcome",
+              pathname: "/home/0",
               state: { from: location },
             }}
           />

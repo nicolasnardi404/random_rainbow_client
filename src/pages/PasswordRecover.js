@@ -31,8 +31,8 @@ export default function PasswordRecovery() {
       );
       if (response.status === 200) {
         alert("Password reset email sent!");
-        // Redirect to /welcome after successful password reset email send
-        history.push("/welcome");
+        // Redirect to /home/0 after successful password reset email send
+        history.push("/home/0");
       } else {
         alert("Failed to send password reset email.");
       }

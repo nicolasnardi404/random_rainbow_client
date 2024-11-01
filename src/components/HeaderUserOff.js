@@ -6,6 +6,7 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import logo from "../images/logo.png";
 
 export default function HeaderUserOff() {
   const history = useHistory();
@@ -22,7 +23,7 @@ export default function HeaderUserOff() {
 
   return (
     <div>
-      <h1 className="app-title hidden-title">RANDOM RAINBOW</h1>
+      <img src={logo} alt="RANDOM RAINBOW" className="logo-title" />
       {/* Mobile Menu Toggle Button */}
       <button className="menu-button" onClick={toggleMenu}>
         <FontAwesomeIcon className="icon-menu" icon={faBars} />
@@ -61,9 +62,6 @@ export default function HeaderUserOff() {
 
       {/* Desktop View */}
       <div className={`desktop-menu ${isMenuOpen ? "hidden" : ""}`}>
-        <a href="/welcome" className="app-title">
-          RANDOM RAINBOW
-        </a>
         <div className="icons-group">
           <button
             className="default-btn"
@@ -71,14 +69,15 @@ export default function HeaderUserOff() {
           >
             Manifesto
           </button>
-          <div className="icons-style" onClick={() => handleClick("log-in")}>
-            <FontAwesomeIcon icon={faUserAstronaut} />
-            <h4>Log In</h4>
-          </div>
-          <div className="icons-style" onClick={() => handleClick("sign-in")}>
-            <FontAwesomeIcon icon={faUsers} />
-            <h4>Sign In</h4>
-          </div>
+          <button className="default-btn" onClick={() => handleClick("log-in")}>
+            Log In
+          </button>
+          <button
+            className="default-btn"
+            onClick={() => handleClick("sign-in")}
+          >
+            Sign In
+          </button>
           <button className="default-btn" onClick={() => handleClick("home/0")}>
             Home
           </button>

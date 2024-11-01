@@ -30,7 +30,7 @@ const EmailVerificationSent = () => {
           </h3>
           <a
             className="email-confirmation-child none-text-decoration"
-            href="/welcome"
+            href="/home/0"
           >
             back to homepage
           </a>

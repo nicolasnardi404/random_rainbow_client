@@ -7,7 +7,6 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import Welcome from "./pages/Welcome";
 import Manifesto from "./pages/Manifesto";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
@@ -34,11 +33,11 @@ function App() {
       <Router>
         <Switch>
           <Route path="/" exact>
-            <Redirect to="/welcome" />
+            <Redirect to="/home/0" />
           </Route>
           <Route path="/manifesto" component={Manifesto} />
           <Route path="/home/:token" component={Home} />
-          <Route path="/welcome" component={Welcome} />
+          {/* <Route path="/welcome" component={Welcome} /> */}
           <Route path="/sign-in" component={SignIn} />
           <Route path="/log-in" component={LogIn} />
           <Route

@@ -15,7 +15,7 @@ const ProtectedRoute = ({ element, ...rest }) => {
         ) : (
           <Redirect
             to={{
-              pathname: "/welcome",
+              pathname: "/home/0",
               state: { from: location },
             }}
           />
