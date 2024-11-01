@@ -9,8 +9,10 @@ function ProfileEdit() {
   const [profile, setProfile] = useState({
     artistDescription: "",
     socialMedia: "",
+    username: "", // Add username to the state
   });
   const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(""); // Add error state
 
   const {
     accessToken,
@@ -18,6 +20,7 @@ function ProfileEdit() {
     idUser,
     setAccessTokenLocal,
     setRefreshTokenLocal,
+    setUsername, // Add this
   } = useContext(AuthContext);
 
   const getUpdatedToken = async () => {
@@ -45,7 +48,10 @@ function ProfileEdit() {
         `${process.env.REACT_APP_API_BASE_URL}/api/users/profile/${idUser}`,
         { headers }
       );
-      setProfile(response.data);
+      setProfile({
+        ...response.data,
+        username: response.data.username || "", // Add username to the fetched data
+      });
     } catch (error) {
       console.error("Failed to fetch profile details:", error);
     } finally {
@@ -61,39 +67,48 @@ function ProfileEdit() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Start loading
-
-    const payload = {
-      artistDescription: profile.artistDescription,
-      socialMedia: profile.socialMedia,
-    };
+    setLoading(true);
+    setError("");
 
     try {
       const newAccessToken = await getUpdatedToken();
-
       const headers = {
         Authorization: `Bearer ${newAccessToken}`,
         "Content-Type": "application/json",
       };
 
-      const response = await axios.put(
+      // Check if username is being changed
+      const response = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL}/api/users/profile/${idUser}`,
-        payload,
         { headers }
       );
 
-      if (response.status === 200) {
-        history.push(`/videos`);
-      } else {
-        console.error("Failed to save profile:", response);
+      const currentUsername = response.data.username;
+
+      const updateResponse = await axios.put(
+        `${process.env.REACT_APP_API_BASE_URL}/api/users/update-profile/${idUser}`,
+        {
+          username: profile.username,
+          artistDescription: profile.artistDescription,
+          socialMedia: profile.socialMedia,
+        },
+        { headers }
+      );
+
+      if (updateResponse.data.accessToken) {
+        setUsername(profile.username);
+        setAccessTokenLocal(updateResponse.data.accessToken);
+        setRefreshTokenLocal(updateResponse.data.refreshToken);
       }
+
+      history.push("/videos");
     } catch (error) {
-      console.error(
-        "There has been a problem with your fetch operation:",
-        error.response ? error.response : error.message
+      console.error("Error updating profile:", error);
+      setError(
+        error.response?.data || "An error occurred while updating the profile"
       );
     } finally {
-      setLoading(false); // End loading
+      setLoading(false);
     }
   };
 
@@ -105,6 +120,17 @@ function ProfileEdit() {
         </div>
       ) : (
         <form onSubmit={handleSubmit}>
+          {error && <div className="error-message">{error}</div>}
+          <input
+            type="text"
+            name="username"
+            value={profile.username}
+            onChange={(e) =>
+              setProfile({ ...profile, username: e.target.value })
+            }
+            className="form-control edit-profile-form"
+            placeholder="Username"
+          />
           <textarea
             type="text"
             name="artistDescription"
