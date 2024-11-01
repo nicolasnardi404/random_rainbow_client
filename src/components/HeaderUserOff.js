@@ -37,14 +37,14 @@ export default function HeaderUserOff() {
           onClick={() => handleClick("log-in")}
         >
           <FontAwesomeIcon icon={faUserAstronaut} />
-          <h3>Log In</h3>
+          <h3>LOG IN</h3>
         </div>
         <div
           className="icons-style menu-btn"
           onClick={() => handleClick("sign-in")}
         >
           <FontAwesomeIcon icon={faUsers} />
-          <h3>Sign Up</h3>
+          <h3>SIGN UP</h3>
         </div>
         <button
           className="default-btn menu-btn"
@@ -67,19 +67,19 @@ export default function HeaderUserOff() {
             className="default-btn"
             onClick={() => handleClick("manifesto")}
           >
-            Manifesto
+            MANIFESTO
           </button>
           <button className="default-btn" onClick={() => handleClick("log-in")}>
-            Log In
+            LOG IN
           </button>
           <button
             className="default-btn"
             onClick={() => handleClick("sign-in")}
           >
-            Sign In
+            SIGN IN
           </button>
           <button className="default-btn" onClick={() => handleClick("home/0")}>
-            Home
+            HOME
           </button>
         </div>
       </div>

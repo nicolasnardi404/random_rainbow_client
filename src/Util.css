@@ -8,26 +8,37 @@ Light Blue Sky: #85C7F2
 Red: #E42525
 */
 
+@import url("https://p.typekit.net/p.css?s=1&k=wia6mva&ht=tk&f=28337&a=85017181&app=typekit&e=css");
 
+@font-face {
+  font-family: "lores-9-plus-wide";
+  src: url("https://use.typekit.net/af/96a625/00000000000000007735bf8c/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"),
+       url("https://use.typekit.net/af/96a625/00000000000000007735bf8c/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"),
+       url("https://use.typekit.net/af/96a625/00000000000000007735bf8c/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: normal;}
 
 /* buttons */
 
 .default-btn {
-  font-size: 20px;
+  font-size: 1.2EM;
   color: #E42525;
-  background-color: #FF99C9;
+  text-shadow: 2px 2px 1px #FF99C9;
+  background-color: transparent;
   padding: 10px 15px;
   border-radius: 10px;
-  border: 1px solid #FF99C9;
-  box-shadow: 0px 4px 8px #FF99C9;
   margin: 10px auto;
+  border: none;
+  font-family: "lores-9-plus-wide";
 }
 
 .default-btn:hover {
-  color: #85c7f2;
-  background-color: #8447ff;
+  color: #BCF0BD;
+  background: #FF99C9;
+  text-shadow: 2px 2px 1px  #E42525;
   cursor: url("../images/rainbow-reverse.png"), auto;
-  border: 1px solid #e42525;
 }
 
 .update-btn {

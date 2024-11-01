@@ -3,6 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import ReactPlayer from "react-player";
 import "../App.css";
 import "../Util.css";
+import "../styles/RandomCard.css";
 import axios from "axios";
 import randomButton from "../images/random_button.png";
 
@@ -54,12 +55,12 @@ export default function RandomVideoCard() {
     <div>
       {selectedVideo ? (
         <div>
-          <div className="title">{selectedVideo.title}</div>
+          <div className="title">*{selectedVideo.title}*</div>
           <div
             className="artist"
             onClick={() => history.push(`/profile/${selectedVideo.username}`)}
           >
-            * {selectedVideo.username} *
+            {selectedVideo.username}
           </div>
           <div>
             <ReactPlayer className="player" url={videoUrl} controls={true} />

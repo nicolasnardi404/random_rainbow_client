@@ -1,3 +1,17 @@
+/* Adobe Typekit Font Import */
+@import url("https://p.typekit.net/p.css?s=1&k=wia6mva&ht=tk&f=28337&a=85017181&app=typekit&e=css");
+
+@font-face {
+  font-family: "lores-9-plus-wide";
+  src: url("https://use.typekit.net/af/96a625/00000000000000007735bf8c/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"),
+       url("https://use.typekit.net/af/96a625/00000000000000007735bf8c/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"),
+       url("https://use.typekit.net/af/96a625/00000000000000007735bf8c/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: normal;
+}
+
 /* 
 COLOR PALLETE WEBSITE:
 Carnation Pink: #FF99C9
@@ -9,12 +23,27 @@ Red: #E42525
 */
 .App {
   text-align: center;
-  background-color: #DEE381;
+  min-height: 100vh;
+
+  background-size: 110% 110%;
   cursor: url("../images/cursor.png"), auto;
   animation: cursorChange 1s infinite;
-  margin: auto;
+  margin: 0;
   padding: 1em 2em;
   overflow: auto;
+  box-shadow: 0 0 10px 0 white, 0 0 20px 0 #7EE280;
+}
+
+/* Add this to ensure the html and body also fill the viewport */
+html, body {
+  background: url("../images/background.png") no-repeat center center fixed;
+  background-size: 110% 110%;
+  background-color: #FF99C9;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: lores-9-plus-wide;
 }
 
 .logo-title{
@@ -137,28 +166,7 @@ Red: #E42525
 
 /* style for random rainbow page */
 
-.title {
-  background-color: #e42525;
-  text-shadow: 2px 2px #ff99c9;
-  margin: 10px auto;
-  max-width: 80%;
-  padding: 1em;
-  font-size: 1.2em;
-}
 
-.artist {
-  color: #e42525;
-  margin: 1em auto;
-}
-
-.artist:hover {
-  color: #8447ff;
-  text-shadow: 2px 2px #85c7f2;
-}
-
-.artist:hover {
-  color: #8447ff;
-}
 
 .description {
   margin: 2em auto;
