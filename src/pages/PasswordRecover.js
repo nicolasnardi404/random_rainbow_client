@@ -1,13 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "../App.css";
-import HeaderUserOn from "../components/HeaderUserOn";
-import HeaderUserOff from "../components/HeaderUserOff";
-import { AuthContext } from "../components/AuthContext";
 import axios from "axios";
 
 export default function PasswordRecovery() {
-  const { accessToken } = useContext(AuthContext);
   const history = useHistory();
   const [formData, setFormData] = useState({ email: "" });
   const [loading, setLoading] = useState(false); // State to manage loading status
@@ -47,11 +43,6 @@ export default function PasswordRecovery() {
   return (
     <div className="App">
       <header className="App-header">
-        {accessToken && accessToken !== "" ? (
-          <HeaderUserOn />
-        ) : (
-          <HeaderUserOff />
-        )}
         <form onSubmit={handleSubmit}>
           <label className="group-form">
             Email:

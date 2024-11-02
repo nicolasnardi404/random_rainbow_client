@@ -55,7 +55,9 @@ export default function RandomVideoCard() {
     <div>
       {selectedVideo ? (
         <div>
-          <div className="title">*{selectedVideo.title}*</div>
+          <div className="title">
+            * {selectedVideo.title.trim().toUpperCase()} *
+          </div>
           <div
             className="artist"
             onClick={() => history.push(`/profile/${selectedVideo.username}`)}
@@ -95,7 +97,6 @@ export default function RandomVideoCard() {
             {/* Show loading text */}
           </button>
           <img src={randomButton} alt="Random Button" />
-          <h2>hey</h2>
         </div>
       ) : (
         <button

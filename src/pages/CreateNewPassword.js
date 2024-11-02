@@ -1,14 +1,9 @@
-import HeaderUserOn from "../components/HeaderUserOn";
-import HeaderUserOff from "../components/HeaderUserOff";
-import { AuthContext } from "../components/AuthContext";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import "../App.css";
 import axios from "axios";
 
 export default function PasswordRecovery() {
-  const { accessToken } = useContext(AuthContext);
-
   const history = useHistory();
   const { token } = useParams();
   const [formData, setFormData] = useState({
@@ -55,11 +50,6 @@ export default function PasswordRecovery() {
   return (
     <div className="App">
       <header className="App-header">
-        {accessToken && accessToken !== "" ? (
-          <HeaderUserOn />
-        ) : (
-          <HeaderUserOff />
-        )}
         <form onSubmit={handleSubmit}>
           <label className="group-form">
             NEW PASSWORD:

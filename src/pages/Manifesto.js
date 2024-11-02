@@ -1,18 +1,9 @@
-import HeaderUserOn from "../components/HeaderUserOn";
-import HeaderUserOff from "../components/HeaderUserOff";
-import { AuthContext } from "../components/AuthContext";
-import React, { useContext } from "react";
+import React from "react";
 
 export default function Manifesto() {
-  const { accessToken } = useContext(AuthContext);
   return (
     <div className="App">
       <header className="App-header">
-        {accessToken && accessToken !== "" ? (
-          <HeaderUserOn />
-        ) : (
-          <HeaderUserOff />
-        )}
         <div className="manifesto">
           <h1>
             Random Rainbow is a cyber art project designed to connect queer

@@ -1,13 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "../App.css";
-import HeaderUserOn from "../components/HeaderUserOn";
-import HeaderUserOff from "../components/HeaderUserOff";
-import { AuthContext } from "../components/AuthContext";
 import axios from "axios";
 
 const EmailVerified = () => {
-  const { accessToken } = useContext(AuthContext);
   const { token } = useParams();
 
   const [isVerified, setIsVerified] = useState(false); // State to manage verification status
@@ -43,11 +39,6 @@ const EmailVerified = () => {
   return (
     <div className="App">
       <header className="App-header">
-        {accessToken && accessToken !== "" ? (
-          <HeaderUserOn />
-        ) : (
-          <HeaderUserOff />
-        )}
         <div className="email-confirmation">
           {loading ? ( // Display loading message if loading is true
             <h2 className="email-confirmation-child">Loading...</h2>

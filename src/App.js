@@ -25,59 +25,62 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
 import EmailVerified from "./pages/EmailVerified";
 import { inject } from "@vercel/analytics";
+import Layout from "./Layout";
 
 function App() {
   inject();
   return (
     <ProvideAuth>
       <Router>
-        <Switch>
-          <Route path="/" exact>
-            <Redirect to="/home/0" />
-          </Route>
-          <Route path="/manifesto" component={Manifesto} />
-          <Route path="/home/:token" component={Home} />
-          {/* <Route path="/welcome" component={Welcome} /> */}
-          <Route path="/sign-in" component={SignIn} />
-          <Route path="/log-in" component={LogIn} />
-          <Route
-            path="/email-verification-sent"
-            component={EmailVerificationSent}
-          />
-          <Route path="/profile/:usernameData" component={ArtistProfile} />
-          <Route path="/email-verified/:token" component={EmailVerified} />
-          <ProtectedRoute
-            path="/:idUser/add-new-video"
-            element={<NewVideo />}
-          />
-          <ProtectedRoute
-            path="/:idUser/update/:videoId"
-            element={<NewVideo />}
-          />
-          <ProtectedRoute path="/videos" element={<UserInterface />} />
-          <ProtectedRoute
-            path="/users/:idUser/videos"
-            element={UserInterface}
-          />
-          <ProtectedRoute path="/profile" element={<ProfileUser />} />
-          <Route path="/password-recovery" component={PasswordRecovery} />
-          <Route path="/new-password/:token" component={CreateNewPassord} />
-          <ProtectedAdminRoute
-            path="/admin-controller"
-            element={<AdminController />}
-            requiredRole="ROLE_ADMIN"
-          />
-          <ProtectedAdminRoute
-            path="/admin-controller/review"
-            element={<AdminController />}
-            requiredRole="ROLE_ADMIN"
-          />
-          <ProtectedAdminRoute
-            path="/admin/videos/update/:videoId"
-            element={<VideoUpdateAdmin />}
-            requiredRole="ROLE_ADMIN"
-          />
-        </Switch>
+        <Layout>
+          <Switch>
+            <Route path="/" exact>
+              <Redirect to="/home/0" />
+            </Route>
+            <Route path="/manifesto" component={Manifesto} />
+            <Route path="/home/:token" component={Home} />
+            {/* <Route path="/welcome" component={Welcome} /> */}
+            <Route path="/sign-in" component={SignIn} />
+            <Route path="/log-in" component={LogIn} />
+            <Route
+              path="/email-verification-sent"
+              component={EmailVerificationSent}
+            />
+            <Route path="/profile/:usernameData" component={ArtistProfile} />
+            <Route path="/email-verified/:token" component={EmailVerified} />
+            <ProtectedRoute
+              path="/:idUser/add-new-video"
+              element={<NewVideo />}
+            />
+            <ProtectedRoute
+              path="/:idUser/update/:videoId"
+              element={<NewVideo />}
+            />
+            <ProtectedRoute path="/videos" element={<UserInterface />} />
+            <ProtectedRoute
+              path="/users/:idUser/videos"
+              element={UserInterface}
+            />
+            <ProtectedRoute path="/profile" element={<ProfileUser />} />
+            <Route path="/password-recovery" component={PasswordRecovery} />
+            <Route path="/new-password/:token" component={CreateNewPassord} />
+            <ProtectedAdminRoute
+              path="/admin-controller"
+              element={<AdminController />}
+              requiredRole="ROLE_ADMIN"
+            />
+            <ProtectedAdminRoute
+              path="/admin-controller/review"
+              element={<AdminController />}
+              requiredRole="ROLE_ADMIN"
+            />
+            <ProtectedAdminRoute
+              path="/admin/videos/update/:videoId"
+              element={<VideoUpdateAdmin />}
+              requiredRole="ROLE_ADMIN"
+            />
+          </Switch>
+        </Layout>
       </Router>
     </ProvideAuth>
   );

@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../components/AuthContext"; // Adjust the import path as needed
 import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded"; // Adjust the import path as needed
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserEdit, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 const VideoList = () => {
   const history = useHistory();
@@ -16,6 +18,20 @@ const VideoList = () => {
     setAccessTokenLocal,
     setRefreshTokenLocal,
   } = useContext(AuthContext);
+
+  function handleLogout() {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("username");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("role");
+    setAccessTokenLocal("");
+    history.push("/home/0");
+  }
+
+  function handleClick(path) {
+    history.push(`/${path}`);
+  }
 
   const headers = {
     Authorization: `Bearer ${refreshToken}`,
@@ -118,7 +134,9 @@ const VideoList = () => {
   }, [idUser]);
 
   function handleClick(e) {
-    e.preventDefault();
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
     if (videos.length < 3) {
       setLoading(true);
       history.push(`/${idUser}/add-new-video`);
@@ -127,6 +145,12 @@ const VideoList = () => {
 
   return (
     <div>
+      <button className="default-btn" onClick={() => handleClick("profile")}>
+        <FontAwesomeIcon icon={faUserEdit} /> Edit Profile
+      </button>
+      <button className="default-btn" onClick={handleLogout}>
+        <FontAwesomeIcon icon={faSignOutAlt} /> Log Out
+      </button>
       {loading ? (
         <div className="special-title" style={{ border: "none" }}>
           Loading...

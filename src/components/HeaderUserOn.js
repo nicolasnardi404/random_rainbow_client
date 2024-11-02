@@ -13,16 +13,6 @@ export default function HeaderUserOn() {
     setMenuOpen(false); // Close menu on item click
   }
 
-  function handleLogout() {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("username");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("role");
-    setAccessTokenLocal("");
-    history.push("/home/0");
-  }
-
   function toggleMenu() {
     setMenuOpen(!isMenuOpen);
   }
@@ -50,18 +40,6 @@ export default function HeaderUserOn() {
           <button className="default-btn" onClick={() => handleClick("home/0")}>
             Home
           </button>
-          <button
-            className="default-btn"
-            onClick={() => handleClick("profile")}
-          >
-            Edit Profile
-          </button>
-          <button className="default-btn" onClick={toggleMenu}>
-            Return
-          </button>
-          <button className="default-btn" onClick={handleLogout}>
-            Log Out
-          </button>
         </div>
       </div>
 
@@ -79,15 +57,6 @@ export default function HeaderUserOn() {
           </button>
           <button className="default-btn" onClick={() => handleClick("home/0")}>
             Home
-          </button>
-          <button
-            className="default-btn"
-            onClick={() => handleClick("profile")}
-          >
-            Edit Profile
-          </button>
-          <button className="default-btn" onClick={handleLogout}>
-            Log Out
           </button>
         </div>
       </div>
