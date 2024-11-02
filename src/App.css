@@ -1,17 +1,17 @@
-
 /* 
 COLOR PALLETE WEBSITE:
 Carnation Pink: #FF99C9
-Light Green: #7EE280
+Light Green: #DEE381
 Maize Yellow: #F8E777
 Veronica Purple: #8447FF
 Light Blue Sky: #85C7F2
 Red: #E42525
+
 */
 
 :root {
   --carnation-pink: #FF99C9;
-  --light-green: #7EE280;
+  --light-green: #DEE381;
   --maize-yellow: #F8E777;
   --veronica-purple: #8447FF;
   --light-blue-sky: #85C7F2;
@@ -59,6 +59,7 @@ html{
 
 .logo-title{
   max-width: 80%;
+  margin-left: 30px; /* Increased margin-left to move the image to the right */
 }
 
 .random-button{
@@ -222,68 +223,6 @@ html{
   color: #e42525;
 }
 
-/* Animations */
-
-/* color change of title Home Page */
-
-@keyframes colorChange {
-  0% {
-    color: #ff99c9;
-    text-shadow: 2px -2px #e42525;
-  }
-  10% {
-    color: #7ee280;
-    text-shadow: -2px 2px #ff99c9;
-  }
-  20% {
-    color: #f8e777;
-    text-shadow: -2px -2px #7ee280;
-  }
-  30% {
-    color: #8447ff;
-    text-shadow: 2px 2px #f8e777;
-  }
-  40% {
-    color: #85c7f2;
-    text-shadow: 2px -2px #8447ff;
-  }
-  50% {
-    color: #e42525;
-    text-shadow: -2px 2px #85c7f2;
-  }
-  60% {
-    color: #ff99c9;
-    text-shadow: -2px -2px #7ee280;
-  }
-  70% {
-    color: #7ee280;
-    text-shadow: -2px 2px #e42525;
-  }
-  80% {
-    color: #f8e777;
-    text-shadow: 2px -2px #ff99c9;
-  }
-  90% {
-    color: #8447ff;
-    text-shadow: 2px 2px #85c7f2;
-  }
-  100% {
-    color: #85c7f2;
-    text-shadow: -2px -2px #e42525;
-  }
-}
-
-/* @keyframes cursorChange {
-  0% {
-    cursor: url("../images/cursor.png"), auto;
-  }
-  50% {
-    cursor: url("../images/cursor-reverse.png"), auto;
-  }
-  100% {
-    cursor: url("../images/cursor.png"), auto;
-  }
-} */
 
 /* fonts */
 
@@ -333,10 +272,17 @@ html{
   display: none;
 }
 
+.desktop-menu{
+  display: flex;
+  justify-content: center;
+  gap:10px;
+}
+
 /* Mobile Styles */
 @media (max-width: 768px) {
-  .desktop-menu {
+   .desktop-menu{
     display: none;
+
   }
 
   .hidden-title {
@@ -367,5 +313,86 @@ html{
 
   .duration-select {
     font-size: 0.7em;
+  }
+}
+
+.desktop-menu{
+  display: flex;
+  justify-content: center;
+  width: 100%;  /* Make sure it takes full width */
+}
+
+.icons-group {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+/* Container styling */
+.header-container {
+  width: 100%;
+  text-align: center;
+}
+
+.desktop-menu {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.icons-group {
+  display: flex;
+  gap: 4px;
+  position: relative;
+}
+
+/* Add this to position the buttons */
+.icons-group .default-btn:first-child {
+  position: absolute;
+  right: 10%;
+}
+
+.icons-group .default-btn:last-child {
+  position: absolute;
+  left: 10%;
+}
+
+/* Desktop styles */
+.desktop-menu {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.icons-group {
+  display: flex;
+  gap: 4px;
+  position: relative;
+}
+
+/* Desktop button positioning */
+.desktop-menu .icons-group .default-btn:first-child {
+  position: absolute;
+  right: 15%;
+  margin-right: 2px;
+}
+
+.desktop-menu .icons-group .default-btn:last-child {
+  position: absolute;
+  left: 20%;
+  margin-left: 2px;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .mobile-menu .icons-group {
+    flex-direction: column;
+    position: static;
+    gap: 10px;
+  }
+
+  .mobile-menu .icons-group .default-btn {
+    position: static;
+    margin: 0;
   }
 }

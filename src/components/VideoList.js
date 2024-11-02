@@ -6,7 +6,7 @@ import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded"; // Adjust t
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserEdit, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
-const VideoList = () => {
+export default function VideoList() {
   const history = useHistory();
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -220,6 +220,4 @@ const VideoList = () => {
       )}
     </div>
   );
-};
-
-export default VideoList;
+}

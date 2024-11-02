@@ -5,7 +5,8 @@ import "../App.css";
 import "../Util.css";
 import "../styles/RandomCard.css";
 import axios from "axios";
-import randomButton from "../images/random_button.png";
+import randomButton from "../images/randombutton.png";
+import randomButtonHover from "../images/randombutton2.png";
 
 export default function RandomVideoCard() {
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -92,11 +93,28 @@ export default function RandomVideoCard() {
                 src={randomButton}
                 alt="RANDOM RAINBOW"
                 className="logo-title"
+                onMouseOver={(e) => (e.currentTarget.src = randomButtonHover)}
+                onMouseOut={(e) => (e.currentTarget.src = randomButton)}
               />
             )}
             {/* Show loading text */}
           </button>
-          <img src={randomButton} alt="Random Button" />
+          <div className="duration">
+            <label className="duration-label" htmlFor="duration">
+              choose max time:
+            </label>
+            <select
+              className="duration-select"
+              id="duration"
+              value={durationOption}
+              onChange={(e) => setDurationOption(e.target.value)}
+            >
+              <option value="1000">all videos</option>
+              <option value="5">less than 5 min</option>
+              <option value="10">less than 10 minutes</option>
+              <option value="-10">more than 10 minutes</option>
+            </select>
+          </div>
         </div>
       ) : (
         <button
@@ -109,29 +127,15 @@ export default function RandomVideoCard() {
           ) : (
             <img
               src={randomButton}
-              alt="Random Button"
-              className="random-button"
+              alt="RANDOM RAINBOW"
+              className="logo-title"
+              onMouseOver={(e) => (e.currentTarget.src = randomButtonHover)}
+              onMouseOut={(e) => (e.currentTarget.src = randomButton)}
             />
           )}{" "}
           {/* Show loading text */}
         </button>
       )}
-      <div className="duration">
-        <label className="duration-label" htmlFor="duration">
-          choose max time:
-        </label>
-        <select
-          className="duration-select"
-          id="duration"
-          value={durationOption}
-          onChange={(e) => setDurationOption(e.target.value)}
-        >
-          <option value="1000">all videos</option>
-          <option value="5">less than 5 min</option>
-          <option value="10">less than 10 minutes</option>
-          <option value="-10">more than 10 minutes</option>
-        </select>
-      </div>
     </div>
   );
 }
