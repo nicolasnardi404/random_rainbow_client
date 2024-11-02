@@ -1,12 +1,11 @@
-/* 
-COLOR PALLETE WEBSITE:
-Carnation Pink: #FF99C9
-Light Green: #7EE280
-Maize Yellow: #F8E777
-Veronica Purple: #8447FF
-Light Blue Sky: #85C7F2
-Red: #E42525
-*/
+:root {
+  --carnation-pink: #FF99C9;
+  --light-green: #7EE280;
+  --maize-yellow: #F8E777;
+  --veronica-purple: #8447FF;
+  --light-blue-sky: #85C7F2;
+  --red: #E42525;
+}
 
 .video-title {
   text-shadow: 2px 2px #ff99c9;

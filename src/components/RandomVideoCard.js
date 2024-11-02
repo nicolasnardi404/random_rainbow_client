@@ -60,12 +60,24 @@ export default function RandomVideoCard() {
             className="artist"
             onClick={() => history.push(`/profile/${selectedVideo.username}`)}
           >
-            {selectedVideo.username}
+            {selectedVideo.username.trim().toUpperCase()}
           </div>
-          <div>
-            <ReactPlayer className="player" url={videoUrl} controls={true} />
+          <div className="player">
+            <ReactPlayer
+              url={videoUrl}
+              controls={true}
+              width="100%"
+              height="100%"
+            />
           </div>
-          <div className="description">{selectedVideo.videoDescription}</div>
+          <div className="description">
+            {selectedVideo.videoDescription.split("\n").map((line, index) => (
+              <React.Fragment key={index}>
+                {line}
+                <br />
+              </React.Fragment>
+            ))}
+          </div>
           <button
             className="btn-random-video btn-random-video-after"
             onClick={selectRandomVideo}
