@@ -59,7 +59,8 @@ html{
 
 .logo-title{
   max-width: 80%;
-  margin-left: 30px; /* Increased margin-left to move the image to the right */
+  margin-left: 30px; 
+  margin-top: 0;
 }
 
 .random-button{
@@ -115,18 +116,6 @@ html{
   animation: colorChange 30s infinite alternate;
 }
 
-.icons-style {
-  font-size: 2em;
-  color: #e42525;
-  text-decoration: none;
-}
-.icons-style h4 {
-  font-size: 0.2em;
-}
-.icons-style:hover {
-  color: #7ee280;
-  cursor: url("../images/rainbow-reverse.png"), auto;
-}
 
 .icons-group {
   display: flex;

@@ -57,7 +57,7 @@ export default function LogInForm() {
               setUsername(decodedToken.sub);
 
               // Redirect to another page
-              history.push("/videos");
+              history.push("/my-piece-of-random-rainbow");
             } catch (err) {
               setError("Invalid token format");
             }

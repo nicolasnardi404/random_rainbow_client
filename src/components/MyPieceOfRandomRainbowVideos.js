@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { AuthContext } from "../components/AuthContext"; // Adjust the import path as needed
+import { AuthContext } from "./AuthContext"; // Adjust the import path as needed
 import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded"; // Adjust the import path as needed
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserEdit, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
-export default function VideoList() {
+export default function MyPieceOfRandomRainbowVideos() {
   const history = useHistory();
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);

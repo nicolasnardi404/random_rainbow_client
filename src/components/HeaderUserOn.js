@@ -25,7 +25,7 @@ export default function HeaderUserOn() {
       <div className="user-avatar">
         <div
           className="icons-style menu-btn"
-          onClick={() => handleClick("videos")}
+          onClick={() => handleClick("my-piece-of-random-rainbow")}
         >
           <FontAwesomeIcon icon={faSmile} />
           <h3>{username}</h3>
@@ -40,7 +40,10 @@ export default function HeaderUserOn() {
       {/* Mobile Menu */}
       <div className={`mobile-menu ${isMenuOpen ? "active" : ""}`}>
         <div className="icons-group">
-          <button className="default-btn" onClick={() => handleClick("videos")}>
+          <button
+            className="default-btn"
+            onClick={() => handleClick("my-piece-of-random-rainbow")}
+          >
             {username}
           </button>
           <button
@@ -58,9 +61,6 @@ export default function HeaderUserOn() {
       {/* Desktop Menu */}
       <div className={`desktop-menu ${isMenuOpen ? "hidden" : ""}`}>
         <div className="icons-group">
-          <button className="default-btn" onClick={() => handleClick("videos")}>
-            {username}
-          </button>
           <button
             className="default-btn"
             onClick={() => handleClick("manifesto")}

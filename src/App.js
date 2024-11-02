@@ -12,7 +12,7 @@ import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import LogIn from "./pages/LogIn";
 import EmailVerificationSent from "./pages/EmailVerificationSent";
-import UserInterface from "./pages/UserInterface";
+import MyPieceOfRandomRainbow from "./pages/MyPieceOfRandomRainbow";
 import NewVideo from "./pages/NewVideo";
 import PasswordRecovery from "./pages/PasswordRecover";
 import CreateNewPassord from "./pages/CreateNewPassword";
@@ -56,11 +56,14 @@ function App() {
               path="/:idUser/update/:videoId"
               element={<NewVideo />}
             />
-            <ProtectedRoute path="/videos" element={<UserInterface />} />
             <ProtectedRoute
-              path="/users/:idUser/videos"
-              element={UserInterface}
+              path="/my-piece-of-random-rainbow"
+              element={<MyPieceOfRandomRainbow />}
             />
+            {/* <ProtectedRoute
+              path="/users/:idUser/videos"
+              element={MyPieceOfRandomRainbow}
+            /> */}
             <ProtectedRoute path="/profile" element={<ProfileUser />} />
             <Route path="/password-recovery" component={PasswordRecovery} />
             <Route path="/new-password/:token" component={CreateNewPassord} />

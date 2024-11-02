@@ -4,3 +4,16 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.icons-style {
+  font-size: 2em;
+  color: var(--red);
+  text-decoration: none;
+}
+.icons-style h3 {
+  font-size: 0.3em;
+}
+.icons-style:hover {
+  color: var(--carnation-pink);
+  cursor: url("../../images/rainbow-reverse.png"), auto;
+}

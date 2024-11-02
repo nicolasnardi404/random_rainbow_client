@@ -13,7 +13,10 @@ const AdminController = () => {
     <div className="App">
       <header className="App-header">
         <VideoListAdmin />
-        <button className="default-btn" onClick={() => handleClick("videos")}>
+        <button
+          className="default-btn"
+          onClick={() => handleClick("my-piece-of-random-rainbow")}
+        >
           return
         </button>
       </header>

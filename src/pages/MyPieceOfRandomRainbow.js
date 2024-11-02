@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import VideoList from "../components/VideoList";
+import MyPieceOfRandomRainbowVideos from "../components/MyPieceOfRandomRainbowVideos";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../components/AuthContext";
 
-const UserInterface = () => {
+export default function MyPieceOfRandomRainbow() {
   const { role } = useContext(AuthContext);
   const history = useHistory();
   const { idUser } = useParams();
@@ -16,7 +16,7 @@ const UserInterface = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <VideoList idUser={idUser} />
+        <MyPieceOfRandomRainbowVideos idUser={idUser} />
         {role === "ROLE_ADMIN" && (
           <button
             className="default-btn"
@@ -28,6 +28,4 @@ const UserInterface = () => {
       </header>
     </div>
   );
-};
-
-export default UserInterface;
+}

@@ -101,7 +101,7 @@ function ProfileEdit() {
         setRefreshTokenLocal(updateResponse.data.refreshToken);
       }
 
-      history.push("/videos");
+      history.push("/my-piece-of-random-rainbow");
     } catch (error) {
       console.error("Error updating profile:", error);
       setError(

@@ -95,7 +95,7 @@ function AddNewVideo() {
       });
 
       if (response.status === 200) {
-        history.push(`/videos`);
+        history.push(`/my-piece-of-random-rainbow`);
       } else {
         console.error("Failed to save video:", response);
       }
