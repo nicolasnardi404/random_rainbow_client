@@ -1,25 +1,44 @@
-
 .manifesto {
     padding: 20px;
     border-radius: 10px;
-    font-size: 0.5em;
-    color: var(--red);
-    -webkit-text-stroke: 1.2px var(--carnation-pink);
-    margin-top: 10px;
-    font-family: forma-djr-micro;
+    color: var(--carnation-pink);
+    -webkit-text-stroke: 1.2px var(--red);
+    margin: 0 auto;
+    font-family: "lores-12", sans-serif;
+    font-weight: 400;
+    font-size: 2.5em;
+  }
+
+  .how-it-works-container{
     max-width: 60%;
     margin: 0 auto;
+  }
+
+  .how-it-works{
+    padding: 20px;
+    border-radius: 10px;
+    color: var(--red);
+    -webkit-text-stroke: 1.2px var(--carnation-pink);
+    margin: 0 auto;
+    font-family: "lores-12", sans-serif;
+    font-weight: 400;
     font-size: 1em;
+  }
+
+  .manifesto-container{
+    max-width: 80%;
+    margin: 0 auto;
   }
 
   .manifesto-title {
     color: var(--red);
     margin: 10px auto;
-    font-family: "lores-12";
-    font-size:2em;
+    font-family: "lores-12", sans-serif;
+    font-weight: 700;
+    font-size: 2em;
     -webkit-text-stroke: 1px var(--carnation-pink);
   }
-  
+
   .manifesto h1 {
     line-height: 60px;
   }
@@ -30,4 +49,31 @@
         line-height: 50px;
       }
     }
+
+  .style1 {
+    font-family: "lores-12", sans-serif;
+    font-weight: 700;
+  }
+
+  .style2 {
+    font-family: "lores-12", sans-serif;
+    font-weight: 700;
+    font-size: 1.1em;
+  }
+
+  .style3 {
+    font-family: "lores-9-plus-narrow", sans-serif;
+    font-weight: 400;
+  }
+
+  .style4 {
+    font-family: "lores-9-plus-wide", sans-serif;
+    font-weight: 400;
+  }
+
+  .manifesto-content {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
 

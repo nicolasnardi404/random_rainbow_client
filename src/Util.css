@@ -23,7 +23,7 @@ Red: #E42525
 /* buttons */
 
 .default-btn {
-  font-size: 1.2EM;
+  font-size: 1em;
   color: #E42525;
   text-shadow: 2px 2px 1px #FF99C9;
   background-color: transparent;

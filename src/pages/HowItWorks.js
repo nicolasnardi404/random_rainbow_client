@@ -3,10 +3,9 @@ import "../styles/Manifesto.css";
 
 export default function HowItWorks() {
   return (
-    <div className="App">
+    <div className="App how-it-works-container">
       <header className="App-header">
-        <div className="manifesto-title">HOW IT WORKS</div>
-        <div className="manifesto">
+        <div className="how-it-works">
           <p>
             Random Rainbow is built for accessibility and simplicity. Artists
             can create an account on the platform and share their work by

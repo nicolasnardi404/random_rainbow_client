@@ -78,25 +78,25 @@ export default function HeaderUserOff() {
       <div className={`desktop-menu ${isMenuOpen ? "hidden" : ""}`}>
         <div className="icons-group-off">
           <div
-            className={`default-btn ${selectedMenu === "manifesto" ? "selected" : ""}`}
+            className={`default-btn menu-btn-desktop ${selectedMenu === "manifesto" ? "selected" : ""}`}
             onClick={() => handleClick("manifesto")}
           >
             MANIFESTO
           </div>
           <div
-            className={`default-btn menu-btn ${selectedMenu === "how-it-works" ? "selected" : ""}`}
+            className={`default-btn menu-btn-desktop  ${selectedMenu === "how-it-works" ? "selected" : ""}`}
             onClick={() => handleClick("how-it-works")}
           >
             HOW IT WORKS
           </div>
           <div
-            className={`default-btn ${selectedMenu === "log-in" ? "selected" : ""}`}
+            className={`default-btn menu-btn-desktop ${selectedMenu === "log-in" ? "selected" : ""}`}
             onClick={() => handleClick("log-in")}
           >
             LOG IN
           </div>
           <div
-            className={`default-btn ${selectedMenu === "home/0" ? "selected" : ""}`}
+            className={`default-btn menu-btn-desktop ${selectedMenu === "home/0" ? "selected" : ""}`}
             onClick={() => handleClick("home/0")}
           >
             RAINBOW

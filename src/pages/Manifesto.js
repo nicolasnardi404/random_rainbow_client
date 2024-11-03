@@ -3,26 +3,32 @@ import "../styles/Manifesto.css";
 
 export default function Manifesto() {
   return (
-    <div>
-      <header className="App-header ">
-        <div className="manifesto-title">RANDOM RAINBOW - A MANIFESTO</div>
+    <div className="manifesto-container">
+      <div className="manifesto-content">
         <div className="manifesto">
           <p>
-            Random Rainbow is a cyber art project born to connect queer video
-            artists through a random experience. Built from scratch and driven
-            by a desire for fluid, boundless connection, it celebrates chance
-            encounters and endless possibilities. Here, connections are never
-            fixed—each click unveils something new, with no set order or
-            repetition. Every visit is a fresh experience.
+            Random Rainbow is a{" "}
+            <span className="style1">cyber art project</span> born to connect{" "}
+            <span className="style2">queer video artists</span> through a{" "}
+            <span className="style1">random experience.</span> Built from
+            scratch and driven by a desire for{" "}
+            <span className="style3">fluid, boundless connection</span>, it
+            celebrates chance encounters and{" "}
+            <span className="style2">endless possibilities.</span>
           </p>
           <p>
-            Random Rainbow believes in randomness as a radical, non-hierarchical
-            way to explore. There is no map, no structure to follow—just an open
-            flow of queer creative expression. A playground beyond the ordinary.
+            Random Rainbow believes in{" "}
+            <span className="style4">randomness</span> as a{" "}
+            <span className="style4">
+              radical, non-hierarchical way to explore.
+            </span>{" "}
+            There is no map, no structure to follow—just an open flow of queer
+            creative expression. A <span className="style1">playground</span>{" "}
+            beyond the ordinary.
           </p>
           <p>Welcome, press the button and enjoy the journey &lt;3</p>
         </div>
-      </header>
+      </div>
     </div>
   );
 }

@@ -52,7 +52,7 @@ Red: #E42525
 .manifesto-app{
   padding: 1em 2em;
   overflow: auto;
-  background: url("../images/background-manifesto.png") no-repeat center center fixed;
+  background: url("../images/background.png") no-repeat center center fixed;
   background-size: 110% 110%;  /* Changed from 110% 100% to cover */
   background-color: #FF99C9;
   margin: 0;
