@@ -39,11 +39,6 @@ Red: #E42525
   margin: 0;
   padding: 1em 2em;
   overflow: auto;
-
-}
-
-/* Add this to ensure the html and body also fill the viewport */
-body {
   background: url("../images/background.png") no-repeat center center fixed;
   background-size: 110% 110%;  /* Changed from 110% 100% to cover */
   background-color: #FF99C9;
@@ -51,7 +46,21 @@ body {
   padding: 0;
   height: 100%;
   width: 100%;
+
 }
+
+.manifesto-app{
+  padding: 1em 2em;
+  overflow: auto;
+  background: url("../images/background-manifesto.png") no-repeat center center fixed;
+  background-size: 110% 110%;  /* Changed from 110% 100% to cover */
+  background-color: #FF99C9;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
 
 html{
   background-color: #FF99C9;

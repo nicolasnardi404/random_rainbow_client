@@ -3,7 +3,7 @@ import "../styles/Manifesto.css";
 
 export default function Manifesto() {
   return (
-    <div className="App manifesto-body">
+    <div>
       <header className="App-header ">
         <div className="manifesto-title">RANDOM RAINBOW - A MANIFESTO</div>
         <div className="manifesto">
