@@ -1,0 +1,32 @@
+
+
+.manifesto {
+    padding: 20px;
+    text-shadow: 1px 1px #85c7f2;
+    border-radius: 10px;
+    font-size: 1em;
+    color: var(--red);
+    -webkit-text-stroke: 1.2px var(--carnation-pink);
+    margin-top: 10px;
+    font-family: "lores-12";
+  }
+
+  .manifesto-title {
+    color: var(--red);
+    margin: 10px auto;
+    font-family: "lores-12";
+    font-size:2em;
+    -webkit-text-stroke: 1px var(--carnation-pink);
+  }
+  
+  .manifesto h1 {
+    line-height: 60px;
+  }
+
+  @media (max-width: 768px) {
+    .manifesto h1 {
+        font-size: 0.8em;
+        line-height: 50px;
+      }
+    }
+      

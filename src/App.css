@@ -117,14 +117,7 @@ html{
 }
 
 
-.icons-group {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  gap: 3em;
-}
+
 
 .user-menu {
   margin-right: 2em;
@@ -311,11 +304,7 @@ html{
   width: 100%;  /* Make sure it takes full width */
 }
 
-.icons-group {
-  display: flex;
-  gap: 4px;
-  justify-content: center;
-}
+
 
 /* Container styling */
 .header-container {
@@ -329,48 +318,7 @@ html{
   width: 100%;
 }
 
-.icons-group {
-  display: flex;
-  gap: 4px;
-  position: relative;
-}
 
-/* Add this to position the buttons */
-.icons-group .default-btn:first-child {
-  position: absolute;
-  right: 10%;
-}
-
-.icons-group .default-btn:last-child {
-  position: absolute;
-  left: 10%;
-}
-
-/* Desktop styles */
-.desktop-menu {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.icons-group {
-  display: flex;
-  gap: 4px;
-  position: relative;
-}
-
-/* Desktop button positioning */
-.desktop-menu .icons-group .default-btn:first-child {
-  position: absolute;
-  right: 15%;
-  margin-right: 2px;
-}
-
-.desktop-menu .icons-group .default-btn:last-child {
-  position: absolute;
-  left: 20%;
-  margin-left: 2px;
-}
 
 /* Mobile styles */
 @media (max-width: 768px) {

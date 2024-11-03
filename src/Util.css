@@ -89,20 +89,6 @@ Red: #E42525
   text-shadow: 2px 2px 2px #e42525;
 }
 
-.manifesto {
-  background-color: #f8e777;
-  padding: 20px;
-  text-shadow: 2px 2px #85c7f2;
-  border-radius: 10px;
-  font-size: 1em;
-  color: #e42525;
-  margin-top: 10px;
-}
-
-.manifesto h1 {
-  line-height: 60px;
-}
-
 .description-user {
   display: flex;
   justify-content: center;
@@ -133,8 +119,4 @@ Red: #E42525
     margin: 0;
   }
 
-  .manifesto h1 {
-    font-size: 0.8em;
-    line-height: 50px;
-  }
 }

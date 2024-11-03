@@ -39,7 +39,7 @@ export default function HeaderUserOn() {
 
       {/* Mobile Menu */}
       <div className={`mobile-menu ${isMenuOpen ? "active" : ""}`}>
-        <div className="icons-group">
+        <div className="icons-group-on">
           <button
             className="default-btn"
             onClick={() => handleClick("my-piece-of-random-rainbow")}
@@ -60,7 +60,7 @@ export default function HeaderUserOn() {
 
       {/* Desktop Menu */}
       <div className={`desktop-menu ${isMenuOpen ? "hidden" : ""}`}>
-        <div className="icons-group">
+        <div className="icons-group-on">
           <button
             className="default-btn"
             onClick={() => handleClick("manifesto")}

@@ -62,7 +62,7 @@ export default function HeaderUserOff() {
 
       {/* Desktop View */}
       <div className={`desktop-menu ${isMenuOpen ? "hidden" : ""}`}>
-        <div className="icons-group">
+        <div className="icons-group-off">
           <button
             className="default-btn"
             onClick={() => handleClick("manifesto")}
