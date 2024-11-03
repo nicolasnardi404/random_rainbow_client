@@ -81,7 +81,7 @@ export default function LogInForm() {
   return (
     <form onSubmit={handleSubmit}>
       <label className="group-form">
-        Email:
+        EMAIL:
         <input
           className="input-form"
           type="email"
@@ -91,7 +91,7 @@ export default function LogInForm() {
           required
         />
         <br />
-        Password:
+        PASSWORD:
         <input
           className="input-form"
           type="password"

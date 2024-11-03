@@ -102,16 +102,28 @@ html{
 
 .input-form {
   display: flex;
-  background-color: #f8e777;
+  background-color: #DEE381;
   margin: 0.5em;
   max-width: 80%;
-  color: #e42525;
-  border: 3px solid #7ee280;
+  color: var(--red);
+  border: 3px solid var(--carnation-pink);
+  border-radius: 10px;
+  font-family: "lores-9-plus-wide";
 }
 
 .group-form {
-  color: #8447ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color:var(--red);
+  /* -webkit-text-stroke: 1px var(--red); */
+  text-shadow: 2px 2px 1px var(--carnation-pink);
+  font-size: 1.2em;
+  font-family: "lores-9-plus-wide";
+  margin: 40px
 }
+
 
 .app-title {
   font-family: Jersey;
@@ -159,13 +171,6 @@ html{
 }
 
 /*  */
-
-.group-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
 
 
 /* email verification */

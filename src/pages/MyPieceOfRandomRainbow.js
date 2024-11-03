@@ -4,13 +4,17 @@ import axios from "axios";
 import { AuthContext } from "../components/AuthContext"; // Adjust the import path as needed
 import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded"; // Adjust the import path as needed
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserEdit, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUserEdit,
+  faSignOutAlt,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
-export default function MyPieceOfRandomRainbowVideos() {
+export default function MyPieceOfRandomRainbow() {
   const history = useHistory();
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { role } = useContext(AuthContext);
+  const { role, username } = useContext(AuthContext);
 
   const {
     accessToken,
@@ -145,9 +149,15 @@ export default function MyPieceOfRandomRainbowVideos() {
   }
 
   return (
-    <div>
+    <div className="App-header">
       <button className="default-btn" onClick={() => handleClick("profile")}>
         <FontAwesomeIcon icon={faUserEdit} /> Edit Profile
+      </button>
+      <button
+        className="default-btn"
+        onClick={() => handleClick(`profile/${username}`)}
+      >
+        <FontAwesomeIcon icon={faUser} /> View Profile
       </button>
       <button className="default-btn" onClick={handleLogout}>
         <FontAwesomeIcon icon={faSignOutAlt} /> Log Out

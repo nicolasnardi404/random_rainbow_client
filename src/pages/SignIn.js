@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import "../styles/SignIn.css";
 
 export default function SignInForm() {
   const history = useHistory();
@@ -37,7 +38,6 @@ export default function SignInForm() {
       setPasswordError("Passwords do not match.");
       return;
     }
-    console.log("hey");
 
     setLoading(true); // Start loading
 
@@ -57,7 +57,7 @@ export default function SignInForm() {
   };
 
   return (
-    <div className="mb-5">
+    <div className="mb-5 App-header">
       {loading ? ( // Display loading message if loading is true
         <div className="special-title" style={{ border: "none" }}>
           Loading...
@@ -65,7 +65,7 @@ export default function SignInForm() {
       ) : (
         // Otherwise, display the form
         <form className="group-form" onSubmit={handleSubmit}>
-          <label>Username:</label>
+          <label>USERNAME:</label>
           <input
             className="input-form"
             type="text"
@@ -74,8 +74,8 @@ export default function SignInForm() {
             onChange={handleChange}
             required
           />
-          <br />
-          <label>New Password:</label>
+
+          <label>PASSWORD:</label>
           <input
             className="input-form"
             type="password"
@@ -84,8 +84,7 @@ export default function SignInForm() {
             onChange={handleChange}
             required
           />
-          <br />
-          <label>Confirm Password:</label>
+          <label>CONFIRM PASSWORD:</label>
           <input
             className="input-form"
             type="password"
@@ -94,8 +93,7 @@ export default function SignInForm() {
             onChange={handleChange}
             required
           />
-          <br />
-          <label>First Name:</label>
+          {/* <label>FIRST NAME:</label>
           <input
             className="input-form"
             type="text"
@@ -105,7 +103,7 @@ export default function SignInForm() {
             required
           />
           <br />
-          <label>Last Name:</label>
+          <label>LAST NAME:</label>
           <input
             className="input-form"
             type="text"
@@ -113,9 +111,9 @@ export default function SignInForm() {
             value={formData.lastname}
             onChange={handleChange}
             required
-          />
-          <br />
-          <label>Email:</label>
+          /> 
+          <br />*/}
+          <label>EMAIL:</label>
           <input
             className="input-form"
             type="email"
@@ -124,7 +122,6 @@ export default function SignInForm() {
             onChange={handleChange}
             required
           />
-          <br />
           <input
             className="default-btn special-btn"
             type="submit"
