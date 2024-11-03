@@ -52,8 +52,14 @@ export default function HeaderUserOff() {
         >
           Manifesto
         </button>
+        <button
+          className="default-btn menu-btn"
+          onClick={() => handleClick("how-it-works")}
+        >
+          How It Works
+        </button>
         <button className="default-btn" onClick={() => handleClick("home/0")}>
-          Home
+          Rainbow
         </button>
         <button className="default-btn" onClick={toggleMenu}>
           Return
@@ -69,6 +75,12 @@ export default function HeaderUserOff() {
           >
             MANIFESTO
           </button>
+          <button
+            className="default-btn menu-btn"
+            onClick={() => handleClick("how-it-works")}
+          >
+            HOW IT WORKS
+          </button>
           <button className="default-btn" onClick={() => handleClick("log-in")}>
             LOG IN
           </button>
@@ -79,7 +91,7 @@ export default function HeaderUserOff() {
             SIGN IN
           </button>
           <button className="default-btn" onClick={() => handleClick("home/0")}>
-            HOME
+            RAINBOW
           </button>
         </div>
       </div>

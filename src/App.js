@@ -24,6 +24,7 @@ import { ProvideAuth } from "./components/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
 import EmailVerified from "./pages/EmailVerified";
+import HowItWorks from "./pages/HowItWorks";
 import { inject } from "@vercel/analytics";
 import Layout from "./Layout";
 
@@ -38,6 +39,7 @@ function App() {
               <Redirect to="/home/0" />
             </Route>
             <Route path="/manifesto" component={Manifesto} />
+            <Route path="/how-it-works" component={HowItWorks} />
             <Route path="/home/:token" component={Home} />
             {/* <Route path="/welcome" component={Welcome} /> */}
             <Route path="/sign-in" component={SignIn} />
