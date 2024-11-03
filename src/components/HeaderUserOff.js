@@ -11,10 +11,12 @@ import logo from "../images/logo.png";
 export default function HeaderUserOff() {
   const history = useHistory();
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [selectedMenu, setSelectedMenu] = useState("");
 
   function handleClick(path) {
+    setSelectedMenu(path);
     history.push(`/${path}`);
-    setMenuOpen(false); // Close menu on item click
+    setMenuOpen(false);
   }
 
   function toggleMenu() {
@@ -33,66 +35,72 @@ export default function HeaderUserOff() {
       {/* Mobile Menu */}
       <div className={`mobile-menu ${isMenuOpen ? "active" : ""}`}>
         <div
-          className="icons-style menu-btn"
+          className={`icons-style menu-btn ${selectedMenu === "log-in" ? "selected" : ""}`}
           onClick={() => handleClick("log-in")}
         >
           <FontAwesomeIcon icon={faUserAstronaut} />
           <h3>LOG IN</h3>
         </div>
         <div
-          className="icons-style menu-btn"
+          className={`icons-style menu-btn ${selectedMenu === "sign-in" ? "selected" : ""}`}
           onClick={() => handleClick("sign-in")}
         >
           <FontAwesomeIcon icon={faUsers} />
           <h3>SIGN UP</h3>
         </div>
-        <button
-          className="default-btn menu-btn"
+        <div
+          className={`default-btn menu-btn ${selectedMenu === "manifesto" ? "selected" : ""}`}
           onClick={() => handleClick("manifesto")}
         >
           Manifesto
-        </button>
-        <button
-          className="default-btn menu-btn"
+        </div>
+        <div
+          className={`default-btn menu-btn ${selectedMenu === "how-it-works" ? "selected" : ""}`}
           onClick={() => handleClick("how-it-works")}
         >
           How It Works
-        </button>
-        <button className="default-btn" onClick={() => handleClick("home/0")}>
+        </div>
+        <div
+          className={`default-btn ${selectedMenu === "home/0" ? "selected" : ""}`}
+          onClick={() => handleClick("home/0")}
+        >
           Rainbow
-        </button>
-        <button className="default-btn" onClick={toggleMenu}>
+        </div>
+        <div
+          className={`default-btn ${selectedMenu === "return" ? "selected" : ""}`}
+          onClick={toggleMenu}
+        >
           Return
-        </button>
+        </div>
       </div>
 
       {/* Desktop View */}
       <div className={`desktop-menu ${isMenuOpen ? "hidden" : ""}`}>
         <div className="icons-group-off">
-          <button
-            className="default-btn"
+          <div
+            className={`default-btn ${selectedMenu === "manifesto" ? "selected" : ""}`}
             onClick={() => handleClick("manifesto")}
           >
             MANIFESTO
-          </button>
-          <button
-            className="default-btn menu-btn"
+          </div>
+          <div
+            className={`default-btn menu-btn ${selectedMenu === "how-it-works" ? "selected" : ""}`}
             onClick={() => handleClick("how-it-works")}
           >
             HOW IT WORKS
-          </button>
-          <button className="default-btn" onClick={() => handleClick("log-in")}>
-            LOG IN
-          </button>
-          <button
-            className="default-btn"
-            onClick={() => handleClick("sign-in")}
+          </div>
+          <div
+            className={`default-btn ${selectedMenu === "log-in" ? "selected" : ""}`}
+            onClick={() => handleClick("log-in")}
           >
-            SIGN IN
-          </button>
-          <button className="default-btn" onClick={() => handleClick("home/0")}>
+            LOG IN
+          </div>
+          <div
+            className={`default-btn ${selectedMenu === "home/0" ? "selected" : ""}`}
+            onClick={() => handleClick("home/0")}
+          >
             RAINBOW
-          </button>
+          </div>
         </div>
       </div>
     </div>

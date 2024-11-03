@@ -19,6 +19,9 @@ const LogIn = () => {
         >
           forgot my password
         </button>
+        <button className="default-btn " onClick={() => handleClick("sign-in")}>
+          sign in
+        </button>
       </header>
     </div>
   );

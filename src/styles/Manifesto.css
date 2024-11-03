@@ -1,14 +1,18 @@
-
+/* body {
+  background: url("../../images/background-manifesto.png") no-repeat center center fixed;
+} */
 
 .manifesto {
     padding: 20px;
-    text-shadow: 1px 1px #85c7f2;
     border-radius: 10px;
-    font-size: 1em;
+    font-size: 0.5em;
     color: var(--red);
     -webkit-text-stroke: 1.2px var(--carnation-pink);
     margin-top: 10px;
-    font-family: "lores-12";
+    font-family: forma-djr-micro;
+    max-width: 60%;
+    margin: 0 auto;
+    font-size: 1em;
   }
 
   .manifesto-title {
@@ -29,4 +33,4 @@
         line-height: 50px;
       }
     }
-      
+

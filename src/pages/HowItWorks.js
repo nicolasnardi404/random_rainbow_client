@@ -7,7 +7,7 @@ export default function HowItWorks() {
       <header className="App-header">
         <div className="manifesto-title">HOW IT WORKS</div>
         <div className="manifesto">
-          <h1>
+          <p>
             Random Rainbow is built for accessibility and simplicity. Artists
             can create an account on the platform and share their work by
             uploading up to three video links. On the homepage, a "Random"
@@ -15,17 +15,17 @@ export default function HowItWorks() {
             video art. Each click calls up a different video from the database,
             ensuring that no two clicks lead to the same experience and no fixed
             order ever appears.
-          </h1>
-          <h1>
+          </p>
+          <p>
             Designed independently from the ground up, Random Rainbow is a labor
             of love crafted with Java powering the backend, and JavaScript with
             React shaping the frontend experience. This independent digital art
             space is all about exploration, spontaneity, and inclusivity.
-          </h1>
-          <h1>
+          </p>
+          <p>
             For any questions or technical issues, feel free to reach out to us
             at info@randomrainbow.art
-          </h1>
+          </p>
         </div>
       </header>
     </div>
