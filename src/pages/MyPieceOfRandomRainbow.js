@@ -18,6 +18,8 @@ export default function MyPieceOfRandomRainbow() {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const { role, username } = useContext(AuthContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   const {
     accessToken,
@@ -26,6 +28,8 @@ export default function MyPieceOfRandomRainbow() {
     setAccessTokenLocal,
     setRefreshTokenLocal,
   } = useContext(AuthContext);
+
+  const [expandedVideo, setExpandedVideo] = useState(null);
 
   function handleLogout() {
     localStorage.removeItem("accessToken");
@@ -60,9 +64,10 @@ export default function MyPieceOfRandomRainbow() {
       video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ||
       video.videoStatus === "ERROR"
     ) {
-      alert(
-        `${video.messageError} \nif you want to ask any other question or ask for more info send us an email info@randomrainbow.com`
+      setModalMessage(
+        `${video.messageError}\n\nFor further inquiries or additional information, please email us at info@randomrainbow.com.`
       );
+      setIsModalOpen(true);
     }
   };
 
@@ -171,61 +176,68 @@ export default function MyPieceOfRandomRainbow() {
         </div>
       ) : (
         <>
-          <table className="table-header">
-            <thead>
-              <tr>
-                <th>VIDEO</th>
-                <th>STATUS</th>
-                <th>EDIT/DELETE</th>
-              </tr>
-            </thead>
-            <tbody>
-              {videos.map((video) => (
-                <tr key={video.videoId}>
-                  <td>{video.title}</td>
-                  <td
-                    style={{
-                      cursor:
-                        video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ||
-                        video.videoStatus === "ERROR"
-                          ? "pointer"
-                          : "default",
-                    }}
-                    onClick={() => handleStatusClick(video)}
+          <div className="video-list">
+            {videos.map((video) => (
+              <div key={video.videoId} className="video-item">
+                <div className="video-title">
+                  <h3>{video.title}</h3>
+                </div>
+                <div className="video-status-container">
+                  {video.videoStatus === "AVAILABLE" ? (
+                    <a
+                      href={`http://www.randomrainbow.art/${video.videoId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="video-link"
+                    >
+                      LINK
+                    </a>
+                  ) : (
+                    <span
+                      className="video-status"
+                      onClick={() => handleStatusClick(video)}
+                    >
+                      {video.videoStatus}
+                    </span>
+                  )}
+                </div>
+                <div className="action-buttons">
+                  <button
+                    className="icon-btn"
+                    onClick={() => handleUpdate(video.videoId)}
                   >
-                    {video.videoStatus === "AVAILABLE" ? (
-                      <a
-                        href={`http://www.randomrainbow.art/home/${video.token}`}
-                        className="video-link"
-                      >
-                        VIDEO LINK
-                      </a>
-                    ) : video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ? (
-                      <span>Not Respecting Guidelines</span>
-                    ) : video.videoStatus === "ERROR" ? (
-                      <span className="error-status">Error</span>
-                    ) : (
-                      <span>Unchecked</span>
-                    )}
-                  </td>
-                  <td>
-                    <button
-                      className="default-btn update-btn"
-                      onClick={() => handleUpdate(video.videoId)}
-                    >
-                      <FontAwesomeIcon icon={faPenToSquare} />
-                    </button>
-                    <button
-                      className="default-btn delete-btn"
-                      onClick={() => handleDelete(video.videoId)}
-                    >
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                  </button>
+                  <button
+                    className="icon-btn"
+                    onClick={() => handleDelete(video.videoId)}
+                  >
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+          {isModalOpen && (
+            <div
+              className="modal-overlay"
+              onClick={() => setIsModalOpen(false)}
+            >
+              <div
+                className="modal-content"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <h2>Status Information</h2>
+                <p>{modalMessage}</p>
+                <button
+                  className="modal-close-btn"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
           <button onClick={handleClickAdd} className="default-btn special-btn">
             {videos.length < 3
               ? "ADD NEW VIDEO"
