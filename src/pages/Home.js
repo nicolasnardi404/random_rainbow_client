@@ -101,7 +101,7 @@ export default function RandomVideoCard() {
           </button>
           <div className="duration">
             <label className="duration-label" htmlFor="duration">
-              choose max time:
+              <p>FILTER: </p>
             </label>
             <select
               className="duration-select"
@@ -109,10 +109,10 @@ export default function RandomVideoCard() {
               value={durationOption}
               onChange={(e) => setDurationOption(e.target.value)}
             >
-              <option value="1000">all videos</option>
-              <option value="5">less than 5 min</option>
-              <option value="10">less than 10 minutes</option>
-              <option value="-10">more than 10 minutes</option>
+              <option value="1000">ALL VIDEOS</option>
+              <option value="5">LESS THAN 5 MIN</option>
+              <option value="10">LESS THAN 10 MINUTES</option>
+              <option value="-10">MORE THAN 10 MINUTES</option>
             </select>
           </div>
         </div>

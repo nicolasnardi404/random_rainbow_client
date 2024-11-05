@@ -42,7 +42,7 @@
   
   .artist:hover {
     color: #8447ff;
-    text-shadow: 2px 2px #85c7f2;
+    -webkit-text-stroke: 1px var(--light-blue-sky);
   }
   
   .description {
@@ -61,13 +61,20 @@
   }
   
   .duration {
-    background: #8447ff;
+    
     padding: 1em;
     font-size: 0.8em;
     margin: 20px auto 10px auto;
     max-width: 40%;
     min-width: 330px;
     border-radius: 10px;
+    color: var(--carnation-pink);
+    font-family: lores-9-plus-narrow;
+    font-size: 1.2em;
+  
+  }
+  .duration p{
+    -webkit-text-stroke: 1px var(--red);
   }
   
   .duration-label {
@@ -75,12 +82,13 @@
   }
   
   .duration-select {
-    background-color: #f8e777;
+    background-color: var(--yellow-maize);
     border-radius: 10px;
     padding: 0.2em;
-    color: #8447ff;
-    border: 2px solid #7ee280;
+    color: var(--red);
+    border: 2px solid var(--carnation-pink);
     max-width: 80%;
+    margin-left: 10px;
   }
   
   .btn-random-video {
@@ -94,7 +102,7 @@
     border: none;
     border-radius: 4px;
     font-size: 2em;
-    margin: 60px auto;
+    margin: 40px auto;
   }
 
 

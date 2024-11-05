@@ -11,9 +11,8 @@ Red: #E42525
 
 :root {
   --carnation-pink: #FF99C9;
-  --light-green: #DEE381;
-  --maize-yellow: #F8E777;
-  --veronica-purple: #8447FF;
+  --maize-yellow: #DEE381;
+  --veronica-purple: #A070FF;
   --light-blue-sky: #85C7F2;
   --red: #E42525;
 }
@@ -149,30 +148,6 @@ html{
   align-items: center;
 }
 
-/* User Interface */
-
-.table-header {
-  background: #f8e777;
-  margin: auto;
-}
-
-.table-header th {
-  background: #8447ff;
-  color: #85c7f2;
-  padding: 1em;
-  font-size: 0.5em;
-}
-
-.table-header td {
-  padding: 1em;
-  border: 3px dotted #85c7f2;
-  color: #8447ff;
-  font-size: 0.5em;
-}
-
-/*  */
-
-
 /* email verification */
 .email-confirmation {
   color: red;
@@ -200,16 +175,14 @@ html{
 
 /* Add new video */
 
-.add-video-style,
-.edit-profile-style {
+.add-video-style{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.add-video-form,
-.edit-profile-form {
+.add-video-form {
   margin: 2em auto;
 }
 

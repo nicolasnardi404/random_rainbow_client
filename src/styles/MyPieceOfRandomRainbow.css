@@ -1,0 +1,124 @@
+/* Table styles */
+.table-header {
+  background: var(--maize-yellow);
+  margin: auto;
+  width: 75%;
+  font-family: "lores-12";
+  font-size: 1.5em;
+}
+
+.table-header th {
+  background: var(--veronica-purple);
+  text-shadow: 2px 2px 1px var(--red);
+  color: var(--light-blue-sky);
+  padding: 1em;
+  font-size: 0.8em;
+  letter-spacing: 0.05em;
+}
+
+.table-header td {
+  padding: 1em;
+  border: 3px dotted #85c7f2;
+  color: var(--veronica-purple);
+  text-shadow: 1px 1px 1px var(--light-blue-sky);
+  font-size: 0.8em;
+}
+
+/* Button styles */
+.update-btn {
+  margin-right: 10px;
+  background-color: var(--light-blue-sky);
+  color: var(--veronica-purple);
+  text-shadow: 1px 1px 1px var(--carnation-pink);
+  font-size: 0.8em;
+}
+
+.update-btn:hover {
+  background-color: var(--veronica-purple);
+  color: var(--light-blue-sky);
+  text-shadow: 1px 1px 1px var(--carnation-pink);
+}
+
+.delete-btn {
+  background-color: var(--carnation-pink);
+  color: var(--red);
+  text-shadow: 1px 1px 1px var(--light-blue-sky);
+  font-size: 0.8em;
+}
+
+.delete-btn:hover {
+  background-color: var(--red);
+  color: var(--carnation-pink);
+  text-shadow: 1px 1px 1px var(--light-blue-sky);
+}
+
+.error-status {
+  color: var(--red);
+}
+
+.special-btn {
+  margin: 20px auto;
+  display: block;
+  background-color: var(--light-blue-sky);
+  color: var(--veronica-purple);
+  text-shadow: 1px 1px 1px var(--carnation-pink);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.special-btn:hover {
+  background-color: var(--veronica-purple);
+  color: var(--light-blue-sky);
+  text-shadow: 1px 1px 1px var(--carnation-pink);
+  transform: scale(1.05);
+}
+
+.special-btn:disabled {
+  background-color: var(--carnation-pink);
+  color: var(--red);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* User menu styles */
+.user-menu {
+  margin-right: 2em;
+  display: flex;
+  flex-direction: row;
+  gap: 2em;
+  justify-content: right;
+  align-items: center;
+}
+
+/* Add these styles */
+.video-link {
+  color: var(--veronica-purple);
+  transition: all 0.2s ease;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-decoration: underline dotted;
+  text-shadow: 1px 1px 1px var(--light-blue-sky);
+
+}
+
+.video-link:hover {
+  color: var(--red);
+  text-shadow: 1px 1px 1px var(--light-blue-sky);
+}
+
+/* Update button styles */
+.icon-btn {
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
+}

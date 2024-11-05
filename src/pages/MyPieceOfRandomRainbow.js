@@ -8,7 +8,10 @@ import {
   faUserEdit,
   faSignOutAlt,
   faUser,
+  faPenToSquare,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import "../styles/MyPieceOfRandomRainbow.css";
 
 export default function MyPieceOfRandomRainbow() {
   const history = useHistory();
@@ -171,9 +174,9 @@ export default function MyPieceOfRandomRainbow() {
           <table className="table-header">
             <thead>
               <tr>
-                <th>Title</th>
-                <th>Video Status</th>
-                <th>Actions</th>
+                <th>VIDEO</th>
+                <th>STATUS</th>
+                <th>EDIT/DELETE</th>
               </tr>
             </thead>
             <tbody>
@@ -193,8 +196,9 @@ export default function MyPieceOfRandomRainbow() {
                     {video.videoStatus === "AVAILABLE" ? (
                       <a
                         href={`http://www.randomrainbow.art/home/${video.token}`}
+                        className="video-link"
                       >
-                        View Video
+                        VIDEO LINK
                       </a>
                     ) : video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ? (
                       <span>Not Respecting Guidelines</span>
@@ -209,13 +213,13 @@ export default function MyPieceOfRandomRainbow() {
                       className="default-btn update-btn"
                       onClick={() => handleUpdate(video.videoId)}
                     >
-                      UPDATE
+                      <FontAwesomeIcon icon={faPenToSquare} />
                     </button>
                     <button
                       className="default-btn delete-btn"
                       onClick={() => handleDelete(video.videoId)}
                     >
-                      DELETE
+                      <FontAwesomeIcon icon={faTrash} />
                     </button>
                   </td>
                 </tr>
