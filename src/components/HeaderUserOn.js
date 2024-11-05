@@ -23,10 +23,7 @@ export default function HeaderUserOn() {
   return (
     <div>
       <div className="user-avatar">
-        <div
-          className="icons-style menu-btn"
-          onClick={() => handleClick("my-piece-of-random-rainbow")}
-        >
+        <div onClick={() => handleClick("my-piece-of-random-rainbow")}>
           <FontAwesomeIcon icon={faSmile} />
           <h3>{username}</h3>
         </div>
