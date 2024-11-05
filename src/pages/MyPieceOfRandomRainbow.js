@@ -31,6 +31,10 @@ export default function MyPieceOfRandomRainbow() {
 
   const [expandedVideo, setExpandedVideo] = useState(null);
 
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const [videoToDelete, setVideoToDelete] = useState(null);
+
   function handleLogout() {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
@@ -63,6 +67,8 @@ export default function MyPieceOfRandomRainbow() {
     if (
       video.videoStatus === "DOESNT_RESPECT_GUIDELINES" ||
       video.videoStatus === "ERROR"
+        ? "error-class"
+        : ""
     ) {
       setModalMessage(
         `${video.messageError}\n\nFor further inquiries or additional information, please email us at info@randomrainbow.com.`
@@ -92,32 +98,32 @@ export default function MyPieceOfRandomRainbow() {
     }
   }
 
-  async function handleDelete(videoId) {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this video?"
-    );
+  const handleDeleteClick = (videoId) => {
+    setShowDeleteModal(true);
+    setVideoToDelete(videoId);
+  };
 
-    if (!confirmDelete) {
-      return;
-    }
-
-    setLoading(true); // Start loading
+  const handleDeleteConfirm = async () => {
     try {
       const token = await getUpdatedToken();
-      await axios.delete(
-        `${process.env.REACT_APP_API_BASE_URL}/api/users/${idUser}/videos/delete/${videoId}`,
+      const response = await axios.delete(
+        `${process.env.REACT_APP_API_BASE_URL}/api/users/${idUser}/videos/delete/${videoToDelete}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      fetchVideos();
+
+      if (response.status === 200) {
+        setVideos(videos.filter((video) => video.videoId !== videoToDelete));
+        setShowDeleteModal(false);
+        setVideoToDelete(null);
+      }
     } catch (error) {
-      console.error("Failed to delete video:", error);
-      setLoading(false);
+      console.error("Error deleting video:", error);
     }
-  }
+  };
 
   async function handleUpdate(videoId) {
     setLoading(true);
@@ -178,9 +184,28 @@ export default function MyPieceOfRandomRainbow() {
         <>
           <div className="video-list">
             {videos.map((video) => (
-              <div key={video.videoId} className="video-item">
+              <div
+                key={video.videoId}
+                className={`video-item ${
+                  video.videoStatus === "ERROR" ||
+                  video.videoStatus === "DOESNT_RESPECT_GUIDELINES"
+                    ? "error-status-item"
+                    : ""
+                }`}
+              >
                 <div className="video-title">
-                  <h3>{video.title}</h3>
+                  {video.videoStatus === "AVAILABLE" ? (
+                    <a
+                      href={`http://www.randomrainbow.art/${video.videoId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="title-link"
+                    >
+                      <h3>{video.title}</h3>
+                    </a>
+                  ) : (
+                    <h3>{video.title}</h3>
+                  )}
                 </div>
                 <div className="video-status-container">
                   {video.videoStatus === "AVAILABLE" ? (
@@ -194,7 +219,13 @@ export default function MyPieceOfRandomRainbow() {
                     </a>
                   ) : (
                     <span
-                      className="video-status"
+                      className={`video-status ${
+                        video.videoStatus === "ERROR"
+                          ? "error-status"
+                          : video.videoStatus === "DOESNT_RESPECT_GUIDELINES"
+                            ? "guidelines-status"
+                            : ""
+                      }`}
                       onClick={() => handleStatusClick(video)}
                     >
                       {video.videoStatus}
@@ -210,7 +241,7 @@ export default function MyPieceOfRandomRainbow() {
                   </button>
                   <button
                     className="icon-btn"
-                    onClick={() => handleDelete(video.videoId)}
+                    onClick={() => handleDeleteClick(video.videoId)}
                   >
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
@@ -243,6 +274,34 @@ export default function MyPieceOfRandomRainbow() {
               ? "ADD NEW VIDEO"
               : "You cannot add more than 3 videos"}
           </button>
+          {showDeleteModal && (
+            <div
+              className="modal-overlay"
+              onClick={() => setShowDeleteModal(false)}
+            >
+              <div
+                className="modal-content"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <h2>Confirm Delete</h2>
+                <p>Are you sure you want to delete this video?</p>
+                <div className="modal-buttons">
+                  <button
+                    className="modal-btn confirm"
+                    onClick={handleDeleteConfirm}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    className="modal-btn cancel"
+                    onClick={() => setShowDeleteModal(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </>
       )}
       {role === "ROLE_ADMIN" && (
