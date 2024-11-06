@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import "../styles/ArtistProfile.css";
 
 export default function ArtistProfile() {
   const { usernameData } = useParams(); // Extract username from the URL
@@ -68,7 +69,7 @@ export default function ArtistProfile() {
             </div>
           )}
           {profileData.dataUserProfile.socialMedia && (
-            <div>
+            <div className="social-media-container ">
               <p>
                 <a
                   href={cleanSocialMediaUrl(
@@ -82,38 +83,40 @@ export default function ArtistProfile() {
               </p>
             </div>
           )}
-          <table className="table-header">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Video Link</th>
-              </tr>
-            </thead>
-            <tbody>
-              {videos.length > 0 ? (
-                videos.map((video) => (
-                  <tr key={video.id}>
-                    <td>{video.title}</td>
-                    <td>
-                      {video.videoStatus === "AVAILABLE" ? (
-                        <a
-                          href={`http://www.randomrainbow.art/home/${video.endpoint}`}
-                        >
-                          View Video
-                        </a>
-                      ) : (
-                        "Not Available"
-                      )}
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="2">No videos available</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+          <div className="video-list">
+            {videos.length > 0 ? (
+              videos.map((video) => (
+                <div
+                  key={video.id}
+                  className="video-item"
+                  onClick={() => {
+                    if (video.videoStatus === "AVAILABLE") {
+                      window.open(
+                        `http://www.randomrainbow.art/home/${video.endpoint}`,
+                        "_blank",
+                        "noopener,noreferrer"
+                      );
+                    }
+                  }}
+                  style={{
+                    cursor:
+                      video.videoStatus === "AVAILABLE" ? "pointer" : "default",
+                  }}
+                >
+                  <div className="video-title">
+                    <h3>{video.title}</h3>
+                  </div>
+                  <div className="video-status-container">
+                    {video.videoStatus !== "AVAILABLE" && (
+                      <span>Not Available</span>
+                    )}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="video-item">No videos available</div>
+            )}
+          </div>
         </>
       )}
     </div>
