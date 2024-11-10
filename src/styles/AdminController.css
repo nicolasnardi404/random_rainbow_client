@@ -14,7 +14,7 @@
 .admin-title {
   font-size: 2.5rem;
   color: var(--veronica-purple);
-  text-shadow: 2px 2px var(--carnation-pink);
+  text-shadow: 2px 2px var(--maize-yellow);
   text-align: center;
   margin-bottom: 2rem;
 }
@@ -26,18 +26,26 @@
 }
 
 .admin-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
   padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  justify-content: center;
 }
 
 .admin-card {
-  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  background-color: var(--maize-yellow);
   border-radius: 15px;
   padding: 1.5rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px var(--veronica-purple);
   transition: transform 0.2s ease;
+  border: 3px solid var(--veronica-purple);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .admin-card:hover {
@@ -51,7 +59,7 @@
 }
 
 .admin-card-username {
-  color: var(--light-blue-sky);
+  color: var(--veronica-purple);
   font-size: 1rem;
   margin-bottom: 1rem;
 }
@@ -60,9 +68,11 @@
   width: 100%;
   padding: 0.5rem;
   border-radius: 5px;
-  border: 2px solid var(--light-blue-sky);
+  border: 2px solid var(--veronica-purple);
   margin-bottom: 1rem;
   font-family: inherit;
+  background-color: var(--maize-yellow);
+  color: var(--veronica-purple);
 }
 
 .admin-error-message {
@@ -79,11 +89,14 @@
 }
 
 .admin-video-link:hover {
-  text-decoration: underline;
+  color: var(--light-blue-sky);
+  text-shadow: 1px 1px var(--veronica-purple);
 }
 
 .admin-card-actions {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 1rem;
   margin-top: 1rem;
 }
@@ -99,25 +112,28 @@
 
 .admin-btn-update {
   background-color: var(--light-blue-sky);
-  color: white;
+  color: var(--veronica-purple);
+  border: 2px solid var(--veronica-purple);
 }
 
 .admin-btn-delete {
   background-color: var(--red);
-  color: white;
+  color: var(--maize-yellow);
+  border: 2px solid var(--veronica-purple);
 }
 
 .admin-btn:hover {
   opacity: 0.9;
   transform: translateY(-2px);
+  box-shadow: 2px 2px var(--veronica-purple);
 }
 
 .admin-toggle-btn {
   background-color: var(--veronica-purple);
-  color: white;
+  color: var(--maize-yellow);
   padding: 0.8rem 1.5rem;
   border-radius: 8px;
-  border: none;
+  border: 2px solid var(--maize-yellow);
   cursor: pointer;
   font-family: inherit;
   margin: 1rem 0;
@@ -125,13 +141,21 @@
 }
 
 .admin-toggle-btn:hover {
-  background-color: var(--carnation-pink);
+  background-color: var(--light-blue-sky);
+  color: var(--veronica-purple);
   transform: translateY(-2px);
+  box-shadow: 2px 2px var(--veronica-purple);
 }
+
 
 @media (max-width: 768px) {
   .admin-cards-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .admin-card:nth-last-child(-n+2),
+  .admin-card:last-child {
+    grid-column: auto;
   }
   
   .admin-card {

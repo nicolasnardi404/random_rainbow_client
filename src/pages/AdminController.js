@@ -3,13 +3,13 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../components/AuthContext";
 import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded";
-import "../VideoList.css"; // Import the CSS file
+import "../styles/AdminController.css"; // Import the CSS file
 
 export default function AdminController() {
   const history = useHistory();
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true); // Loading state
-  const [showAllVideos, setShowAllVideos] = useState(true);
+  const [showAllVideos, setShowAllVideos] = useState(false);
 
   function handleClick(path) {
     history.push(`/${path}`);
@@ -150,61 +150,54 @@ export default function AdminController() {
   };
 
   return (
-    <div className="video-list-container App-header">
-      <h1 className="special-title">
+    <div className="admin-container">
+      <h1 className="admin-title">
         {showAllVideos ? "ALL VIDEOS" : "REVIEW VIDEOS"}
       </h1>
-      {loading ? ( // Show loading indicator when loading is true
-        <div className="special-title" style={{ border: "none" }}>
-          Loading...
-        </div>
-      ) : videos.length === 0 ? ( // Check if there are no videos to display
-        <div className="title">No videos to review</div>
+      {loading ? (
+        <div className="admin-loading">Loading...</div>
+      ) : videos.length === 0 ? (
+        <div className="admin-title">No videos to review</div>
       ) : (
-        <div className="video-list-cards">
+        <div className="admin-cards-grid">
           {videos.map((video) => (
-            <div key={video.videoId} className="video-card">
-              <h2 className="video-title">{video.title}</h2>
-              <p className="video-username">{video.username}</p>
-              <p>
-                <select
-                  className="video-select"
-                  value={video.videoStatus}
-                  onChange={(e) =>
-                    handleStatusChange(video.videoId, e.target.value)
-                  }
-                >
-                  <option value="AVAILABLE">Available</option>
-                  <option value="ERROR">Error</option>
-                  <option value="DOESNT_RESPECT_GUIDELINES">
-                    Doesn't Respect Guidelines
-                  </option>
-                  <option value="UNCHECKED">Unchecked</option>
-                </select>
-              </p>
-              <p>
-                <h4 className="video-error">
-                  {video.messageError ? `Error: ${video.messageError}` : ""}
-                </h4>
-              </p>
-              <p>
-                <a
-                  href={`http://www.randomrainbow.art/home/${video.token}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View Video
-                </a>
-              </p>
-              <div className="video-actions">
+            <div key={video.videoId} className="admin-card">
+              <h2 className="admin-card-title">{video.title}</h2>
+              <p className="admin-card-username">{video.username}</p>
+              <select
+                className="admin-status-select"
+                value={video.videoStatus}
+                onChange={(e) =>
+                  handleStatusChange(video.videoId, e.target.value)
+                }
+              >
+                <option value="AVAILABLE">Available</option>
+                <option value="ERROR">Error</option>
+                <option value="DOESNT_RESPECT_GUIDELINES">
+                  Doesn't Respect Guidelines
+                </option>
+                <option value="UNCHECKED">Unchecked</option>
+              </select>
+              <h4 className="admin-error-message">
+                {video.messageError ? `Error: ${video.messageError}` : ""}
+              </h4>
+              <a
+                href={`http://www.randomrainbow.art/home/${video.token}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="admin-video-link"
+              >
+                View Video
+              </a>
+              <div className="admin-card-actions">
                 <button
-                  className="default-btn update-btn"
+                  className="admin-btn admin-btn-update"
                   onClick={() => handleUpdate(video.videoId)}
                 >
                   Update
                 </button>
                 <button
-                  className="default-btn delete-btn"
+                  className="admin-btn admin-btn-delete"
                   onClick={() => handleDelete(video.videoId)}
                 >
                   Delete
@@ -214,11 +207,11 @@ export default function AdminController() {
           ))}
         </div>
       )}
-      <button className="default-btn special-btn" onClick={toggleVideoList}>
+      <button className="admin-toggle-btn" onClick={toggleVideoList}>
         {showAllVideos ? "GO TO REVIEW VIDEOS" : "GO TO ALL VIDEOS"}
       </button>
       <button
-        className="default-btn"
+        className="admin-toggle-btn"
         onClick={() => handleClick("my-piece-of-random-rainbow")}
       >
         return
