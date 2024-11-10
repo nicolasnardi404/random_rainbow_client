@@ -148,7 +148,6 @@
 }
 
 .video-status {
-  cursor: pointer;
   border-radius: 4px;
   color: var(--light-blue-sky);
   transition: all 0.2s ease;
@@ -265,6 +264,7 @@
 .error-status:hover,
 .guidelines-status:hover {
     color: var(--carnation-pink) !important;
+    cursor: pointer;
 } 
 
 .modal-buttons {
@@ -307,4 +307,9 @@
   flex-direction: row;
   font-size: 0.9em;
   gap: 100px;
+}
+
+.cannot-add-more{
+  color: var(--carnation-pink);
+  text-shadow: 1px 1px 1px var(--red);
 }

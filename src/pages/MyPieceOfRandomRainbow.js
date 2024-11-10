@@ -272,15 +272,13 @@ export default function MyPieceOfRandomRainbow() {
               </div>
             </div>
           )}
-          <button onClick={handleClickAdd} className="default-btn">
-            {videos.length < 3 ? (
-              <>
-                <FontAwesomeIcon icon={faPlus} /> Add Video
-              </>
-            ) : (
-              "You cannot add more than 3 videos"
-            )}
-          </button>
+          {videos.length < 3 ? (
+            <button onClick={handleClickAdd} className="default-btn">
+              <FontAwesomeIcon icon={faPlus} /> Add Video
+            </button>
+          ) : (
+            <p className="cannot-add-more">You cannot add more than 3 videos</p>
+          )}
           {showDeleteModal && (
             <div
               className="modal-overlay"
