@@ -115,11 +115,9 @@ html{
   align-items: center;
   justify-content: center;
   color:var(--red);
-  /* -webkit-text-stroke: 1px var(--red); */
   text-shadow: 2px 2px 1px var(--carnation-pink);
   font-size: 1.2em;
   font-family: "lores-9-plus-wide";
-  margin: 40px
 }
 
 

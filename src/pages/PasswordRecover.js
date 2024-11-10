@@ -56,9 +56,9 @@ export default function PasswordRecovery() {
             />
           </label>
           <input
-            className="default-btn special-btn"
+            className="default-btn log-in-btn"
             type="submit"
-            value={loading ? "Sending..." : "Send Reset Email"} // Display loading message if in loading state
+            value={loading ? "Sending..." : "RESET PASSWORD"} // Display loading message if in loading state
             disabled={loading} // Disable button while loading
           />
         </form>

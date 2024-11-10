@@ -123,9 +123,9 @@ export default function SignInForm() {
             required
           />
           <input
-            className="default-btn special-btn"
+            className="default-btn log-in-btn"
             type="submit"
-            value="Sign Up"
+            value="CREATE ACCOUNT"
           />
           {passwordError && <div className="error">{passwordError}</div>}
           {error && <div className="error">{error}</div>}

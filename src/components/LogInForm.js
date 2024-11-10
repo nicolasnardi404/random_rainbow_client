@@ -6,6 +6,10 @@ import axios from "axios";
 
 export default function LogInForm() {
   const history = useHistory();
+
+  function handleClick(path) {
+    history.push(`/${path}`);
+  }
   const {
     setRefreshTokenLocal,
     setAccessTokenLocal,
@@ -90,7 +94,6 @@ export default function LogInForm() {
           onChange={handleChange}
           required
         />
-        <br />
         PASSWORD:
         <input
           className="input-form"
@@ -101,7 +104,6 @@ export default function LogInForm() {
           required
         />
       </label>
-      <br />
       <input
         className="default-btn special-btn"
         type="submit"
@@ -109,6 +111,15 @@ export default function LogInForm() {
         disabled={loading} // Disable button when loading
       />
       {error && <p>{error}</p>}
+      <button
+        className="default-btn "
+        onClick={() => handleClick("password-recovery")}
+      >
+        forgot my password
+      </button>
+      <button className="default-btn " onClick={() => handleClick("sign-in")}>
+        sign in
+      </button>
     </form>
   );
 }
