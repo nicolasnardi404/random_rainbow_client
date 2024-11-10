@@ -45,7 +45,6 @@ Red: #E42525
   padding: 0;
   height: 100%;
   width: 100%;
-
 }
 
 .manifesto-app{
@@ -86,7 +85,7 @@ html{
   min-height: 100vh;
   font-size: calc(10px + 2vmin);
   color: #7ee280;
-  font-family: bitmap;
+  font-family: "lores-9-plus-wide";
 }
 
 .App-header video {

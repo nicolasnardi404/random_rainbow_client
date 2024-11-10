@@ -10,6 +10,7 @@ import {
   faUser,
   faPenToSquare,
   faTrash,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import "../styles/MyPieceOfRandomRainbow.css";
 
@@ -164,18 +165,20 @@ export default function MyPieceOfRandomRainbow() {
 
   return (
     <div className="App-header">
-      <button className="default-btn" onClick={() => handleClick("profile")}>
-        <FontAwesomeIcon icon={faUserEdit} /> Edit Profile
-      </button>
-      <button
-        className="default-btn"
-        onClick={() => handleClick(`profile/${username}`)}
-      >
-        <FontAwesomeIcon icon={faUser} /> View Profile
-      </button>
-      <button className="default-btn" onClick={handleLogout}>
-        <FontAwesomeIcon icon={faSignOutAlt} /> Log Out
-      </button>
+      <div className="button-container">
+        <button className="default-btn" onClick={() => handleClick("profile")}>
+          <FontAwesomeIcon icon={faUserEdit} /> Edit Profile
+        </button>
+        <button
+          className="default-btn"
+          onClick={() => handleClick(`profile/${username}`)}
+        >
+          <FontAwesomeIcon icon={faUser} /> View Profile
+        </button>
+        <button className="default-btn" onClick={handleLogout}>
+          <FontAwesomeIcon icon={faSignOutAlt} /> Log Out
+        </button>
+      </div>
       {loading ? (
         <div className="special-title" style={{ border: "none" }}>
           Loading...
@@ -196,7 +199,7 @@ export default function MyPieceOfRandomRainbow() {
                 <div className="video-title">
                   {video.videoStatus === "AVAILABLE" ? (
                     <a
-                      href={`http://www.randomrainbow.art/${video.videoId}`}
+                      href={`http://www.randomrainbow.art/home/${video.token}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="title-link"
@@ -210,7 +213,7 @@ export default function MyPieceOfRandomRainbow() {
                 <div className="video-status-container">
                   {video.videoStatus === "AVAILABLE" ? (
                     <a
-                      href={`http://www.randomrainbow.art/${video.videoId}`}
+                      href={`http://www.randomrainbow.art/home/${video.token}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="video-link"
@@ -269,10 +272,14 @@ export default function MyPieceOfRandomRainbow() {
               </div>
             </div>
           )}
-          <button onClick={handleClickAdd} className="default-btn special-btn">
-            {videos.length < 3
-              ? "ADD NEW VIDEO"
-              : "You cannot add more than 3 videos"}
+          <button onClick={handleClickAdd} className="default-btn">
+            {videos.length < 3 ? (
+              <>
+                <FontAwesomeIcon icon={faPlus} /> Add Video
+              </>
+            ) : (
+              "You cannot add more than 3 videos"
+            )}
           </button>
           {showDeleteModal && (
             <div
@@ -309,7 +316,7 @@ export default function MyPieceOfRandomRainbow() {
           className="default-btn"
           onClick={() => handleClick("admin-controller")}
         >
-          ADMIN
+          Admin
         </button>
       )}
     </div>

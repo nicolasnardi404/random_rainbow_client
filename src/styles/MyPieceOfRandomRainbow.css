@@ -1,57 +1,3 @@
-/* Table styles */
-.table-header {
-  background: var(--maize-yellow);
-  margin: auto;
-  width: 75%;
-  font-family: "lores-12";
-  font-size: 1.5em;
-}
-
-.table-header th {
-  background: var(--veronica-purple);
-  text-shadow: 2px 2px 1px var(--red);
-  color: var(--light-blue-sky);
-  padding: 1em;
-  font-size: 0.8em;
-  letter-spacing: 0.05em;
-}
-
-.table-header td {
-  padding: 1em;
-  border: 3px dotted #85c7f2;
-  color: var(--veronica-purple);
-  text-shadow: 1px 1px 1px var(--light-blue-sky);
-  font-size: 0.8em;
-}
-
-/* Button styles */
-.update-btn {
-  margin-right: 10px;
-  background-color: var(--light-blue-sky);
-  color: var(--veronica-purple);
-  text-shadow: 1px 1px 1px var(--carnation-pink);
-  font-size: 0.8em;
-}
-
-.update-btn:hover {
-  background-color: var(--veronica-purple);
-  color: var(--light-blue-sky);
-  text-shadow: 1px 1px 1px var(--carnation-pink);
-}
-
-.delete-btn {
-  background-color: var(--carnation-pink);
-  color: var(--red);
-  text-shadow: 1px 1px 1px var(--light-blue-sky);
-  font-size: 0.8em;
-}
-
-.delete-btn:hover {
-  background-color: var(--red);
-  color: var(--carnation-pink);
-  text-shadow: 1px 1px 1px var(--light-blue-sky);
-}
-
 .error-status {
   color: var(--red);
 }
@@ -59,13 +5,13 @@
 .special-btn {
   margin: 20px auto;
   display: block;
-  background-color: var(--light-blue-sky);
-  color: var(--veronica-purple);
-  text-shadow: 1px 1px 1px var(--carnation-pink);
+  background-color: transparent;
+  color: var(--red);
+  text-shadow: 2px 2px 1px var(--carnation-pink);
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  font-size: 1.2em;
+  font-size: 0.9em;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -102,6 +48,7 @@
   border-radius: 5px;
   text-decoration: underline dotted;
   text-shadow: 1px 1px 1px var(--light-blue-sky);
+
 }
 
 .video-link:hover {
@@ -162,8 +109,6 @@
 
 .video-list {
   max-width: 800px;
-  margin: 2rem auto;
-  padding: 0 20px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -171,39 +116,30 @@
 }
 
 .video-item {
-  background: var(--veronica-purple);
-  border-radius: 8px;
-  padding: 1rem 1.5rem;
-  margin-bottom: 1rem;
-  display: grid;
-  grid-template-columns: 1fr auto auto;
   gap: 2rem;
+  align-items: center;
+  display: flex;
+  flex-direction: center;
   align-items: center;
 }
 
-.video-title h3 {
-  margin: 0;
-  color: var(--light-blue-sky);
-  font-size: 1.8rem;
-  text-shadow: 1px 1px 1px var(--carnation-pink);
-}
-
-.video-status-container {
-  text-align: center;
-}
 
 .video-link {
   background: var(--light-blue-sky);
   color: var(--veronica-purple);
   padding: 0.4rem 0.8rem;
+  margin-bottom: 10px;
   border-radius: 4px;
   text-decoration: none;
   font-weight: bold;
   transition: all 0.2s ease;
-  font-size: 0.6em;
+  font-size: 0.9em;
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  
+  
 }
 
 .video-link:hover {
@@ -213,26 +149,19 @@
 
 .video-status {
   cursor: pointer;
-  padding: 0.4rem 0.8rem;
   border-radius: 4px;
   color: var(--light-blue-sky);
   transition: all 0.2s ease;
-  font-size: 0.6em;
-  display: flex;
-  flex-direction: center;
-  justify-content: center;
+  font-size: 1.4em;
   text-shadow: 1px 1px 1px var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 9px;
 }
 
-.video-status:hover {
-  color: var(--carnation-pink);
-  transform: translateY(-2px);
-}
 
-.action-buttons {
-    display: flex;
-    gap: 1rem;
-}
+
 
 .icon-btn {
   background: none;
@@ -241,9 +170,6 @@
   cursor: pointer;
   padding: 0.4rem;
   transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .icon-btn:hover {
@@ -320,23 +246,26 @@
   background: var(--maize-yellow);
 }
 
-.title-link {
+.title-link{
   text-decoration: none;
 }
 
-.title-link h3 {
-  color: var(--light-blue-sky);
-  transition: color 0.2s ease;
+.video-title h3{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 8px;
 }
+
 
 .title-link:hover h3 {
   color: var(--maize-yellow);
 }
 
-
-.error-status:hover{
+.error-status:hover,
+.guidelines-status:hover {
     color: var(--carnation-pink) !important;
-  } 
+} 
 
 .modal-buttons {
   display: flex;
@@ -373,4 +302,9 @@
   transform: translateY(-2px);
 }
 
-
+.button-container{
+  display: flex;
+  flex-direction: row;
+  font-size: 0.9em;
+  gap: 100px;
+}

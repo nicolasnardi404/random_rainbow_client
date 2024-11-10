@@ -56,16 +56,18 @@ export default function HeaderUserOn() {
       </div>
 
       {/* Desktop Menu */}
-      <div className={`desktop-menu ${isMenuOpen ? "hidden" : ""}`}>
+      <div
+        className={`desktop-menu ${isMenuOpen ? "hidden" : ""} header-user-on`}
+      >
         <div className="icons-group-on">
           <button
             className="default-btn"
             onClick={() => handleClick("manifesto")}
           >
-            Manifesto
+            MANIFESTO
           </button>
           <button className="default-btn" onClick={() => handleClick("home/0")}>
-            Home
+            RAINBOW
           </button>
         </div>
       </div>
