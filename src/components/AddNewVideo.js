@@ -3,6 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
 import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded";
+import "../styles/AddNewVideo.css";
 
 function AddNewVideo() {
   const history = useHistory();
@@ -117,49 +118,59 @@ function AddNewVideo() {
   return (
     <div className="add-video-style">
       {fetchingData ? ( // Show loading indicator when fetching data
-        <div className="special-title" style={{ border: "none" }}>
-          Loading...
-        </div>
+        <div className="special-title">Loading...</div>
       ) : (
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="title"
-            value={video.title} // Displaying the fetched title
-            onChange={handleChange}
-            className="form-control add-video-form"
-            placeholder="Title"
-            required
-            disabled={loading} // Disable input when saving
-          />
-          <textarea
-            name="videoDescription"
-            value={video.videoDescription}
-            onChange={handleChange}
-            className="form-control add-video-form"
-            placeholder="Description"
-            rows="5"
-            required
-            disabled={loading} // Disable textarea when saving
-          />
-          {!videoId && (
+          <div className="form-group">
+            <label htmlFor="title">TITLE</label>
             <input
               type="text"
-              name="videoLink"
-              value={video.videoLink}
+              id="title"
+              name="title"
+              value={video.title}
               onChange={handleChange}
               className="form-control add-video-form"
-              placeholder="Video Link (youtube/vimeo)"
+              placeholder="..."
               required
-              disabled={loading} // Disable input when saving
+              disabled={loading}
             />
+          </div>
+          <div className="form-group">
+            <label htmlFor="videoDescription">DESCRIPTION</label>
+            <textarea
+              id="videoDescription"
+              name="videoDescription"
+              value={video.videoDescription}
+              onChange={handleChange}
+              className="form-control add-video-form"
+              placeholder="..."
+              rows="5"
+              required
+              disabled={loading}
+            />
+          </div>
+          {!videoId && (
+            <div className="form-group">
+              <label htmlFor="videoLink">VIDEO LINK ( YOUTUBE / VIMEO )</label>
+              <input
+                type="text"
+                id="videoLink"
+                name="videoLink"
+                value={video.videoLink}
+                onChange={handleChange}
+                className="form-control add-video-form"
+                placeholder="..."
+                required
+                disabled={loading}
+              />
+            </div>
           )}
           <button
             type="submit"
-            className="default-btn special-btn"
-            disabled={loading} // Disable button when saving
+            className="default-btn special-btn save-video-btn"
+            disabled={loading}
           >
-            {loading ? "Saving..." : "Save"} {/* Show loading text */}
+            {loading ? "Saving..." : "SAVE"}
           </button>
         </form>
       )}

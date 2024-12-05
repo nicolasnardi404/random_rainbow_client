@@ -50,11 +50,7 @@ export default function ArtistProfile() {
 
   return (
     <div className="App-header">
-      {loading && (
-        <div className="special-title" style={{ border: "none" }}>
-          Loading...
-        </div>
-      )}
+      {loading && <div className="special-title">Loading...</div>}
       {error && <p className="error">{error}</p>}
       {!loading && !error && (
         <>

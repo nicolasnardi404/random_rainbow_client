@@ -59,9 +59,7 @@ export default function SignInForm() {
   return (
     <div className="mb-5 App-header">
       {loading ? ( // Display loading message if loading is true
-        <div className="special-title" style={{ border: "none" }}>
-          Loading...
-        </div>
+        <div className="special-title">Loading...</div>
       ) : (
         // Otherwise, display the form
         <form className="group-form" onSubmit={handleSubmit}>

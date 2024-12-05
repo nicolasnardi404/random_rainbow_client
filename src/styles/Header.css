@@ -4,13 +4,15 @@
   display: flex;
   justify-content: flex-end;
   color: var(--red);
-  font-size: 3em;
+  font-size: 2em;
   margin: 30px 30px 0 30px;
+  font-family: "lores-9-plus-wide";
 
 }
 .user-avatar:hover {
   cursor: url("../../images/rainbow-reverse.png"), auto;
   color: var(--veronica-purple);
+  font-family: "lores-9-plus-wide";
 }
 
 .user-avatar h3{

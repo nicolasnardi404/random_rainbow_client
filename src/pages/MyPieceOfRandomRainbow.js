@@ -180,9 +180,7 @@ export default function MyPieceOfRandomRainbow() {
         </button>
       </div>
       {loading ? (
-        <div className="special-title" style={{ border: "none" }}>
-          Loading...
-        </div>
+        <div className="special-title">Loading...</div>
       ) : (
         <>
           <div className="video-list">

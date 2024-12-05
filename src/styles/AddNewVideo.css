@@ -1,0 +1,31 @@
+.add-video-form {
+    width: 600px;
+    font-size: 16px;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--red);
+  font-size: 0.8em;
+  font-family: "lores-9-plus-wide";
+  background-color: var(--yellow-maze);
+  border: 1px solid var(--carnation-pink);
+}
+
+.add-video-form:focus {
+    background-color: var(--yellow-maze);
+    color: var(--red);
+}
+
+.form-group label{
+    color:var(--red);
+    font-size: 0.8em;
+    margin: 0;
+    text-shadow: 2px 2px 1px var(--carnation-pink);
+}
+
+.save-video-btn{
+    border: 2px solid var(--veronica-purple);
+}

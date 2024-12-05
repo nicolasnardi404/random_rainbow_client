@@ -107,13 +107,6 @@
   max-width: 800px;
 }
 
-.special-title {
-  color: var(--maize-yellow);
-  font-size: 1.5rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  margin: 20px 0;
-  text-align: center;
-}
 
 /* For any social media links or additional info */
 .social-links {
@@ -231,13 +224,6 @@
   transform-origin: bottom left;
 }
 
-.special-title {
-  color: var(--maize-yellow);
-  font-size: 1.5rem;
-  text-align: center;
-  margin: 20px 0;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
 
 .error {
   background: linear-gradient(45deg, var(--red), #ff6b6b);

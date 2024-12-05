@@ -87,7 +87,7 @@ export default function RandomVideoCard() {
             disabled={loading} // Disable button when loading
           >
             {loading ? (
-              "Loading..."
+              <div className="special-title">Loading...</div>
             ) : (
               <img
                 src={randomButton}
@@ -123,7 +123,7 @@ export default function RandomVideoCard() {
           disabled={loading} // Disable button when loading
         >
           {loading ? (
-            "Loading..."
+            <div className="special-title loading-style">Loading...</div>
           ) : (
             <img
               src={randomButton}

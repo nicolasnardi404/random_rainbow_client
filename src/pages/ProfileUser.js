@@ -117,9 +117,7 @@ function ProfileEdit() {
     <div className="App-header">
       <div className="edit-profile-style">
         {loading ? (
-          <div className="special-title" style={{ border: "none" }}>
-            Loading...
-          </div>
+          <div className="special-title">Loading...</div>
         ) : (
           <form onSubmit={handleSubmit}>
             {error && <div className="error-message">{error}</div>}
