@@ -28,8 +28,7 @@ export default function HeaderUserOff() {
       <img src={logo} alt="RANDOM RAINBOW" className="logo-title" />
       {/* Mobile Menu Toggle Button */}
       <button className="menu-button" onClick={toggleMenu}>
-        <FontAwesomeIcon className="icon-menu" icon={faBars} />
-        MENU
+        *MENU*
       </button>
 
       {/* Mobile Menu */}

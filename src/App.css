@@ -247,6 +247,11 @@ html{
 
 /* Mobile Styles */
 @media (max-width: 768px) {
+
+  .logo-title{
+    margin-top: 20px;
+  }
+
    .desktop-menu{
     display: none;
 

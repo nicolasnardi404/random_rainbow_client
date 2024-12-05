@@ -31,11 +31,11 @@ export default function HeaderUserOn() {
       <img src={logo} alt="RANDOM RAINBOW" className="logo-title" />
       {/* Mobile Menu Toggle Button */}
       <button className="menu-button" onClick={toggleMenu}>
-        MENU
+        *MENU*
       </button>
 
       {/* Mobile Menu */}
-      <div className={`mobile-menu ${isMenuOpen ? "active" : ""}`}>
+      <div className={`mobile-menu ${isMenuOpen ? "show" : "hide"}`}>
         <div className="icons-group-on">
           <button
             className="default-btn"
@@ -51,6 +51,10 @@ export default function HeaderUserOn() {
           </button>
           <button className="default-btn" onClick={() => handleClick("home/0")}>
             Home
+          </button>
+          {/* Close Menu Button */}
+          <button className="default-btn" onClick={toggleMenu}>
+            Return
           </button>
         </div>
       </div>
