@@ -11,18 +11,15 @@ import randomButtonHover from "../images/randombutton2.png";
 export default function RandomVideoCard() {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [durationOption, setDurationOption] = useState("1000");
-  const [loading, setLoading] = useState(false); // Add loading state
+  const [loading, setLoading] = useState(false);
+  const [showScrollButton, setShowScrollButton] = useState(false);
   const { token } = useParams();
   const history = useHistory();
 
-  useEffect(() => {
-    if (token) {
-      fetchVideoByToken(token);
-    }
-  }, [token]);
-
+  // Add the fetchVideoByToken function
   const fetchVideoByToken = async (token) => {
     try {
+      setLoading(true);
       const response = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL}/api/randomvideo/video/${token}`
       );
@@ -30,13 +27,39 @@ export default function RandomVideoCard() {
     } catch (error) {
       console.error("Failed to fetch video by token:", error);
     } finally {
-      setLoading(false); // End loading
+      setLoading(false);
     }
+  };
+
+  useEffect(() => {
+    if (token) {
+      fetchVideoByToken(token);
+    }
+  }, [token]);
+
+  // Handle scroll button visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.pageYOffset;
+      setShowScrollButton(scrollPosition > 300);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "instant",
+    });
   };
 
   const selectRandomVideo = async () => {
     try {
-      setLoading(true); // Start loading
+      setLoading(true);
+      scrollToTop();
+
       const response = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL}/api/randomvideo/${durationOption}`
       );
@@ -45,16 +68,15 @@ export default function RandomVideoCard() {
     } catch (error) {
       console.error("Failed to fetch random video:", error);
     } finally {
-      setLoading(false); // End loading
+      setLoading(false);
     }
   };
 
-  // Determine the video URL
   const videoUrl = selectedVideo ? selectedVideo.videoLink : "";
 
   return (
     <div className="App-header">
-      {selectedVideo ? (
+      {selectedVideo && !loading ? (
         <div>
           <div className="title">
             * {selectedVideo.title.trim().toUpperCase()} *
@@ -84,7 +106,7 @@ export default function RandomVideoCard() {
           <button
             className="btn-random-video btn-random-video-after"
             onClick={selectRandomVideo}
-            disabled={loading} // Disable button when loading
+            disabled={loading}
           >
             {loading ? (
               <div className="special-title">Loading...</div>
@@ -97,7 +119,6 @@ export default function RandomVideoCard() {
                 onMouseOut={(e) => (e.currentTarget.src = randomButton)}
               />
             )}
-            {/* Show loading text */}
           </button>
           <div className="duration">
             <label className="duration-label" htmlFor="duration">
@@ -120,7 +141,7 @@ export default function RandomVideoCard() {
         <button
           className="btn-random-video"
           onClick={selectRandomVideo}
-          disabled={loading} // Disable button when loading
+          disabled={loading}
         >
           {loading ? (
             <div className="special-title loading-style">Loading...</div>
@@ -128,12 +149,10 @@ export default function RandomVideoCard() {
             <img
               src={randomButton}
               alt="RANDOM RAINBOW"
-              // className="logo-title"
               onMouseOver={(e) => (e.currentTarget.src = randomButtonHover)}
               onMouseOut={(e) => (e.currentTarget.src = randomButton)}
             />
-          )}{" "}
-          {/* Show loading text */}
+          )}
         </button>
       )}
     </div>
