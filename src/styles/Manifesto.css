@@ -95,6 +95,7 @@
     .how-it-works {
         font-size: 0.8em;
         padding: 8px;
+        -webkit-text-stroke: 0.2px var(--carnation-pink);
     }
 
     .manifesto-content {
