@@ -55,7 +55,7 @@ export default function ArtistProfile() {
       {!loading && !error && (
         <>
           {profileData.username && (
-            <h1 className="title-username">*{profileData.username}*</h1>
+            <h1 className="title-username">{profileData.username}</h1>
           )}
           {profileData.dataUserProfile.artistDescription && (
             <div>
