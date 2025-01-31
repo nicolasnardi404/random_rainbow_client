@@ -22,7 +22,7 @@
 .form-group label{
     color:var(--red);
     font-size: 0.8em;
-    margin: 0;
+    margin: 0px;
     text-shadow: 2px 2px 1px var(--carnation-pink);
 }
 
@@ -30,7 +30,7 @@
     border: 2px solid var(--veronica-purple);
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 600px) {
     .add-video-form {
         width: 95%;
         padding: 5px;
@@ -39,5 +39,9 @@
     
     .form-group label {
         font-size: 0.7em;
+    }
+
+    .form-control{
+        margin: 10px;
     }
 }
