@@ -115,49 +115,65 @@ function ProfileEdit() {
 
   return (
     <div className="App-header">
-      <div className="edit-profile-style">
-        {loading ? (
-          <div className="special-title">Loading...</div>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            {error && <div className="error-message">{error}</div>}
+      {loading ? (
+        <div className="special-title">Loading...</div>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          {error && <div className="error">{error}</div>}
+          <div className="form-group">
+            <label htmlFor="username">USERNAME</label>
             <input
               type="text"
+              id="username"
               name="username"
               value={profile.username}
               onChange={(e) =>
                 setProfile({ ...profile, username: e.target.value })
               }
-              className="form-control edit-profile-form"
-              placeholder="Username"
+              className="form-control add-video-form"
+              placeholder="..."
+              disabled={loading}
             />
+          </div>
+          <div className="form-group">
+            <label htmlFor="artistDescription">ARTIST DESCRIPTION</label>
             <textarea
-              type="text"
+              id="artistDescription"
               name="artistDescription"
               value={profile.artistDescription}
               onChange={(e) =>
                 setProfile({ ...profile, artistDescription: e.target.value })
               }
-              className="form-control edit-profile-form"
-              placeholder="Artist Description"
+              className="form-control add-video-form"
+              placeholder="..."
               rows="5"
+              disabled={loading}
             />
+          </div>
+          <div className="form-group">
+            <label htmlFor="socialMedia">SOCIAL MEDIA LINK</label>
             <input
               type="text"
+              id="socialMedia"
               name="socialMedia"
               value={profile.socialMedia}
               onChange={(e) =>
                 setProfile({ ...profile, socialMedia: e.target.value })
               }
-              className="form-control edit-profile-form"
-              placeholder="Social Media Link"
+              className="form-control add-video-form"
+              placeholder="..."
+              disabled={loading}
             />
-            <button type="submit" className="default-btn special-btn">
-              Update Profile
-            </button>
-          </form>
-        )}
-      </div>
+          </div>
+          <button
+            type="submit"
+            className="default-btn special-btn save-video-btn"
+            disabled={loading}
+          >
+            {loading ? "Updating..." : "UPDATE PROFILE"}
+          </button>
+        </form>
+      )}
     </div>
   );
 }
