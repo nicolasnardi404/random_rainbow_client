@@ -166,15 +166,20 @@ export default function MyPieceOfRandomRainbow() {
   return (
     <div className="App-header">
       <div className="button-container">
-        <button className="default-btn" onClick={() => handleClick("profile")}>
-          <FontAwesomeIcon icon={faUserEdit} /> Edit Profile
-        </button>
-        <button
-          className="default-btn"
-          onClick={() => handleClick(`profile/${username}`)}
-        >
-          <FontAwesomeIcon icon={faUser} /> View Profile
-        </button>
+        <div className="mobile-profile-btn-group">
+          <button
+            className="default-btn mobile-profile-btn"
+            onClick={() => handleClick("profile")}
+          >
+            <FontAwesomeIcon icon={faUserEdit} /> Edit Profile
+          </button>
+          <button
+            className="default-btn mobile-profile-btn"
+            onClick={() => handleClick(`profile/${username}`)}
+          >
+            <FontAwesomeIcon icon={faUser} /> View Profile
+          </button>
+        </div>
         <button className="default-btn" onClick={handleLogout}>
           <FontAwesomeIcon icon={faSignOutAlt} /> Log Out
         </button>
@@ -271,7 +276,10 @@ export default function MyPieceOfRandomRainbow() {
             </div>
           )}
           {videos.length < 3 ? (
-            <button onClick={handleClickAdd} className="default-btn">
+            <button
+              onClick={handleClickAdd}
+              className="default-btn add-video-btn"
+            >
               <FontAwesomeIcon icon={faPlus} /> Add Video
             </button>
           ) : (

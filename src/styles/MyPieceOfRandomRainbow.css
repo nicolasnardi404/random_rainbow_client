@@ -321,13 +321,17 @@
     gap: 15px;
     width: 100%;
     padding: 0 20px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
   }
 
   .default-btn {
     width: 100%;
     padding: 12px;
     font-size: 1em;
+  }
+
+  .add-video-btn{
+    font-size: 1.5em !important;
   }
 
   .video-list {
@@ -357,5 +361,15 @@
   .icon-btn {
     padding: 10px;
     font-size: 1.2em;
+  }
+
+  .mobile-profile-btn-group{
+    display: flex;
+  }
+  .mobile-profile-btn{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }
