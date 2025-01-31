@@ -33,19 +33,22 @@ export default function HeaderUserOff() {
 
       {/* Mobile Menu */}
       <div className={`mobile-menu ${isMenuOpen ? "active" : ""}`}>
-        <div
-          className={`icons-style menu-btn ${selectedMenu === "log-in" ? "selected" : ""}`}
-          onClick={() => handleClick("log-in")}
-        >
-          <FontAwesomeIcon icon={faUserAstronaut} />
-          <h3>LOG IN</h3>
-        </div>
-        <div
-          className={`icons-style menu-btn ${selectedMenu === "sign-in" ? "selected" : ""}`}
-          onClick={() => handleClick("sign-in")}
-        >
-          <FontAwesomeIcon icon={faUsers} />
-          <h3>SIGN UP</h3>
+        <img src={logo} alt="RANDOM RAINBOW" className="logo-title menu-logo" />
+        <div className="all-icons">
+          <div
+            className={`icons-style menu-btn ${selectedMenu === "log-in" ? "selected" : ""}`}
+            onClick={() => handleClick("log-in")}
+          >
+            <FontAwesomeIcon icon={faUserAstronaut} />
+            <h3>LOG IN</h3>
+          </div>
+          <div
+            className={`icons-style menu-btn ${selectedMenu === "sign-in" ? "selected" : ""}`}
+            onClick={() => handleClick("sign-in")}
+          >
+            <FontAwesomeIcon icon={faUsers} />
+            <h3>SIGN UP</h3>
+          </div>
         </div>
         <div
           className={`default-btn menu-btn ${selectedMenu === "manifesto" ? "selected" : ""}`}

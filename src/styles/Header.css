@@ -25,6 +25,12 @@ font-size: 0.5em;
   text-decoration: none;
 }
 
+.all-icons{
+  display: flex;
+  justify-content: space-between;
+  gap:60px;
+}
+
 .icons-style:hover{
   color: var(--lif);
 }
@@ -73,8 +79,9 @@ font-size: 0.5em;
   font-size: 0.5em;
 }
 
+
 .menu-btn:hover{
-  color: var(--carnation-pink) !important;
+  color: var(--carnation-pink);
 }
 
 .header-user-on{
@@ -163,7 +170,7 @@ font-size: 0.5em;
     text-decoration: none; /* Remove underline */
     font-size: 1em; /* Font size */
     cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s ease; /* Smooth transition */
+    /* transition: background-color 0.3s ease; Smooth transition */
     margin: 15px 0; /* Add vertical spacing between buttons */
   }
 
@@ -172,7 +179,16 @@ font-size: 0.5em;
     text-shadow: 1px 1px 1px var(--maize-yellow);
   }
 
-  .mobile-menu .default-btn:hover {
-    background-color: var(--light-blue-sky); /* Hover color */
+  .mobile-menu .default-btn.selected:hover{
+    background-color: #FF99C9;
+    color: var(--red);
+    text-shadow: 1px 1px 1px var(--maize-yellow);
   }
+
+  .mobile-menu .default-btn:hover {
+    background-color: var(--maize-yellow); /* Default button color */
+    color: var(--red); /* Button text color */
+    text-shadow: 1px 1px 1px var(--carnation-pink);
+  }
+  
 }
