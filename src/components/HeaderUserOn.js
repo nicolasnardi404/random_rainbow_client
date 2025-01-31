@@ -10,10 +10,12 @@ export default function HeaderUserOn() {
   const { username, setAccessTokenLocal } = useContext(AuthContext);
   const history = useHistory();
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [selectedMenu, setSelectedMenu] = useState("");
 
   function handleClick(path) {
+    setSelectedMenu(path);
     history.push(`/${path}`);
-    setMenuOpen(false); // Close menu on item click
+    setMenuOpen(false);
   }
 
   function toggleMenu() {
@@ -38,18 +40,21 @@ export default function HeaderUserOn() {
       <div className={`mobile-menu ${isMenuOpen ? "show" : "hide"}`}>
         <div className="icons-group-on">
           <button
-            className="default-btn"
+            className={`default-btn ${selectedMenu === "my-piece-of-random-rainbow" ? "selected" : ""}`}
             onClick={() => handleClick("my-piece-of-random-rainbow")}
           >
             {username}
           </button>
           <button
-            className="default-btn"
+            className={`default-btn ${selectedMenu === "manifesto" ? "selected" : ""}`}
             onClick={() => handleClick("manifesto")}
           >
             Manifesto
           </button>
-          <button className="default-btn" onClick={() => handleClick("home/0")}>
+          <button
+            className={`default-btn ${selectedMenu === "home/0" ? "selected" : ""}`}
+            onClick={() => handleClick("home/0")}
+          >
             Home
           </button>
           {/* Close Menu Button */}
@@ -65,12 +70,15 @@ export default function HeaderUserOn() {
       >
         <div className="icons-group-on">
           <button
-            className="default-btn"
+            className={`default-btn ${selectedMenu === "manifesto" ? "selected" : ""}`}
             onClick={() => handleClick("manifesto")}
           >
             MANIFESTO
           </button>
-          <button className="default-btn" onClick={() => handleClick("home/0")}>
+          <button
+            className={`default-btn ${selectedMenu === "home/0" ? "selected" : ""}`}
+            onClick={() => handleClick("home/0")}
+          >
             RAINBOW
           </button>
         </div>
