@@ -85,7 +85,7 @@ export default function LogIn() {
 
   return (
     <form onSubmit={handleSubmit} className="login-container">
-      <label className="login-form-group">
+      <label className="group-form">
         EMAIL:
         <input
           className="login-input"

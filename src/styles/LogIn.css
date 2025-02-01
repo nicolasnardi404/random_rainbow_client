@@ -28,11 +28,18 @@
 }
 
 .extra-btns{
-    margin-top: 20px;
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
+    font-size: 0.8em;
 }
 
 .log-in-btn{
     border: 2px solid var(--carnation-pink);
+}
+
+@media (max-width: 600px){
+  .log-in-btn{
+    max-width: 50%;
+  }
 }

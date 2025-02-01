@@ -57,12 +57,12 @@ export default function SignInForm() {
   };
 
   return (
-    <div className="mb-5 App-header">
+    <div className="App-header">
       {loading ? ( // Display loading message if loading is true
         <div className="special-title">Loading...</div>
       ) : (
         // Otherwise, display the form
-        <form className="group-form" onSubmit={handleSubmit}>
+        <form className="group-form sign-in-form" onSubmit={handleSubmit}>
           <label>USERNAME:</label>
           <input
             className="input-form"
@@ -121,7 +121,7 @@ export default function SignInForm() {
             required
           />
           <input
-            className="default-btn log-in-btn"
+            className="default-btn create-account-btn"
             type="submit"
             value="CREATE ACCOUNT"
           />

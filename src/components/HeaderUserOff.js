@@ -40,7 +40,7 @@ export default function HeaderUserOff() {
             onClick={() => handleClick("log-in")}
           >
             <FontAwesomeIcon icon={faUserAstronaut} />
-            <h3>LOG IN</h3>
+            <h3>LOGIN</h3>
           </div>
           <div
             className={`icons-style menu-btn ${selectedMenu === "sign-in" ? "selected" : ""}`}
@@ -97,7 +97,7 @@ export default function HeaderUserOff() {
             className={`default-btn menu-btn-desktop ${selectedMenu === "log-in" ? "selected" : ""}`}
             onClick={() => handleClick("log-in")}
           >
-            LOG IN
+            LOGIN
           </div>
           <div
             className={`default-btn menu-btn-desktop ${selectedMenu === "home/0" ? "selected" : ""}`}
