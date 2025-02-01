@@ -213,44 +213,46 @@ export default function MyPieceOfRandomRainbow() {
                     <h3>{video.title}</h3>
                   )}
                 </div>
-                <div className="video-status-container">
-                  {video.videoStatus === "AVAILABLE" ? (
-                    <a
-                      href={`http://www.randomrainbow.art/home/${video.token}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="video-link"
+                <div className="video-status-group">
+                  <div className="video-status-container">
+                    {video.videoStatus === "AVAILABLE" ? (
+                      <a
+                        href={`http://www.randomrainbow.art/home/${video.token}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="video-link"
+                      >
+                        LINK
+                      </a>
+                    ) : (
+                      <span
+                        className={`video-status ${
+                          video.videoStatus === "ERROR"
+                            ? "error-status"
+                            : video.videoStatus === "DOESNT_RESPECT_GUIDELINES"
+                              ? "guidelines-status"
+                              : ""
+                        }`}
+                        onClick={() => handleStatusClick(video)}
+                      >
+                        {video.videoStatus}
+                      </span>
+                    )}
+                  </div>
+                  <div className="action-buttons">
+                    <button
+                      className="icon-btn"
+                      onClick={() => handleUpdate(video.videoId)}
                     >
-                      LINK
-                    </a>
-                  ) : (
-                    <span
-                      className={`video-status ${
-                        video.videoStatus === "ERROR"
-                          ? "error-status"
-                          : video.videoStatus === "DOESNT_RESPECT_GUIDELINES"
-                            ? "guidelines-status"
-                            : ""
-                      }`}
-                      onClick={() => handleStatusClick(video)}
+                      <FontAwesomeIcon icon={faPenToSquare} />
+                    </button>
+                    <button
+                      className="icon-btn"
+                      onClick={() => handleDeleteClick(video.videoId)}
                     >
-                      {video.videoStatus}
-                    </span>
-                  )}
-                </div>
-                <div className="action-buttons">
-                  <button
-                    className="icon-btn"
-                    onClick={() => handleUpdate(video.videoId)}
-                  >
-                    <FontAwesomeIcon icon={faPenToSquare} />
-                  </button>
-                  <button
-                    className="icon-btn"
-                    onClick={() => handleDeleteClick(video.videoId)}
-                  >
-                    <FontAwesomeIcon icon={faTrash} />
-                  </button>
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

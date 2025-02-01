@@ -50,29 +50,31 @@ export default function HeaderUserOff() {
             <h3>SIGN UP</h3>
           </div>
         </div>
-        <div
-          className={`default-btn menu-btn ${selectedMenu === "manifesto" ? "selected" : ""}`}
-          onClick={() => handleClick("manifesto")}
-        >
-          Manifesto
-        </div>
-        <div
-          className={`default-btn menu-btn ${selectedMenu === "how-it-works" ? "selected" : ""}`}
-          onClick={() => handleClick("how-it-works")}
-        >
-          How It Works
-        </div>
-        <div
-          className={`default-btn ${selectedMenu === "home/0" ? "selected" : ""}`}
-          onClick={() => handleClick("home/0")}
-        >
-          Rainbow
-        </div>
-        <div
-          className={`default-btn ${selectedMenu === "return" ? "selected" : ""}`}
-          onClick={toggleMenu}
-        >
-          Return
+        <div className="icons-group-on">
+          <div
+            className={`default-btn menu-btn ${selectedMenu === "manifesto" ? "selected" : ""}`}
+            onClick={() => handleClick("manifesto")}
+          >
+            Manifesto
+          </div>
+          <div
+            className={`default-btn menu-btn ${selectedMenu === "how-it-works" ? "selected" : ""}`}
+            onClick={() => handleClick("how-it-works")}
+          >
+            How It Works
+          </div>
+          <div
+            className={`default-btn ${selectedMenu === "home/0" ? "selected" : ""}`}
+            onClick={() => handleClick("home/0")}
+          >
+            Rainbow
+          </div>
+          <div
+            className={`default-btn ${selectedMenu === "return" ? "selected" : ""}`}
+            onClick={toggleMenu}
+          >
+            Return
+          </div>
         </div>
       </div>
 
