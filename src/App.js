@@ -27,6 +27,7 @@ import EmailVerified from "./pages/EmailVerified";
 import HowItWorks from "./pages/HowItWorks";
 import { inject } from "@vercel/analytics";
 import Layout from "./Layout";
+import Support from "./pages/Support";
 
 function App() {
   inject();
@@ -84,6 +85,7 @@ function App() {
               element={<VideoUpdateAdmin />}
               requiredRole="ROLE_ADMIN"
             />
+            <Route path="/support" component={Support} />
           </Switch>
         </Layout>
       </Router>

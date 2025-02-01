@@ -58,6 +58,12 @@ export default function HeaderUserOn() {
           >
             Home
           </button>
+          <button
+            className={`default-btn ${selectedMenu === "support" ? "selected" : ""}`}
+            onClick={() => handleClick("support")}
+          >
+            Support
+          </button>
           {/* Close Menu Button */}
           <button className="default-btn" onClick={toggleMenu}>
             Return
@@ -70,6 +76,12 @@ export default function HeaderUserOn() {
         className={`desktop-menu ${isMenuOpen ? "hidden" : ""} header-user-on`}
       >
         <div className="icons-group-on">
+          <button
+            className={`default-btn ${selectedMenu === "support" ? "selected" : ""}`}
+            onClick={() => handleClick("support")}
+          >
+            SUPPORT
+          </button>
           <button
             className={`default-btn ${selectedMenu === "manifesto" ? "selected" : ""}`}
             onClick={() => handleClick("manifesto")}

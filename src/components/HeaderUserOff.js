@@ -58,13 +58,19 @@ export default function HeaderUserOff() {
             Manifesto
           </div>
           <div
+            className={`default-btn menu-btn ${selectedMenu === "support" ? "selected" : ""}`}
+            onClick={() => handleClick("support")}
+          >
+            Support
+          </div>
+          <div
             className={`default-btn menu-btn ${selectedMenu === "how-it-works" ? "selected" : ""}`}
             onClick={() => handleClick("how-it-works")}
           >
             How It Works
           </div>
           <div
-            className={`default-btn ${selectedMenu === "home/0" ? "selected" : ""}`}
+            className={`default-btn menu-btn ${selectedMenu === "home/0" ? "selected" : ""}`}
             onClick={() => handleClick("home/0")}
           >
             Rainbow
@@ -104,6 +110,12 @@ export default function HeaderUserOff() {
             onClick={() => handleClick("home/0")}
           >
             RAINBOW
+          </div>
+          <div
+            className={`default-btn menu-btn-desktop ${selectedMenu === "support" ? "selected" : ""}`}
+            onClick={() => handleClick("support")}
+          >
+            SUPPORT
           </div>
         </div>
       </div>
