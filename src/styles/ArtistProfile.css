@@ -3,18 +3,18 @@
   border: 2px solid var(--maize-yellow);
   border-radius: 8px;
   padding: 20px;
-  margin: 10px 0;
+  margin-bottom: 10px;
   transition: all 0.3s ease-in-out;
   text-decoration: none;
-    text-align: center;
-    text-decoration: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
 }
 
-.video-item[style*="cursor: pointer"]:hover {
+.video-item:hover {
   background: linear-gradient(45deg, var(--veronica-purple), var(--light-blue-sky));
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -24,11 +24,10 @@
 
 .video-title h3 {
   color: #ffffff;
-  margin-top: 0;
+  margin-top: 0 auto;
   font-size: 1.2rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   width: 100%;
-  text-align: center;
 }
 
 .video-status-container {
@@ -169,6 +168,10 @@
   .social-media-container {
     margin: 0 !important;
   }
+
+  .video-item{
+    padding: 10px 20px 0px 20px;
+  }
 }
 
 .title-username {
@@ -176,7 +179,7 @@
   font-size: 3.5rem;
   font-weight: bold;
   text-align: center;
-  margin: 30px 0;
+  margin: 0;
   color: var(--veronica-purple);
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -200,15 +203,16 @@
   color: var(--red);
   max-width: 800px;
   width: 80%;
-  margin: 10px auto;
+  margin: 0 auto;
   padding: 20px;
   text-align: center;
   font-size: 1em;
   line-height: 1.6;
   background-color: transparent;
   color: var(--red);
-  -webkit-text-stroke: 1.2px var(--carnation-pink);
+  -webkit-text-stroke: 0.8px var(--carnation-pink);
   font-family: "lores-12", sans-serif;
+  font-size: 0.8em;
 }
 
 
@@ -216,7 +220,7 @@
 
 /* Social Media Link */
 .social-media-container {
-  margin: 20px 0;
+  margin: 0;
 }
 
 .social-media-container a {

@@ -64,21 +64,6 @@ export default function ArtistProfile() {
               </p>
             </div>
           )}
-          {profileData.dataUserProfile.socialMedia && (
-            <div className="social-media-container ">
-              <p>
-                <a
-                  href={cleanSocialMediaUrl(
-                    profileData.dataUserProfile.socialMedia
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Social Media
-                </a>
-              </p>
-            </div>
-          )}
           <div className="video-list">
             {videos.length > 0 ? (
               videos.map((video) => (
@@ -111,6 +96,21 @@ export default function ArtistProfile() {
               ))
             ) : (
               <div className="video-item">No videos available</div>
+            )}
+            {profileData.dataUserProfile.socialMedia && (
+              <div className="social-media-container ">
+                <p>
+                  <a
+                    href={cleanSocialMediaUrl(
+                      profileData.dataUserProfile.socialMedia
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Social Media
+                  </a>
+                </p>
+              </div>
             )}
           </div>
         </>
