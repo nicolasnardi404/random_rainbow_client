@@ -6,6 +6,7 @@ import axios from "axios";
 export default function PasswordRecovery() {
   const history = useHistory();
   const { token } = useParams();
+  const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",
@@ -27,6 +28,11 @@ export default function PasswordRecovery() {
     }
   };
 
+  const handleModalClose = () => {
+    setShowModal(false);
+    history.push("/log-in");
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -37,13 +43,13 @@ export default function PasswordRecovery() {
       );
 
       if (!response.error) {
-        alert("Password successfully updated!");
-        history.push("/log-in"); // Redirect to login page after success
+        setShowModal(true); // Show modal instead of alert
       } else {
         alert("Failed to update password.");
       }
     } catch (error) {
       console.error("Error updating password:", error);
+      alert("An error occurred while updating your password.");
     }
   };
 
@@ -71,14 +77,30 @@ export default function PasswordRecovery() {
               required
             />
           </label>
-          {passwordError && <p style={{ color: "red" }}>{passwordError}</p>}{" "}
-          {/* Display error message if passwords don't match */}
+          {passwordError && <p style={{ color: "red" }}>{passwordError}</p>}
           <input
             className="default-btn special-btn"
             type="submit"
             value="CHANGE PASSWORD"
           />
         </form>
+
+        {showModal && (
+          <div className="modal-overlay" onClick={handleModalClose}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <h2>Success!</h2>
+              <p>Your password has been successfully updated.</p>
+              <div className="modal-buttons">
+                <button
+                  className="modal-btn confirm"
+                  onClick={handleModalClose}
+                >
+                  OK
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </header>
     </div>
   );
