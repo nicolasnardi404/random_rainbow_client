@@ -6,7 +6,8 @@ import axios from "axios";
 export default function PasswordRecovery() {
   const history = useHistory();
   const [formData, setFormData] = useState({ email: "" });
-  const [loading, setLoading] = useState(false); // State to manage loading status
+  const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false); // Add modal state
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -18,7 +19,7 @@ export default function PasswordRecovery() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setLoading(true); // Start loading
+    setLoading(true);
 
     try {
       const response = await axios.post(
@@ -26,9 +27,9 @@ export default function PasswordRecovery() {
         formData
       );
       if (response.status === 200) {
-        alert("Password reset email sent!");
-        // Redirect to /home/0 after successful password reset email send
-        history.push("/home/0");
+        setShowModal(true);
+        setLoading(false);
+        // Remove the immediate redirect
       } else {
         alert("Failed to send password reset email.");
       }
@@ -36,8 +37,13 @@ export default function PasswordRecovery() {
       console.error("Error sending password reset email:", error);
       alert("An unexpected error occurred. Please try again.");
     } finally {
-      setLoading(false); // End loading
+      setLoading(false);
     }
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+    history.push("/home/0");
   };
 
   return (
@@ -58,11 +64,29 @@ export default function PasswordRecovery() {
           <input
             className="default-btn create-account-btn"
             type="submit"
-            value={loading ? "Sending..." : "RESET PASSWORD"} // Display loading message if in loading state
-            disabled={loading} // Disable button while loading
+            value={loading ? "Sending..." : "RESET PASSWORD"}
+            disabled={loading}
           />
         </form>
-        {loading && <p>Loading...</p>} {/* Show loading message */}
+        {loading && <p>Loading...</p>}
+
+        {/* Add Modal */}
+        {showModal && (
+          <div className="modal-overlay" onClick={handleModalClose}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <h2>Success!</h2>
+              <p>Password reset email sent! </p>
+              <div className="modal-buttons">
+                <button
+                  className="modal-btn confirm"
+                  onClick={handleModalClose}
+                >
+                  OK
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </header>
     </div>
   );

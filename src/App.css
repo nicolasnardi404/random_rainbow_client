@@ -378,3 +378,49 @@ html{
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   border-color: var(--light-blue-sky);
 } */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 90%;
+  color: black;
+  font-size: 1.4em;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-btn.confirm {
+  background-color: #007bff;
+  color: white;
+}
+
+.modal-btn:hover {
+  opacity: 0.8;
+}
