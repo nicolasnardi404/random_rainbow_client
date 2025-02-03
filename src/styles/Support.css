@@ -1,5 +1,5 @@
 .support-container {
-  max-width: 800px;
+  /* max-width: 800px; */
   margin: 0 auto;
   padding: 2em;
   text-align: center;
@@ -16,9 +16,15 @@
 .support-text {
   color: var(--red);
   text-shadow: 1px 1px 1px var(--carnation-pink);
-  margin-bottom: 2em;
   font-size: 1.2em;
   line-height: 1.6;
+  color: var(--red);
+  -webkit-text-stroke: 1.2px var(--carnation-pink);
+  margin: 0 auto;
+  font-family: "lores-12", sans-serif;
+  font-weight: 400;
+  font-size: 1.5em;
+  max-width: 80%;
 }
 
 .donation-options {
@@ -33,7 +39,7 @@
   background-color: var(--maize-yellow);
   padding: 50px;
   border-radius: 10px;
-  min-width: 80%;
+  max-width: 60%;
   border: 2px solid var(--carnation-pink);
   display: flex;
   justify-content: center;

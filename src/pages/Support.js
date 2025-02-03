@@ -29,14 +29,14 @@ export default function Support() {
 
           <div className="donation-options">
             <div className="donation-card">
-              <h2>One-time Donation</h2>
-              <p>Support us with a one-time contribution</p>
+              <h2>Donation</h2>
+              <p>Support Random Rainbow</p>
               <stripe-buy-button
                 buy-button-id="buy_btn_1PwQaD09kQaCl5xpu4ZIwHKA"
                 publishable-key="pk_live_51PwO6M09kQaCl5xpiYwXWc1lE6JSVV8H6a08o0HtO27vHyCP4IKSjxIHAs6HfsW90hdfBB7vMBzpWTO4AXmm6gOP003CShheae"
               ></stripe-buy-button>
             </div>
-
+            {/* 
             <div className="donation-card">
               <h2>Monthly Support</h2>
               <p>Become a recurring supporter</p>
@@ -44,7 +44,7 @@ export default function Support() {
                 buy-button-id="buy_btn_1QnkR909kQaCl5xp6s8DhSSH"
                 publishable-key="pk_live_51PwO6M09kQaCl5xpiYwXWc1lE6JSVV8H6a08o0HtO27vHyCP4IKSjxIHAs6HfsW90hdfBB7vMBzpWTO4AXmm6gOP003CShheae"
               ></stripe-buy-button>
-            </div>
+            </div> */}
           </div>
 
           <div className="support-info">
