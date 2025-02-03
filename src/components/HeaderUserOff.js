@@ -36,14 +36,14 @@ export default function HeaderUserOff() {
         <img src={logo} alt="RANDOM RAINBOW" className="logo-title menu-logo" />
         <div className="all-icons">
           <div
-            className={`icons-style menu-btn ${selectedMenu === "log-in" ? "selected" : ""}`}
+            className={`icons-style menu-btn log-in `}
             onClick={() => handleClick("log-in")}
           >
             <FontAwesomeIcon icon={faUserAstronaut} />
             <h3>LOGIN</h3>
           </div>
           <div
-            className={`icons-style menu-btn ${selectedMenu === "sign-in" ? "selected" : ""}`}
+            className={`icons-style menu-btn sign-in`}
             onClick={() => handleClick("sign-in")}
           >
             <FontAwesomeIcon icon={faUsers} />

@@ -28,7 +28,7 @@ font-size: 0.5em;
 .all-icons{
   display: flex;
   justify-content: space-between;
-  gap:60px;
+  gap:30px;
 }
 
 .icons-style:hover{
@@ -41,8 +41,9 @@ font-size: 0.5em;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 0px !important;
-  margin-right:20px;
+  gap: 80px !important;
+  margin-right:0px;
+  
 }
 
 .icons-group-off {
@@ -112,7 +113,7 @@ font-size: 0.5em;
 
   .icons-group-on {
     flex-direction: column; /* Stack items vertically */
-    gap: 20px; /* Reduced gap for mobile */
+    gap: 0px !important; /* Reduced gap for mobile */
     margin-right: 0;
   }
 
