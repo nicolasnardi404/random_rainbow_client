@@ -38,7 +38,9 @@ export default function HeaderUserOn() {
 
       {/* Mobile Menu */}
       <div className={`mobile-menu ${isMenuOpen ? "show" : "hide"}`}>
-        <img src={logo} alt="RANDOM RAINBOW" className="logo-title menu-logo" />
+        <div className="menu-user-on">
+          <img src={logo} alt="RANDOM RAINBOW" className="logo-title" />
+        </div>
         <div className="icons-group-on">
           <button
             className={`default-btn ${selectedMenu === "my-piece-of-random-rainbow" ? "selected" : ""}`}

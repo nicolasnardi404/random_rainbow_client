@@ -33,7 +33,9 @@ export default function HeaderUserOff() {
 
       {/* Mobile Menu */}
       <div className={`mobile-menu ${isMenuOpen ? "active" : ""}`}>
-        <img src={logo} alt="RANDOM RAINBOW" className="logo-title menu-logo" />
+        <div className="menu-logo">
+          <img src={logo} alt="RANDOM RAINBOW" className="logo-title" />
+        </div>
         <div className="all-icons">
           <div
             className={`icons-style menu-btn log-in `}

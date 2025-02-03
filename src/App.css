@@ -140,8 +140,6 @@ html{
 }
 
 
-
-
 .user-menu {
   margin-right: 2em;
   display: flex;
@@ -268,12 +266,16 @@ html{
     margin-left: 0px;
   }
 
-  .menu-logo{
-    margin-top: 0;
-    min-width: 120%;
-    /* background-color: var(--maize-yellow); */
-    padding: 20px;
-    border-radius: 20px;
+  .menu-logo {
+    margin-top: -70px !important;  /* Added negative margin to move logo up */
+    min-width: 140%;
+    padding: 0px 20px;
+  }
+
+  .menu-user-on{
+    margin-top: -150px !important;  /* Added negative margin to move logo up */
+    min-width: 140%;
+    padding: 0px 20px;
   }
 
    .desktop-menu{
@@ -346,6 +348,8 @@ html{
 
 /* Mobile styles */
 @media (max-width: 768px) {
+
+
   .mobile-menu .icons-group {
     flex-direction: column;
     position: static;
