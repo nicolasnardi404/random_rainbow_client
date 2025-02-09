@@ -21,10 +21,15 @@
   transform: scale(1.1);
 }
 
-.liked-heart {
+.heart-icon {
+  color: var(--light-blue-sky);
+  font-size: 1.8rem;
+  transition: all 0.2s ease;
+}
+
+.heart-icon.liked {
   color: var(--red);
   text-shadow: 1px 1px 1px var(--carnation-pink);
-  font-size: 1.8rem;
 }
 
 .like-count {

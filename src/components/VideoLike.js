@@ -38,6 +38,39 @@ const VideoLike = ({ videoId }) => {
     history.push("/log-in");
   };
 
+  useEffect(() => {
+    const fetchLikeInfo = async () => {
+      try {
+        const config = {};
+        if (accessToken) {
+          const token = await refreshTokenIfNeeded({
+            accessToken,
+            refreshToken,
+            setAccessTokenLocal,
+            setRefreshTokenLocal,
+          });
+          config.headers = { Authorization: `Bearer ${token}` };
+        }
+
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/api/videos/${videoId}/like`,
+          config
+        );
+
+        setLikeCount(response.data.likeCount);
+        if (response.data.liked !== undefined) {
+          setIsLiked(response.data.liked);
+        }
+      } catch (error) {
+        console.error("Error fetching like info:", error);
+      }
+    };
+
+    if (videoId) {
+      fetchLikeInfo();
+    }
+  }, [videoId, accessToken]);
+
   const toggleLike = async () => {
     if (!accessToken) {
       setShowLoginModal(true);
@@ -65,12 +98,13 @@ const VideoLike = ({ videoId }) => {
         }
       );
 
-      setIsLiked(response.data.liked);
-      setLikeCount(response.data.likeCount);
+      if (response.data) {
+        setIsLiked(response.data.liked);
+        setLikeCount(response.data.likeCount);
 
-      // Only trigger balloons when liking (not unliking)
-      if (response.data.liked) {
-        rainbowReward();
+        if (response.data.liked) {
+          rainbowReward();
+        }
       }
     } catch (error) {
       console.error("Error toggling like:", error);
@@ -81,31 +115,25 @@ const VideoLike = ({ videoId }) => {
 
   return (
     <div className="video-like-container">
-      <button
-        className={`like-button ${isLiked ? "liked" : ""} ${isLoading ? "loading" : ""}`}
-        onClick={toggleLike}
-        disabled={isLoading}
-      >
-        <span id="likeReward">
-          <FontAwesomeIcon
-            icon={isLiked ? solidHeart : regularHeart}
-            className={`${isLiked ? "liked-heart" : ""} ${isLoading ? "loading" : ""}`}
-          />
-        </span>
+      <span id="likeReward" className="like-button" onClick={toggleLike}>
+        <FontAwesomeIcon
+          icon={isLiked ? solidHeart : regularHeart}
+          className={`heart-icon ${isLiked ? "liked" : ""}`}
+        />
         <span className="like-count">{likeCount}</span>
-      </button>
+      </span>
 
       {showLoginModal && (
         <div className="modal-overlay" onClick={() => setShowLoginModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h2>Sign in Required</h2>
-            <p>Want to like this video? Sign in to show your appreciation!</p>
+            <h2>Please Log In</h2>
+            <p>You need to be logged in to like videos.</p>
             <div className="modal-buttons">
               <button
                 className="modal-btn confirm"
                 onClick={handleLoginRedirect}
               >
-                Go to Login
+                Log In
               </button>
               <button
                 className="modal-btn cancel"
