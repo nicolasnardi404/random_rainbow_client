@@ -6,6 +6,7 @@ import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
+import { useReward } from "react-rewards";
 import "../styles/VideoLike.css";
 
 const VideoLike = ({ videoId }) => {
@@ -21,6 +22,17 @@ const VideoLike = ({ videoId }) => {
   } = useContext(AuthContext);
   const history = useHistory();
 
+  const { reward: rainbowReward } = useReward("likeReward", "emoji", {
+    emoji: ["🌈"],
+    elementCount: 15,
+    elementSize: 40,
+    spread: 100,
+    startVelocity: 35,
+    decay: 0.91,
+    lifetime: 200,
+    zIndex: 999,
+  });
+
   const handleLoginRedirect = () => {
     setShowLoginModal(false);
     history.push("/log-in");
@@ -32,7 +44,7 @@ const VideoLike = ({ videoId }) => {
       return;
     }
 
-    if (isLoading) return; // Prevent multiple clicks while loading
+    if (isLoading) return;
 
     try {
       setIsLoading(true);
@@ -52,16 +64,20 @@ const VideoLike = ({ videoId }) => {
           },
         }
       );
+
       setIsLiked(response.data.liked);
       setLikeCount(response.data.likeCount);
+
+      // Only trigger balloons when liking (not unliking)
+      if (response.data.liked) {
+        rainbowReward();
+      }
     } catch (error) {
       console.error("Error toggling like:", error);
     } finally {
       setIsLoading(false);
     }
   };
-
-  // ... rest of your existing code ...
 
   return (
     <div className="video-like-container">
@@ -70,10 +86,12 @@ const VideoLike = ({ videoId }) => {
         onClick={toggleLike}
         disabled={isLoading}
       >
-        <FontAwesomeIcon
-          icon={isLiked ? solidHeart : regularHeart}
-          className={`${isLiked ? "liked-heart" : ""} ${isLoading ? "loading" : ""}`}
-        />
+        <span id="likeReward">
+          <FontAwesomeIcon
+            icon={isLiked ? solidHeart : regularHeart}
+            className={`${isLiked ? "liked-heart" : ""} ${isLoading ? "loading" : ""}`}
+          />
+        </span>
         <span className="like-count">{likeCount}</span>
       </button>
 

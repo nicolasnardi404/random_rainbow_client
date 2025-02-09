@@ -21,6 +21,7 @@
     "react-dom": "^18.3.1",
     "react-draggable": "^4.4.6",
     "react-player": "^2.16.0",
+    "react-rewards": "^2.1.0",
     "react-router-dom": "^5.3.4",
     "react-scripts": "5.0.1",
     "react-youtube": "^10.1.0",
