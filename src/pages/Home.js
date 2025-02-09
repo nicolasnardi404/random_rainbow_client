@@ -7,6 +7,7 @@ import "../styles/RandomCard.css";
 import axios from "axios";
 import randomButton from "../images/randombutton.png";
 import randomButtonHover from "../images/randombutton2.png";
+import VideoLike from "../components/VideoLike";
 
 export default function RandomVideoCard() {
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -95,6 +96,7 @@ export default function RandomVideoCard() {
               height="100%"
             />
           </div>
+          <VideoLike videoId={selectedVideo.videoId} />
           <div className="description">
             {selectedVideo.videoDescription.split("\n").map((line, index) => (
               <React.Fragment key={index}>

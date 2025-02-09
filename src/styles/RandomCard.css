@@ -139,3 +139,35 @@
     color: var(--carnation-pink);
     transform: translateY(-3px);
   }
+
+  .video-like-container {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+  }
+
+  .like-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 15px;
+    transition: all 0.2s ease;
+    color: var(--light-blue-sky);
+    font-size: 1.2em;
+  }
+
+  .like-button:hover {
+    transform: scale(1.1);
+  }
+
+  .like-button.liked {
+    color: var(--red);
+  }
+
+  .like-count {
+    font-size: 0.9em;
+    color: var(--light-blue-sky);
+  }
