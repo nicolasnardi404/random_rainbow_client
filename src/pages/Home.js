@@ -8,6 +8,7 @@ import axios from "axios";
 import randomButton from "../images/randombutton.png";
 import randomButtonHover from "../images/randombutton2.png";
 import VideoLike from "../components/VideoLike";
+import VideoComments from "../components/VideoComments";
 
 export default function RandomVideoCard() {
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -105,6 +106,7 @@ export default function RandomVideoCard() {
               </React.Fragment>
             ))}
           </div>
+          <VideoComments videoId={selectedVideo.videoId} />
           <button
             className="btn-random-video btn-random-video-after"
             onClick={selectRandomVideo}
