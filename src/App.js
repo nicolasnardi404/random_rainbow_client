@@ -28,6 +28,7 @@ import HowItWorks from "./pages/HowItWorks";
 import { inject } from "@vercel/analytics";
 import Layout from "./Layout";
 import Support from "./pages/Support";
+import Chat from "./components/Chat";
 
 function App() {
   inject();
@@ -86,6 +87,7 @@ function App() {
               requiredRole="ROLE_ADMIN"
             />
             <Route path="/support" component={Support} />
+            <Route path="/chat" component={Chat} />
           </Switch>
         </Layout>
       </Router>

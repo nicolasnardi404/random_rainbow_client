@@ -96,6 +96,12 @@ export default function HeaderUserOn() {
           >
             RAINBOW
           </button>
+          <button
+            className={`default-btn ${selectedMenu === "chat" ? "selected" : ""}`}
+            onClick={() => handleClick("chat")}
+          >
+            CHAT
+          </button>
         </div>
       </div>
     </div>
