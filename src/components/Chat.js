@@ -223,6 +223,7 @@ const Chat = () => {
           body: JSON.stringify({ content: newMessage }),
         }
       );
+      console.log("Message length:", newMessage.length);
 
       if (response.ok) {
         setNewMessage("");
@@ -263,7 +264,12 @@ const Chat = () => {
           placeholder="Type your message..."
           className="chat-input"
         />
-        <button type="submit" className="send-btn">
+        <div className="character-counter">{newMessage.length} / 300</div>
+        <button
+          type="submit"
+          className="send-btn"
+          disabled={newMessage.length > 300}
+        >
           Send
         </button>
       </form>

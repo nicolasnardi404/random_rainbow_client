@@ -102,6 +102,13 @@
   transform: translateY(-2px);
 }
 
+.send-btn:disabled {
+  background-color: #ccc; /* Light gray background */
+  color: #666; /* Darker gray text */
+  cursor: not-allowed; /* Change cursor to indicate non-clickable */
+  opacity: 0.6; /* Slightly transparent */
+}
+
 .loading-sentinel {
   height: 20px;
   display: flex;
@@ -113,4 +120,11 @@
   color: var(--carnation-pink);
   font-size: 0.8em;
   padding: 0.5rem;
+}
+
+.character-counter {
+  font-size: 0.8em;
+  color: var(--carnation-pink);
+  text-align: right;
+  margin-top: 0.5rem;
 } 
