@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  useCallback,
+} from "react";
 import { AuthContext } from "./AuthContext";
 import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded";
 import SockJS from "sockjs-client/dist/sockjs";
@@ -9,8 +15,13 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [wsConnected, setWsConnected] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
   const messagesEndRef = useRef(null);
   const stompClient = useRef(null);
+  const observer = useRef(null);
+  const loadingElementRef = useRef(null);
+  const chatContainerRef = useRef(null);
   const {
     accessToken,
     refreshToken,
@@ -20,15 +31,13 @@ const Chat = () => {
   } = useContext(AuthContext);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
   };
 
-  // Initial messages fetch
-  useEffect(() => {
-    fetchMessages();
-  }, []);
-
-  const fetchMessages = async () => {
+  const fetchMessages = useCallback(async () => {
     try {
       const token = await refreshTokenIfNeeded({
         accessToken,
@@ -46,12 +55,102 @@ const Chat = () => {
         }
       );
       const data = await response.json();
-      setMessages(data.reverse()); // Reverse to show newest messages at bottom
+      setMessages(data.reverse());
       scrollToBottom();
     } catch (error) {
       console.error("Error fetching messages:", error);
     }
-  };
+  }, [accessToken, refreshToken, setAccessTokenLocal, setRefreshTokenLocal]);
+
+  const fetchOlderMessages = useCallback(async () => {
+    if (isLoading || !hasMore || messages.length === 0) return;
+
+    try {
+      setIsLoading(true);
+      const oldestMessageId = messages[0].id;
+      const token = await refreshTokenIfNeeded({
+        accessToken,
+        refreshToken,
+        setAccessTokenLocal,
+        setRefreshTokenLocal,
+      });
+
+      const response = await fetch(
+        `${process.env.REACT_APP_API_BASE_URL}/api/chat/messages/before/${oldestMessageId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+
+      if (data.length === 0) {
+        setHasMore(false);
+      } else {
+        setMessages((prevMessages) => {
+          const existingIds = new Set(prevMessages.map((msg) => msg.id));
+          const newMessages = data.filter((msg) => !existingIds.has(msg.id));
+          return [...newMessages, ...prevMessages];
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching older messages:", error);
+      setHasMore(false);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [
+    isLoading,
+    hasMore,
+    messages,
+    accessToken,
+    refreshToken,
+    setAccessTokenLocal,
+    setRefreshTokenLocal,
+  ]);
+
+  // Initial messages fetch
+  useEffect(() => {
+    const initializeChat = async () => {
+      await fetchMessages();
+      setTimeout(scrollToBottom, 100);
+    };
+    initializeChat();
+  }, [fetchMessages]);
+
+  // Set up intersection observer for infinite scrolling
+  useEffect(() => {
+    if (!loadingElementRef.current || isLoading) return;
+
+    const handleIntersection = (entries) => {
+      const firstEntry = entries[0];
+      if (firstEntry.isIntersecting && hasMore && !isLoading) {
+        fetchOlderMessages();
+      }
+    };
+
+    const options = {
+      root: chatContainerRef.current,
+      rootMargin: "20px",
+      threshold: 0.1,
+    };
+
+    const currentObserver = new IntersectionObserver(
+      handleIntersection,
+      options
+    );
+    currentObserver.observe(loadingElementRef.current);
+
+    return () => {
+      if (currentObserver) {
+        currentObserver.disconnect();
+      }
+    };
+  }, [isLoading, hasMore, fetchOlderMessages]);
+
+  // Add this effect to handle new messages
+  useEffect(() => {}, [messages]);
 
   useEffect(() => {
     const connectWebSocket = () => {
@@ -77,7 +176,6 @@ const Chat = () => {
                 }
                 return prev;
               });
-              scrollToBottom();
             } catch (error) {
               console.error("Error processing message:", error);
             }
@@ -134,19 +232,29 @@ const Chat = () => {
     }
   };
 
+  console.log("Updated messages:", messages);
+
   return (
     <div className="chat-container">
-      <div className="chat-messages">
-        {messages.map((msg, index) => (
+      <div className="chat-messages" ref={chatContainerRef}>
+        {hasMore && (
+          <div ref={loadingElementRef} className="loading-sentinel">
+            {isLoading ? (
+              <div className="loading-indicator">Loading...</div>
+            ) : (
+              <div></div>
+            )}
+          </div>
+        )}
+        {messages.map((msg) => (
           <div
-            key={msg.id || index}
+            key={`${msg.id}-${msg.timestamp}`}
             className={`message ${msg.user?.username === username ? "own-message" : ""}`}
           >
             <span className="message-username">{msg.user?.username}</span>
             <p className="message-content">{msg.content}</p>
           </div>
         ))}
-        <div ref={messagesEndRef} />
       </div>
       <form onSubmit={handleSubmit} className="chat-input-form">
         <textarea

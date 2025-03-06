@@ -100,4 +100,17 @@
 .send-btn:hover {
   background: var(--red);
   transform: translateY(-2px);
+}
+
+.loading-sentinel {
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-indicator {
+  color: var(--carnation-pink);
+  font-size: 0.8em;
+  padding: 0.5rem;
 } 
