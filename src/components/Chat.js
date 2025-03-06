@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { AuthContext } from "./AuthContext";
 import { refreshTokenIfNeeded } from "../util/RefreshTokenIfNeeded";
+import SockJS from "sockjs-client/dist/sockjs";
+import { Stomp } from "@stomp/stompjs";
 import "../styles/Chat.css";
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [wsConnected, setWsConnected] = useState(false);
   const messagesEndRef = useRef(null);
+  const stompClient = useRef(null);
   const {
     accessToken,
     refreshToken,
@@ -19,47 +23,83 @@ const Chat = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Fetch initial messages
+  // Initial messages fetch
   useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const token = await refreshTokenIfNeeded({
-          accessToken,
-          refreshToken,
-          setAccessTokenLocal,
-          setRefreshTokenLocal,
-        });
-
-        const response = await fetch(
-          `${process.env.REACT_APP_API_BASE_URL}/api/chat/messages`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const data = await response.json();
-        setMessages(data);
-        scrollToBottom();
-      } catch (error) {
-        console.error("Error fetching messages:", error);
-      }
-    };
-
     fetchMessages();
   }, []);
 
-  // WebSocket connection for real-time updates
-  useEffect(() => {
-    const ws = new WebSocket(`${process.env.REACT_APP_WS_URL}/chat`);
+  const fetchMessages = async () => {
+    try {
+      const token = await refreshTokenIfNeeded({
+        accessToken,
+        refreshToken,
+        setAccessTokenLocal,
+        setRefreshTokenLocal,
+      });
 
-    ws.onmessage = (event) => {
-      const message = JSON.parse(event.data);
-      setMessages((prev) => [...prev, message]);
+      const response = await fetch(
+        `${process.env.REACT_APP_API_BASE_URL}/api/chat/messages`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      setMessages(data.reverse()); // Reverse to show newest messages at bottom
       scrollToBottom();
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    }
+  };
+
+  useEffect(() => {
+    const connectWebSocket = () => {
+      const socket = new SockJS(`${process.env.REACT_APP_API_BASE_URL}/chat`);
+      const stomp = Stomp.over(socket);
+
+      stomp.debug = function (str) {
+        console.log(str);
+      };
+
+      stomp.connect(
+        {},
+        () => {
+          console.log("WebSocket Connected");
+          setWsConnected(true);
+
+          stomp.subscribe("/topic/messages", (message) => {
+            try {
+              const receivedMessage = JSON.parse(message.body);
+              setMessages((prev) => {
+                if (!prev.some((m) => m.id === receivedMessage.id)) {
+                  return [...prev, receivedMessage];
+                }
+                return prev;
+              });
+              scrollToBottom();
+            } catch (error) {
+              console.error("Error processing message:", error);
+            }
+          });
+        },
+        (error) => {
+          console.error("WebSocket Error:", error);
+          setWsConnected(false);
+          setTimeout(connectWebSocket, 3000);
+        }
+      );
+
+      stompClient.current = stomp;
     };
 
-    return () => ws.close();
+    connectWebSocket();
+
+    return () => {
+      if (stompClient.current && stompClient.current.connected) {
+        stompClient.current.disconnect();
+      }
+    };
   }, []);
 
   const handleSubmit = async (e) => {
@@ -87,10 +127,7 @@ const Chat = () => {
       );
 
       if (response.ok) {
-        const savedMessage = await response.json();
-        setMessages((prev) => [...prev, savedMessage]);
         setNewMessage("");
-        scrollToBottom();
       }
     } catch (error) {
       console.error("Error sending message:", error);
