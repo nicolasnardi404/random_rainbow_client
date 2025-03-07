@@ -289,7 +289,7 @@ const Chat = () => {
   return (
     <div>
       <header className="chat-header">
-        <h1>Random Rainbow Infinite Chat!</h1>
+        <h1>Infinite Chat!</h1>
         <p>
           This chat aims to facilitate interaction among the artists
           participating in the Random Rainbow project.

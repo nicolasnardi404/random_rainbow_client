@@ -66,6 +66,12 @@ export default function HeaderUserOn() {
           >
             Support
           </button>
+          <button
+            className={`default-btn ${selectedMenu === "chat" ? "selected" : ""}`}
+            onClick={() => handleClick("chat")}
+          >
+            Chat
+          </button>
           {/* Close Menu Button */}
           <button className="default-btn" onClick={toggleMenu}>
             Return
