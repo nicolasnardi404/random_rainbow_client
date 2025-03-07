@@ -252,7 +252,15 @@ const Chat = () => {
             key={`${msg.id}-${msg.timestamp}`}
             className={`message ${msg.user?.username === username ? "own-message" : ""}`}
           >
-            <span className="message-username">{msg.user?.username}</span>
+            <span className="message-username">
+              <a
+                href={`/profile/${msg.user?.username}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {msg.user?.username}
+              </a>
+            </span>
             <p className="message-content">{msg.content}</p>
           </div>
         ))}

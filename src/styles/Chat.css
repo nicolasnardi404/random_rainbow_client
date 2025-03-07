@@ -45,8 +45,7 @@
 }
 
 .own-message .message-username {
-  color: var(--veronica-purple);
-  text-shadow: 1px 1px 1px var(--light-blue-sky);
+  color: var(--red);
 }
 
 .message-content {
@@ -57,10 +56,6 @@
   padding: 0.3rem;
 }
 
-.own-message .message-content {
-  color: var(--veronica-purple);
-  text-shadow: 1px 1px 1px var(--light-blue-sky);
-}
 
 .chat-input-form {
   padding: 1rem;
@@ -127,4 +122,28 @@
   color: var(--carnation-pink);
   text-align: right;
   margin-top: 0.5rem;
+}
+
+.message-username a {
+  color: var(--carnation-pink);
+  text-decoration: none;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.message-username a:hover {
+  color: var(--veronica-purple);
+  text-shadow: 1px 1px 2px var(--light-blue-sky);
+}
+
+.own-message .message-username a {
+  color: var(--veronica-purple);
+}
+
+.own-message .message-username a:hover {
+  color: var(--red);
+  text-shadow: 1px 1px 1px var(--maize-yellow);
+}
+
+.own-message .message-content {
+  color: var(--veronica-purple);
 } 
