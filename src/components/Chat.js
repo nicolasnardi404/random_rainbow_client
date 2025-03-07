@@ -29,6 +29,7 @@ const Chat = () => {
     setAccessTokenLocal,
     setRefreshTokenLocal,
   } = useContext(AuthContext);
+  const [openMenuMessageId, setOpenMenuMessageId] = useState(null);
 
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
@@ -233,6 +234,39 @@ const Chat = () => {
     }
   };
 
+  const deleteMessage = async (messageId) => {
+    try {
+      const token = await refreshTokenIfNeeded({
+        accessToken,
+        refreshToken,
+        setAccessTokenLocal,
+        setRefreshTokenLocal,
+      });
+
+      await fetch(
+        `${process.env.REACT_APP_API_BASE_URL}/api/chat/messages/${messageId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setMessages((prevMessages) =>
+        prevMessages.filter((msg) => msg.id !== messageId)
+      );
+    } catch (error) {
+      console.error("Error deleting message:", error);
+    }
+  };
+
+  const confirmDelete = (messageId) => {
+    if (window.confirm("Are you sure you want to delete this message?")) {
+      deleteMessage(messageId);
+    }
+  };
+
   console.log("Updated messages:", messages);
 
   return (
@@ -260,6 +294,27 @@ const Chat = () => {
               >
                 {msg.user?.username}
               </a>
+              {msg.user?.username === username && (
+                <span className="more-options">
+                  <button
+                    className="more-btn"
+                    onClick={() =>
+                      setOpenMenuMessageId(
+                        openMenuMessageId === msg.id ? null : msg.id
+                      )
+                    }
+                  >
+                    •••
+                  </button>
+                  {openMenuMessageId === msg.id && (
+                    <div className="options-dropdown">
+                      <button onClick={() => confirmDelete(msg.id)}>
+                        Delete
+                      </button>
+                    </div>
+                  )}
+                </span>
+              )}
             </span>
             <p className="message-content">{msg.content}</p>
           </div>
