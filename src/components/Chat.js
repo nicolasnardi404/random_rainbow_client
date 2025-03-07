@@ -30,6 +30,8 @@ const Chat = () => {
     setRefreshTokenLocal,
   } = useContext(AuthContext);
   const [openMenuMessageId, setOpenMenuMessageId] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [messageToDelete, setMessageToDelete] = useState(null);
 
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
@@ -261,9 +263,16 @@ const Chat = () => {
     }
   };
 
-  const confirmDelete = (messageId) => {
-    if (window.confirm("Are you sure you want to delete this message?")) {
-      deleteMessage(messageId);
+  const handleDeleteClick = (messageId) => {
+    setShowDeleteModal(true);
+    setMessageToDelete(messageId);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (messageToDelete) {
+      await deleteMessage(messageToDelete);
+      setShowDeleteModal(false);
+      setMessageToDelete(null);
     }
   };
 
@@ -308,7 +317,7 @@ const Chat = () => {
                   </button>
                   {openMenuMessageId === msg.id && (
                     <div className="options-dropdown">
-                      <button onClick={() => confirmDelete(msg.id)}>
+                      <button onClick={() => handleDeleteClick(msg.id)}>
                         Delete
                       </button>
                     </div>
@@ -336,6 +345,31 @@ const Chat = () => {
           Send
         </button>
       </form>
+      {showDeleteModal && (
+        <div
+          className="modal-overlay"
+          onClick={() => setShowDeleteModal(false)}
+        >
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>Confirm Delete</h2>
+            <p>Are you sure you want to delete this message?</p>
+            <div className="modal-buttons">
+              <button
+                className="modal-btn confirm"
+                onClick={handleDeleteConfirm}
+              >
+                Delete
+              </button>
+              <button
+                className="modal-btn cancel"
+                onClick={() => setShowDeleteModal(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
