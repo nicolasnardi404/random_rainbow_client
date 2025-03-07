@@ -287,97 +287,108 @@ const Chat = () => {
   console.log("Updated messages:", messages);
 
   return (
-    <div className="chat-container">
-      <div className="chat-messages" ref={chatContainerRef}>
-        {hasMore && (
-          <div ref={loadingElementRef} className="loading-sentinel">
-            {isLoading ? (
-              <div className="loading-indicator">Loading...</div>
-            ) : (
-              <div></div>
-            )}
-          </div>
-        )}
-        {messages.map((msg) => (
-          <div
-            key={`${msg.id}-${msg.timestamp}`}
-            className={`message ${msg.user?.username === username ? "own-message" : ""}`}
-          >
-            <span className="message-username">
-              <a
-                href={`/profile/${msg.user?.username}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {msg.user?.username}
-              </a>
-              {msg.user?.username === username && (
-                <span className="more-options">
-                  <button
-                    className="more-btn"
-                    onClick={() =>
-                      setOpenMenuMessageId(
-                        openMenuMessageId === msg.id ? null : msg.id
-                      )
-                    }
-                  >
-                    •••
-                  </button>
-                  {openMenuMessageId === msg.id && (
-                    <div className="options-dropdown">
-                      <button onClick={() => handleDeleteClick(msg.id)}>
-                        Delete
-                      </button>
-                    </div>
-                  )}
-                </span>
+    <div>
+      <header className="chat-header">
+        <h1>Random Rainbow Infinite Chat!</h1>
+        <p>
+          This chat aims to facilitate interaction among the artists
+          participating in the Random Rainbow project.
+        </p>
+      </header>
+      <div className="chat-container">
+        <div className="chat-messages" ref={chatContainerRef}>
+          {hasMore && (
+            <div ref={loadingElementRef} className="loading-sentinel">
+              {isLoading ? (
+                <div className="loading-indicator">Loading...</div>
+              ) : (
+                <div></div>
               )}
-            </span>
-            <p className="message-content">{msg.content}</p>
+            </div>
+          )}
+          {messages.map((msg) => (
+            <div
+              key={`${msg.id}-${msg.timestamp}`}
+              className={`message ${msg.user?.username === username ? "own-message" : ""}`}
+            >
+              <span className="message-username">
+                <a
+                  href={`/profile/${msg.user?.username}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {msg.user?.username}
+                </a>
+                {msg.user?.username === username && (
+                  <span className="more-options">
+                    <button
+                      className="more-btn"
+                      onClick={() =>
+                        setOpenMenuMessageId(
+                          openMenuMessageId === msg.id ? null : msg.id
+                        )
+                      }
+                    >
+                      •••
+                    </button>
+                    {openMenuMessageId === msg.id && (
+                      <div className="options-dropdown">
+                        <button onClick={() => handleDeleteClick(msg.id)}>
+                          Delete
+                        </button>
+                      </div>
+                    )}
+                  </span>
+                )}
+              </span>
+              <p className="message-content">{msg.content}</p>
+            </div>
+          ))}
+        </div>
+        <form onSubmit={handleSubmit} className="chat-input-form">
+          <div className="chat-input-form-container">
+            <textarea
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              placeholder="Type your message..."
+              className="chat-input"
+            />
+            <div className="character-counter">{newMessage.length} / 300</div>
           </div>
-        ))}
-      </div>
-      <form onSubmit={handleSubmit} className="chat-input-form">
-        <textarea
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Type your message..."
-          className="chat-input"
-        />
-        <div className="character-counter">{newMessage.length} / 300</div>
-        <button
-          type="submit"
-          className="send-btn"
-          disabled={newMessage.length > 300}
-        >
-          Send
-        </button>
-      </form>
-      {showDeleteModal && (
-        <div
-          className="modal-overlay"
-          onClick={() => setShowDeleteModal(false)}
-        >
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h2>Confirm Delete</h2>
-            <p>Are you sure you want to delete this message?</p>
-            <div className="modal-buttons">
-              <button
-                className="modal-btn confirm"
-                onClick={handleDeleteConfirm}
-              >
-                Delete
-              </button>
-              <button
-                className="modal-btn cancel"
-                onClick={() => setShowDeleteModal(false)}
-              >
-                Cancel
-              </button>
+          <button
+            type="submit"
+            className="send-btn"
+            disabled={newMessage.length > 300}
+          >
+            Send
+          </button>
+        </form>
+        {showDeleteModal && (
+          <div
+            className="modal-overlay"
+            onClick={() => setShowDeleteModal(false)}
+          >
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <h2>Confirm Delete</h2>
+              <p>Are you sure you want to delete this message?</p>
+              <div className="modal-buttons">
+                <button
+                  className="modal-btn confirm"
+                  onClick={handleDeleteConfirm}
+                >
+                  Delete
+                </button>
+                <button
+                  className="modal-btn cancel"
+                  onClick={() => setShowDeleteModal(false)}
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
