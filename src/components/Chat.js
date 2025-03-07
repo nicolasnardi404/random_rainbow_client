@@ -78,6 +78,9 @@ const Chat = () => {
         setRefreshTokenLocal,
       });
 
+      // Save the current scroll position
+      const currentScrollHeight = chatContainerRef.current.scrollHeight;
+
       const response = await fetch(
         `${process.env.REACT_APP_API_BASE_URL}/api/chat/messages/before/${oldestMessageId}`,
         {
@@ -96,6 +99,11 @@ const Chat = () => {
           const newMessages = data.filter((msg) => !existingIds.has(msg.id));
           return [...newMessages, ...prevMessages];
         });
+
+        // Adjust the scroll position to maintain the user's view
+        const newScrollHeight = chatContainerRef.current.scrollHeight;
+        chatContainerRef.current.scrollTop +=
+          newScrollHeight - currentScrollHeight;
       }
     } catch (error) {
       console.error("Error fetching older messages:", error);
