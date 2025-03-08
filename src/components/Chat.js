@@ -309,17 +309,17 @@ const Chat = () => {
           {messages.map((msg) => (
             <div
               key={`${msg.id}-${msg.timestamp}`}
-              className={`message ${msg.user?.username === username ? "own-message" : ""}`}
+              className={`message ${msg.username === username ? "own-message" : ""}`}
             >
               <span className="message-username">
                 <a
-                  href={`/profile/${msg.user?.username}`}
+                  href={`/profile/${msg.username}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {msg.user?.username}
+                  {msg.username}
                 </a>
-                {msg.user?.username === username && (
+                {msg.username === username && (
                   <span className="more-options">
                     <button
                       className="more-btn"
