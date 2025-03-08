@@ -3,6 +3,19 @@
 import axios from "axios";
 import isTokenExpired from "./isTokenExpired"; // Adjust the import path as needed
 
+// Helper function to redirect to login page
+const redirectToLogin = () => {
+  // Clear all auth-related data from localStorage
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("role");
+  localStorage.removeItem("idUser");
+  localStorage.removeItem("username");
+
+  // Redirect to login page
+  window.location.href = "/log-in";
+};
+
 export async function refreshTokenIfNeeded(context) {
   const {
     accessToken,
@@ -28,6 +41,8 @@ export async function refreshTokenIfNeeded(context) {
     return responseData.refreshToken;
   } catch (error) {
     console.error("Failed to refresh token:", error);
+    // Redirect to login page when token refresh fails
+    redirectToLogin();
     throw new Error("Token refresh failed");
   }
 }
