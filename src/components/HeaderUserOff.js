@@ -82,12 +82,12 @@ export default function HeaderUserOff() {
           >
             Rainbow
           </div>
-          <div
+          {/* <div
             className={`default-btn menu-btn ${selectedMenu === "lab" ? "selected" : ""}`}
             onClick={() => handleClick("lab")}
           >
             Lab
-          </div>
+          </div> */}
           <div
             className={`default-btn ${selectedMenu === "return" ? "selected" : ""}`}
             onClick={toggleMenu}

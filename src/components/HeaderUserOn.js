@@ -52,12 +52,12 @@ export default function HeaderUserOn() {
           >
             {username}
           </button>
-          {/* <button
+          <button
             className={`default-btn ${selectedMenu === "manifesto" ? "selected" : ""}`}
             onClick={() => handleClick("manifesto")}
           >
             Manifesto
-          </button> */}
+          </button>
           <button
             className={`default-btn ${selectedMenu === "home/0" ? "selected" : ""}`}
             onClick={() => handleClick("home/0")}
@@ -76,12 +76,12 @@ export default function HeaderUserOn() {
           >
             Chat
           </button>
-          <button
+          {/* <button
             className={`default-btn ${selectedMenu === "lab" ? "selected" : ""}`}
             onClick={() => handleClick("lab")}
           >
             Lab
-          </button>
+          </button> */}
           {/* Close Menu Button */}
           <button className="default-btn" onClick={toggleMenu}>
             Return
