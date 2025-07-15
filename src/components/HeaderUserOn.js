@@ -14,7 +14,11 @@ export default function HeaderUserOn() {
 
   function handleClick(path) {
     setSelectedMenu(path);
-    history.push(`/${path}`);
+    if (path === "lab") {
+      window.location.href = "https://lab.randomrainbow.art";
+    } else {
+      history.push(`/${path}`);
+    }
     setMenuOpen(false);
   }
 
@@ -72,6 +76,12 @@ export default function HeaderUserOn() {
           >
             Chat
           </button>
+          <button
+            className={`default-btn ${selectedMenu === "lab" ? "selected" : ""}`}
+            onClick={() => handleClick("lab")}
+          >
+            Lab
+          </button>
           {/* Close Menu Button */}
           <button className="default-btn" onClick={toggleMenu}>
             Return
@@ -107,6 +117,12 @@ export default function HeaderUserOn() {
             onClick={() => handleClick("chat")}
           >
             CHAT
+          </button>
+          <button
+            className={`default-btn ${selectedMenu === "lab" ? "selected" : ""}`}
+            onClick={() => handleClick("lab")}
+          >
+            LAB
           </button>
         </div>
       </div>
