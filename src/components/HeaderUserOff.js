@@ -4,6 +4,7 @@ import {
   faBars,
   faUserAstronaut,
   faUsers,
+  faFlask,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../images/logo.png";
@@ -15,7 +16,11 @@ export default function HeaderUserOff() {
 
   function handleClick(path) {
     setSelectedMenu(path);
-    history.push(`/${path}`);
+    if (path === "lab") {
+      window.location.href = "https://lab.randomrainbow.art";
+    } else {
+      history.push(`/${path}`);
+    }
     setMenuOpen(false);
   }
 
@@ -78,6 +83,12 @@ export default function HeaderUserOff() {
             Rainbow
           </div>
           <div
+            className={`default-btn menu-btn ${selectedMenu === "lab" ? "selected" : ""}`}
+            onClick={() => handleClick("lab")}
+          >
+            Lab
+          </div>
+          <div
             className={`default-btn ${selectedMenu === "return" ? "selected" : ""}`}
             onClick={toggleMenu}
           >
@@ -112,6 +123,12 @@ export default function HeaderUserOff() {
             onClick={() => handleClick("home/0")}
           >
             RAINBOW
+          </div>
+          <div
+            className={`default-btn menu-btn-desktop ${selectedMenu === "lab" ? "selected" : ""}`}
+            onClick={() => handleClick("lab")}
+          >
+            LAB
           </div>
           <div
             className={`default-btn menu-btn-desktop ${selectedMenu === "support" ? "selected" : ""}`}
