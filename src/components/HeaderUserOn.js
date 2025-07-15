@@ -52,12 +52,12 @@ export default function HeaderUserOn() {
           >
             {username}
           </button>
-          <button
+          {/* <button
             className={`default-btn ${selectedMenu === "manifesto" ? "selected" : ""}`}
             onClick={() => handleClick("manifesto")}
           >
             Manifesto
-          </button>
+          </button> */}
           <button
             className={`default-btn ${selectedMenu === "home/0" ? "selected" : ""}`}
             onClick={() => handleClick("home/0")}
